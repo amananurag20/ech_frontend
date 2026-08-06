@@ -1,0 +1,433 @@
+.page {
+  background: #e6e5e9;
+  color: #191b1c;
+  min-height: 100svh;
+  padding: 0 80px;
+}
+
+.pageFrame {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  min-height: 100svh;
+  padding: 44px 0;
+  width: 100%;
+}
+
+.navigation,
+.footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.backButton {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #535250;
+  cursor: pointer;
+  display: inline-flex;
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 6px;
+  padding: 4px;
+}
+
+.appointmentPanel {
+  display: flex;
+  flex-direction: row;
+  height: 360px;
+  width: 680px;
+}
+
+.selectedLayout {
+  flex-direction: row;
+  height: 363px;
+  width: 945px;
+}
+
+.appointmentSummary {
+  background: #172629;
+  border-radius: 36px;
+  color: #f6f7f9;
+  display: flex;
+  flex: 0 0 280px;
+  flex-direction: column;
+  gap: 9px;
+  height: 360px;
+  overflow: hidden;
+  padding: 16px 8px;
+}
+
+.summaryDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 8px;
+}
+
+.doctorRow {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.avatar {
+  border-radius: 23px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+  width: 40px;
+}
+
+.avatarImage {
+  object-fit: cover;
+  object-position: center 14%;
+}
+
+.doctorCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doctorCopy h1,
+.doctorCopy p,
+.summaryDetails h2,
+.calendarHeader h2 {
+  margin: 0;
+}
+
+.doctorCopy h1 {
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.doctorCopy p {
+  color: rgba(225, 228, 243, 0.48);
+  font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.summaryDetails h2 {
+  font: 480 20px/24px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.14px;
+}
+
+.summaryMetadata {
+  align-items: stretch;
+  color: rgba(241, 249, 251, 0.64);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metadataLeft {
+  flex: 1 1 auto;
+}
+
+.metadataLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.metadataItem {
+  align-items: center;
+  display: inline-flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 4px;
+  min-height: 28px;
+  padding: 6px 8px 6px 6px;
+  white-space: nowrap;
+}
+
+.setAppointment {
+  background: #fefdff;
+  border-radius: 36px;
+  display: flex;
+  height: 360px;
+  overflow: hidden;
+  width: 400px;
+}
+
+.selectedLayout .setAppointment {
+  border-radius: 36px;
+  height: 363px;
+  width: 665px;
+}
+
+.calendar {
+  display: flex;
+  flex: 0 0 400px;
+  flex-direction: column;
+  gap: 13px;
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+.selectedLayout .calendar {
+  border-right: 1px solid rgba(133, 133, 133, 0.44);
+}
+
+.calendarHeader {
+  align-items: center;
+  display: flex;
+  gap: 13px;
+  padding: 0 16px;
+}
+
+.calendarHeader button {
+  align-items: center;
+  appearance: none;
+  background: #fff;
+  border: 0;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  height: 26px;
+  justify-content: center;
+  padding: 6px 4px;
+  width: 22px;
+}
+
+.calendarHeader h2 {
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.calendarHeader h2 span {
+  color: #858887;
+}
+
+.calendarGrid {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(7, 48px);
+  justify-content: center;
+  padding: 0 12px;
+}
+
+.weekday {
+  align-items: center;
+  color: #858887;
+  display: flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 32px;
+  justify-content: center;
+}
+
+.dateButton,
+.emptyDate {
+  height: 48px;
+  width: 48px;
+}
+
+.dateButton {
+  align-items: center;
+  appearance: none;
+  background: rgba(229, 232, 231, 0.48);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: #191b1c;
+  cursor: pointer;
+  display: flex;
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  justify-content: center;
+  letter-spacing: 0.2px;
+  padding: 8px;
+}
+
+.dateButton:hover:not(:disabled):not(.selected),
+.dateButton:focus-visible:not(.selected),
+.dateButton.today:not(.selected) {
+  border-color: #239c69;
+  outline: none;
+}
+
+.dateButton.unavailable {
+  background: transparent;
+  cursor: default;
+}
+
+.dateButton.selected {
+  background: #207853;
+  border-color: #207853;
+  border-radius: 28px;
+  color: #fffaf2;
+  outline: none;
+}
+
+.timings {
+  display: flex;
+  flex: 0 0 265px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 14px 12px;
+}
+
+.timingsHeader {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+}
+
+.timingsHeader h2 {
+  flex: 1 1 auto;
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+.timeFormatToggle {
+  background: rgba(143, 150, 165, 0.08);
+  border-radius: 40px;
+  display: flex;
+  padding: 2px;
+}
+
+.timeFormatToggle button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  color: #535250;
+  cursor: pointer;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  padding: 4px 6px;
+}
+
+.timeFormatToggle .activeFormat {
+  background: #fff;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.12);
+  color: #191b1c;
+}
+
+.timeList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeList button {
+  appearance: none;
+  background: rgba(111, 111, 129, 0.12);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #191b1c;
+  cursor: pointer;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 28px;
+  padding: 6px 8px;
+}
+
+.timeList button:hover,
+.timeList button:focus-visible,
+.timeList .selectedTime {
+  background: #fefdff;
+  border-color: rgba(133, 133, 133, 0.44);
+  outline: none;
+}
+
+.footer a {
+  color: #535250;
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  text-decoration: none;
+}
+
+.footer a:first-child {
+  color: #2954c2;
+}
+
+@media (max-height: 760px) and (min-width: 501px) {
+  .pageFrame {
+    gap: 28px;
+    justify-content: flex-start;
+  }
+
+  .footer {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 0 16px;
+  }
+
+  .pageFrame {
+    gap: 28px;
+    padding: 24px 0;
+  }
+
+  .appointmentPanel {
+    flex-direction: column;
+    height: auto;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .appointmentSummary,
+  .setAppointment {
+    flex-basis: auto;
+    height: auto;
+    width: 100%;
+  }
+
+  .summaryMetadata {
+    flex-direction: row;
+  }
+
+  .selectedLayout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .selectedLayout .appointmentSummary,
+  .selectedLayout .setAppointment {
+    flex-basis: auto;
+    height: auto;
+    width: 100%;
+  }
+
+  .selectedLayout .summaryMetadata {
+    flex-direction: row;
+  }
+
+  .selectedLayout .setAppointment {
+    flex-direction: column;
+  }
+
+  .selectedLayout .calendar {
+    border-bottom: 1px solid rgba(133, 133, 133, 0.44);
+    border-right: 0;
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .timings {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .calendarGrid {
+    gap: min(4px, 1vw);
+    grid-template-columns: repeat(7, minmax(0, 48px));
+    padding: 0 8px;
+  }
+
+  .dateButton,
+  .emptyDate {
+    aspect-ratio: 1;
+    height: auto;
+    width: 100%;
+  }
+
+  .footer a,
+  .backButton {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}

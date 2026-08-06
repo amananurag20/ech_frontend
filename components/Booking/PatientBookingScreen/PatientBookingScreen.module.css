@@ -1,0 +1,404 @@
+.page {
+  background: #e6e5e9;
+  color: #191b1c;
+  min-height: 100svh;
+  padding: 0 80px;
+}
+
+.pageFrame {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  min-height: 100svh;
+  padding: 44px 0;
+  width: 100%;
+}
+
+.navigation,
+.footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.backButton {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #535250;
+  cursor: pointer;
+  display: inline-flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.backButton:hover {
+  color: #191b1c;
+}
+
+.wordmark {
+  height: 21.1765px;
+  width: 90px;
+}
+
+.glassCard {
+  background: linear-gradient(rgba(207, 207, 207, 0.64), rgba(207, 207, 207, 0.64)),
+    rgba(180, 177, 170, 0.36);
+  border: 1px solid rgba(129, 129, 129, 0.12);
+  border-radius: 36px;
+  box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
+  box-sizing: border-box;
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  width: 800px;
+}
+
+.profileColumn,
+.formCard {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.profileColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.doctorCard {
+  border-radius: 24px;
+  flex: 0 0 380px;
+  min-height: 380px;
+  overflow: hidden;
+  position: relative;
+}
+
+.doctorImage {
+  object-fit: cover;
+  object-position: center 13%;
+}
+
+.doctorGradient {
+  background: linear-gradient(180deg, rgba(15, 16, 17, 0), rgba(15, 16, 17, 0.92));
+  bottom: -1px;
+  filter: blur(1px);
+  height: 157px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.doctorIdentity {
+  bottom: 20px;
+  color: #fff;
+  left: 20px;
+  position: absolute;
+  right: 20px;
+  z-index: 1;
+}
+
+.doctorIdentity h1,
+.doctorIdentity p,
+.briefCard h2,
+.briefCard p,
+.sectionLabel {
+  margin: 0;
+}
+
+.doctorIdentity h1 {
+  font: 480 32px/36px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.24px;
+}
+
+.doctorIdentity p,
+.briefCard h2,
+.fieldGroup label,
+.sectionLabel {
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.doctorIdentity p {
+  margin-top: 4px;
+}
+
+.briefCard,
+.formCard {
+  background: #fefefd;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.briefCard {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  min-height: 176px;
+  padding: 16px;
+}
+
+.briefCard h2 {
+  color: #191b1c;
+  margin-bottom: 8px;
+}
+
+.briefCard p {
+  color: #535250;
+  font: 400 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.collapsedBrief {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.moreButton {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #2954c2;
+  cursor: pointer;
+  font: 400 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.formCard {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldGroup input,
+.fieldGroup select,
+.fieldGroup textarea {
+  background: #fefefd;
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #191b1c;
+  font: 400 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  outline: 0;
+  width: 100%;
+}
+
+.fieldGroup input,
+.fieldGroup select {
+  height: 36px;
+  padding: 9px 10px;
+}
+
+.fieldGroup input:focus,
+.fieldGroup select:focus,
+.fieldGroup textarea:focus {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.16);
+}
+
+.fieldGroup select {
+  appearance: none;
+  background-image: url('/icons/booking/caret-up-down.svg');
+  background-position: right 13px center;
+  background-repeat: no-repeat;
+  background-size: 6.2px 11.4px;
+  cursor: pointer;
+  padding-right: 34px;
+}
+
+.selectPlaceholder {
+  color: #858887 !important;
+}
+
+.selectValue {
+  color: #191b1c;
+}
+
+.fieldGroup textarea {
+  height: 100px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.fieldGroup textarea::placeholder {
+  color: #858887;
+}
+
+.fieldGroup input::placeholder {
+  color: #858887;
+}
+
+.divider {
+  background: rgba(194, 198, 198, 0.72);
+  height: 1px;
+  width: 100%;
+}
+
+.complaintSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionLabel {
+  color: #535250;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.spinner {
+  animation: spin 700ms linear infinite;
+  border: 1.5px solid rgba(246, 248, 243, 0.42);
+  border-radius: 50%;
+  border-top-color: #f6f8f3;
+  display: block;
+  height: 10px;
+  width: 10px;
+}
+
+.footer a {
+  color: #535250;
+  font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  text-decoration: none;
+}
+
+.footer a:first-child {
+  color: #2954c2;
+}
+
+.briefModal {
+  background: #f1f1f1;
+  border: 1px solid rgba(129, 129, 129, 0.12);
+  border-radius: 36px;
+  box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  padding: 16px;
+  position: relative;
+  width: min(456px, calc(100vw - 48px));
+}
+
+.briefModalContent {
+  background: #fefefd;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+  position: relative;
+}
+
+.briefModalCopy {
+  color: #535250;
+  display: flex;
+  flex-direction: column;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 12px;
+}
+
+.briefModalCopy h2,
+.briefModalCopy p {
+  margin: 0;
+}
+
+.briefModalCopy h2 {
+  color: #191b1c;
+  margin-bottom: 8px;
+}
+
+.briefDivider {
+  height: 1px;
+  width: 100%;
+}
+
+.briefModalActions {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 4px;
+  position: relative;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-height: 880px) and (min-width: 721px) {
+  .pageFrame {
+    gap: 28px;
+    justify-content: flex-start;
+  }
+
+  .footer {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 960px) {
+  .page {
+    padding: 0 32px;
+  }
+
+  .glassCard {
+    max-width: 800px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 0 16px;
+  }
+
+  .pageFrame {
+    gap: 28px;
+    padding: 24px 0;
+  }
+
+  .glassCard {
+    border-radius: 28px;
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .doctorCard {
+    flex-basis: auto;
+    min-height: min(105vw, 460px);
+  }
+
+  .footer {
+    margin-top: auto;
+  }
+}
