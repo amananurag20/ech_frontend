@@ -1,0 +1,205 @@
+.fieldContainer,
+.searchField {
+  font-family: "Saans Medium", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  line-height: 16px;
+}
+
+.fieldContainer {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44);
+  display: flex;
+  gap: 4px;
+  height: 36px;
+  overflow: hidden;
+  padding: 10px;
+  width: 100%;
+}
+
+.fieldContainer input,
+.searchField input {
+  background: transparent;
+  border: 0;
+  color: #191b1c;
+  flex: 1;
+  font: inherit;
+  min-width: 0;
+  outline: 0;
+  padding: 0;
+}
+
+.fieldContainer input::placeholder,
+.searchField input::placeholder {
+  color: #858887;
+  opacity: 1;
+}
+
+.fieldContainer:not(.disabled):not(.hover):not(.focused):hover,
+.fieldContainer.hover {
+  background: rgba(229, 232, 231, 0.48);
+  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44), 0 0 0 1px rgba(35, 30, 98, 0.08);
+}
+
+.fieldContainer:not(.disabled):focus-within,
+.fieldContainer.focused {
+  background: #fafcfa;
+  box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56), inset 0 0 0 2px rgba(60, 137, 251, 0.4), 0 0 0 2px rgba(35, 30, 98, 0.12);
+}
+
+.fieldContainer.disabled {
+  box-shadow: inset 0 0 0 1px rgba(25, 27, 28, 0.12);
+}
+
+.fieldContainer.disabled input::placeholder {
+  color: #c2c6c6;
+}
+
+.clearButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 16px;
+  height: 16px;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  width: 16px;
+}
+
+.inputField {
+  color: #535250;
+  display: flex;
+  flex-direction: column;
+  font-family: "Saans Medium", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  gap: 6px;
+  line-height: 16px;
+  width: 320px;
+}
+
+.inputFieldDisabled {
+  color: #858887;
+}
+
+.composedField {
+  width: 320px;
+}
+
+.subSection {
+  align-items: center;
+  color: #858887;
+  display: flex;
+  font-family: "Saans Medium", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  gap: 4px;
+  height: 22px;
+  line-height: 16px;
+  width: 100%;
+}
+
+.subSectionActive {
+  color: #535250;
+}
+
+.subSectionLabel {
+  min-width: 0;
+}
+
+.quantityValue,
+.toggle {
+  margin-left: auto;
+}
+
+.quantityValue {
+  color: #191b1c;
+}
+
+.toggle {
+  background: rgba(131, 145, 143, 0.28);
+  border: 0;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  height: 22px;
+  padding: 2px;
+  transition: background 120ms ease;
+  width: 44px;
+}
+
+.toggle span {
+  background: #fefdff;
+  border-radius: 44px;
+  height: 18px;
+  transform: translateX(0);
+  transition: transform 120ms ease;
+  width: 26px;
+}
+
+.toggleOn {
+  background: #239c69;
+}
+
+.toggleOn span {
+  background: #f6f8f3;
+  transform: translateX(14px);
+}
+
+.searchField {
+  align-items: center;
+  background: #fafcfa;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  display: flex;
+  gap: 6px;
+  height: 32px;
+  overflow: hidden;
+  padding: 4px 4px 4px 8px;
+  width: 240px;
+}
+
+.searchIcon {
+  flex: 0 0 auto;
+}
+
+.searchField input {
+  color: #191b1c;
+}
+
+.searchField:not(.searchFocused):not(.searchFilled):hover,
+.searchHover {
+  background: linear-gradient(rgba(229, 232, 231, 0.48), rgba(229, 232, 231, 0.48)), #fafcfa;
+}
+
+.searchField:focus-within,
+.searchFocused {
+  background: #fdfffe;
+  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44), 0 1px 1.5px rgba(9, 9, 12, 0.08), 0 0 0 0.5px rgba(1, 2, 38, 0.05);
+}
+
+.searchFilled {
+  background: #fdfffe;
+  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44);
+}
+
+.searchTrailing {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  display: flex;
+  flex: 0 0 24px;
+  height: 24px;
+  justify-content: center;
+  padding: 0;
+}
+
+button.searchTrailing {
+  cursor: pointer;
+}

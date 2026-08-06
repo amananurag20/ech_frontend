@@ -5,6 +5,135 @@
   padding: 20px 0 82px;
 }
 
+.inputSheet {
+  background: #f4f6f5;
+  border-radius: 48px;
+  margin: 48px auto 0;
+  min-height: 1044px;
+  padding: 0 34px 34px;
+  width: 780px;
+}
+
+.inputEyebrow {
+  color: #a9acab;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+}
+
+.inputSwatch {
+  align-items: center;
+  background: linear-gradient(135deg, #e2e4e3, #fff);
+  border-radius: 18px;
+  display: flex;
+  height: 58px;
+  justify-content: center;
+  margin-top: 18px;
+  width: 58px;
+}
+
+.inputSwatch span {
+  background: #f8faf9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(25, 27, 28, 0.32);
+  height: 22px;
+  width: 40px;
+}
+
+.inputTitle {
+  color: #050606;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  line-height: 1;
+  margin: 24px 0 16px;
+}
+
+.inputDescription {
+  color: #555958;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.35px;
+  line-height: 1.22;
+  margin: 0;
+  max-width: 700px;
+}
+
+.inputGrid {
+  align-items: start;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 320px 360px;
+  margin-top: 42px;
+}
+
+.inputSpecimen {
+  margin: 0;
+}
+
+.inputSpecimen + .inputSpecimen {
+  margin-top: -8px;
+}
+
+.inputComponentName {
+  align-items: center;
+  color: #8b3dff;
+  display: flex;
+  font-size: 20px;
+  font-weight: 500;
+  gap: 6px;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+
+.inputComponentName span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.inputComponentFrame {
+  align-items: flex-start;
+  border: 2px dashed #9747ff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.fieldFrame {
+  gap: 15px;
+  padding: 20px;
+  width: 320px;
+}
+
+.fieldFrame > * {
+  flex: 0 0 auto;
+  width: 281px;
+}
+
+.subFrame {
+  gap: 12px;
+  padding: 20px;
+  width: 321px;
+}
+
+.subFrame > * {
+  flex: 0 0 auto;
+  width: 281px;
+}
+
+.searchFrame {
+  gap: 15px;
+  padding: 20px;
+  width: 280px;
+}
+
+.inputsFrame {
+  gap: 15px;
+  padding: 20px;
+  width: 360px;
+}
+
 .sheet {
   background: #f4f6f5;
   border-radius: 64px;
@@ -115,5 +244,9 @@
 @media (max-width: 1180px) {
   .sheet {
     margin: 0;
+  }
+
+  .inputSheet {
+    margin-left: 200px;
   }
 }
