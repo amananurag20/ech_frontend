@@ -101,6 +101,8 @@
 
 .navigation { display: flex; gap: 19px; height: 602px; width: 459px; }
 .navigationPanel { background: transparent; border-radius: 16px; box-sizing: border-box; display: flex; flex: 0 0 220px; flex-direction: column; height: 602px; overflow: hidden; width: 220px; }
+.navigationPanel.fullHeight { height: 100%; }
+.fullHeight .primaryLinks { flex: 1 1 auto; height: auto; }
 .primaryHeader { align-items: center; box-sizing: border-box; display: flex; flex: 0 0 60px; gap: 6px; height: 60px; padding: 16px 0 16px 10px; }
 .primaryHeader > img { margin-right: auto; }
 .roundControl,

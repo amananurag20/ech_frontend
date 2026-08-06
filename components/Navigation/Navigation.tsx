@@ -96,6 +96,7 @@ type SelectableNavigationProps = {
 
 export type PrimaryNavigationProps = SelectableNavigationProps & {
   className?: string;
+  fullHeight?: boolean;
   items?: NavigationItem[];
   onNext?: () => void;
   onPrevious?: () => void;
@@ -130,6 +131,7 @@ export function PrimaryNavigation({
   activeId,
   className = "",
   defaultActiveId,
+  fullHeight = false,
   items = defaultPrimaryItems,
   onActiveChange,
   onNext,
@@ -139,7 +141,7 @@ export function PrimaryNavigation({
   const { selectedId, select } = useSelection({ activeId, defaultActiveId, onActiveChange });
 
   return (
-    <nav aria-label="Primary" className={`${styles.navigationPanel} ${className}`}>
+    <nav aria-label="Primary" className={`${styles.navigationPanel} ${fullHeight ? styles.fullHeight : ""} ${className}`}>
       <div className={styles.primaryHeader}>
         <Image alt="MedQT" height={20} src="/icons/navigation/medqt.svg" width={83} />
         <button aria-label="Search" className={styles.roundControl} onClick={onSearch} type="button">

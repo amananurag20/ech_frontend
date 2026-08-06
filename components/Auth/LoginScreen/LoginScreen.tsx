@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useRef,
   useState,
@@ -63,6 +64,7 @@ export function LoginScreen({
   onPhoneLogin,
   onVerifyCode,
 }: LoginScreenProps) {
+  const router = useRouter();
   const [step, setStep] = useState<"phone" | "verification">("phone");
   const [countryCode, setCountryCode] = useState<CountryCode>("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -144,6 +146,7 @@ export function LoginScreen({
         Promise.resolve(onVerifyCode?.(code, phoneDigits(phoneNumber), countryCode)),
         waitForLoadingCue(),
       ]);
+      router.push("/appointments");
     } catch {
       setError("Unable to verify the code. Try again.");
     } finally {

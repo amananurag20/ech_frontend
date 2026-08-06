@@ -1,0 +1,608 @@
+.page {
+  background: #f0eff3;
+  color: #191b1c;
+  min-height: 100svh;
+  overflow: auto;
+  padding: 0 16px;
+}
+
+.layout {
+  display: flex;
+  gap: 16px;
+  min-height: 100svh;
+  min-width: 980px;
+}
+
+.sidebar {
+  flex: 0 0 220px;
+  height: calc(100svh - 32px);
+  min-height: 700px;
+}
+
+.workspace {
+  background: #f9f9fa;
+  border-radius: 16px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
+  min-width: 0;
+  padding: 18px 12px 12px;
+}
+
+.workspaceHeader {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 12px;
+}
+
+.headingCopy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.headingCopy h1,
+.headingCopy p,
+.appointmentTitle h2,
+.appointmentTitle p {
+  margin: 0;
+}
+
+.headingCopy h1 {
+  font: 600 28px/32px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.44px;
+}
+
+.headingCopy p {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search {
+  background: rgba(253, 253, 253, 0.64);
+  box-shadow: inset 0 0 0 1px rgba(62, 66, 67, 0.2), 0 1px 1.5px rgba(9, 9, 12, 0.08), 0 0 0 0.5px rgba(1, 2, 38, 0.05);
+  height: 34px;
+  width: 240px;
+}
+
+.addButton {
+  height: 32px;
+}
+
+.appointmentsSurface {
+  background: #f0eff3;
+  border-radius: 20px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 12px 24px;
+}
+
+.appointmentRow {
+  align-items: center;
+  background: #fefefd;
+  display: flex;
+  flex: 0 0 88px;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px 16px 16px 8px;
+  position: relative;
+}
+
+.appointmentRow:first-child {
+  border-radius: 14px 14px 6px 6px;
+}
+
+.appointmentRow:not(:first-child):not(:last-of-type) {
+  border-radius: 6px;
+}
+
+.appointmentRow:last-of-type {
+  border-radius: 6px 6px 14px 14px;
+}
+
+.dragSpace {
+  flex: 0 0 16px;
+  height: 56px;
+}
+
+.appointmentDescription {
+  display: flex;
+  flex: 1 1 50%;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.appointmentTitle {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.appointmentTitle h2 {
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.appointmentTitle p {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+}
+
+.durationColor,
+.durationNeutral,
+.hiddenTag {
+  height: 28px;
+}
+
+.durationNeutral {
+  background: rgba(111, 111, 129, 0.12);
+}
+
+.hiddenTag {
+  background: rgba(255, 208, 175, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(194, 146, 41, 0.64);
+  color: #c5890e;
+}
+
+.rowActions {
+  align-items: center;
+  display: flex;
+  flex: 1 1 50%;
+  gap: 10px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.compactActions {
+  align-items: center;
+  display: flex;
+}
+
+.menuAnchor {
+  position: relative;
+}
+
+.appointmentMenu {
+  background: #fefefd;
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 170px;
+  padding: 4px;
+  position: absolute;
+  right: 0;
+  top: 32px;
+  width: 212px;
+  z-index: 30;
+}
+
+.appointmentMenu .menuItem {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  color: #191b1c;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 28px;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 6px;
+  height: 28px;
+  justify-content: flex-start;
+  padding: 6px;
+  text-align: left;
+  width: 204px;
+}
+
+.appointmentMenu .menuItem:hover {
+  background: rgba(111, 111, 129, 0.08);
+  border-radius: 4px;
+}
+
+.appointmentMenu .menuItem img,
+.menuItemCopy img {
+  flex: 0 0 16px;
+  height: 16px;
+  object-fit: contain;
+  width: 16px;
+}
+
+.appointmentMenu .hideMenuItem {
+  border-bottom: 1px solid rgba(25, 27, 28, 0.12);
+  cursor: default;
+  flex-basis: 34px;
+  height: 34px;
+  justify-content: space-between;
+  padding: 4px 4px 8px 6px;
+}
+
+.appointmentMenu .hideMenuItem:hover {
+  background: transparent;
+  border-radius: 0;
+}
+
+.menuItemCopy {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.appointmentMenu .embedMenuItem {
+  border-bottom: 1px solid rgba(25, 27, 28, 0.12);
+}
+
+.appointmentMenu .deleteMenuItem {
+  color: #dd1010;
+}
+
+.duplicateDialog,
+.deleteDialog {
+  background: rgba(241, 241, 241, 0.88);
+  border: 1px solid rgba(129, 129, 129, 0.12);
+  box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
+  box-sizing: border-box;
+  color: #191b1c;
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  -webkit-backdrop-filter: blur(48px);
+  backdrop-filter: blur(48px);
+}
+
+.duplicateDialog {
+  border-radius: 36px;
+  gap: 14px;
+  height: 430px;
+  padding: 24px 16px;
+}
+
+.deleteDialog {
+  border-radius: 24px;
+  gap: 16px;
+  height: 152px;
+  padding: 24px 16px;
+}
+
+.duplicateHeader {
+  align-items: flex-start;
+  display: flex;
+  flex: 0 0 44px;
+  height: 44px;
+  justify-content: space-between;
+  padding-left: 8px;
+  width: 408px;
+}
+
+.modalHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modalHeading h2,
+.modalHeading p,
+.deleteCopy h2,
+.deleteCopy p {
+  margin: 0;
+}
+
+.modalHeading h2,
+.deleteCopy h2 {
+  font: 480 20px/24px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.14px;
+}
+
+.modalHeading p,
+.deleteCopy p {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.closeButton {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 24px;
+  cursor: pointer;
+  flex: 0 0 40px;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  width: 40px;
+}
+
+.closeButton:hover {
+  background: rgba(111, 111, 129, 0.08);
+}
+
+.closeButton img {
+  height: 16px;
+  left: 12px;
+  position: absolute;
+  top: 12px;
+  width: 16px;
+}
+
+.duplicateContent {
+  background: #fefefd;
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 282px;
+  flex-direction: column;
+  gap: 20px;
+  height: 282px;
+  padding: 16px;
+  width: 408px;
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 8px;
+}
+
+.modalField > input,
+.inputWithSuffix,
+.urlInput {
+  background: rgba(253, 253, 253, 0.64);
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 8px;
+  box-sizing: border-box;
+  height: 36px;
+}
+
+.modalField > input {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  outline: none;
+  padding: 10px;
+  width: 376px;
+}
+
+.modalField > input:focus,
+.inputWithSuffix:focus-within,
+.urlInput:focus-within {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
+}
+
+.durationSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputWithSuffix,
+.urlInput {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  padding: 0 10px;
+  width: 376px;
+}
+
+.inputWithSuffix input,
+.urlInput input {
+  background: transparent;
+  border: 0;
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  min-width: 0;
+  outline: none;
+}
+
+.inputWithSuffix input {
+  width: 22px;
+}
+
+.inputWithSuffix > span,
+.urlInput > span {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.inputWithSuffix {
+  gap: 4px;
+}
+
+.urlInput input {
+  flex: 1 1 auto;
+}
+
+.multipleDurationRow {
+  align-items: center;
+  display: flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  justify-content: space-between;
+}
+
+.modalActions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  height: 28px;
+  justify-content: flex-end;
+  padding: 0 4px;
+  width: 408px;
+}
+
+.deleteCopy {
+  display: flex;
+  flex: 0 0 60px;
+  flex-direction: column;
+  gap: 4px;
+  height: 60px;
+  padding: 0 8px;
+  width: 392px;
+}
+
+.deleteCopy p {
+  max-width: 384px;
+}
+
+.compactActions > button,
+.menuAnchor > button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  height: 26px;
+  justify-content: center;
+  padding: 6px 8px;
+  width: 30px;
+}
+
+.compactActions > button:first-child {
+  background: #fff;
+}
+
+.compactActions > button:hover,
+.menuAnchor > button:hover {
+  background: rgba(111, 111, 129, 0.12);
+}
+
+.emptyResults {
+  color: #858887;
+  font: 480 14px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin: 24px;
+}
+
+.emptySurface {
+  align-items: stretch;
+  padding: 0;
+}
+
+.emptyAppointments {
+  align-items: center;
+  border-right: 1px solid rgba(25, 27, 28, 0.12);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  padding: 64px 16px 20px;
+}
+
+.emptyIllustration {
+  flex: 0 0 116px;
+  height: 116px;
+  overflow: hidden;
+  position: relative;
+  width: 128px;
+}
+
+.emptyCalendar {
+  height: 86px;
+  left: 20px;
+  position: absolute;
+  top: 17px;
+  width: 86px;
+}
+
+.emptyClock,
+.emptyLink {
+  display: block;
+  position: absolute;
+  transform-origin: center;
+}
+
+.emptyClock {
+  height: 23.45px;
+  left: 102px;
+  top: 71px;
+  transform: rotate(10.99deg);
+  width: 23.45px;
+}
+
+.emptyLink {
+  height: 25.85px;
+  left: 5px;
+  top: 12px;
+  transform: rotate(-21.02deg);
+  width: 25.85px;
+}
+
+.emptyClock img,
+.emptyLink img,
+.emptyDotOne,
+.emptyDotTwo {
+  position: absolute;
+}
+
+.clockLayerOne { height: 17.6px; left: 2.9px; top: 2.9px; width: 17.6px; }
+.clockLayerTwo { height: 19.1px; left: 2.2px; top: 2.2px; width: 19.1px; }
+.linkLayerOne { height: 17.8px; left: 2.5px; top: 4.1px; width: 20.9px; }
+.linkLayerTwo { height: 19.4px; left: 1.6px; top: 3.2px; width: 22.6px; }
+.emptyDotOne { height: 5px; left: 13px; top: 88px; transform: rotate(-10.52deg); width: 5px; }
+.emptyDotTwo { height: 5px; left: 106px; top: 23px; transform: rotate(-10.52deg); width: 5px; }
+
+.emptyCopy {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 10px 4px;
+  text-align: center;
+  width: 100%;
+}
+
+.emptyCopy h2,
+.emptyCopy p {
+  margin: 0;
+}
+
+.emptyCopy h2 {
+  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.emptyCopy p {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  white-space: nowrap;
+  width: 350px;
+}
+
+.createButton {
+  height: 32px;
+}
+
+@media (max-width: 1100px) {
+  .headingCopy p { max-width: 320px; }
+  .search { width: 200px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compactActions > button,
+  .menuAnchor > button { transition: none; }
+}
