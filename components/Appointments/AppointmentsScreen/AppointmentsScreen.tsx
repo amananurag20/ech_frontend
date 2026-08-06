@@ -8,6 +8,7 @@ import { Modal } from "@/components/Modal";
 import { PrimaryNavigation } from "@/components/Navigation";
 import { Tag } from "@/components/Tag";
 import { Toggle } from "@/components/Toggle";
+import { AppointmentEditScreen } from "../AppointmentEditScreen";
 import styles from "./AppointmentsScreen.module.css";
 
 export type AppointmentType = {
@@ -56,9 +57,10 @@ type AppointmentRowProps = {
   appointment: AppointmentType;
   onDelete: (appointment: AppointmentType) => void;
   onDuplicate: (appointment: AppointmentType) => void;
+  onEdit: (appointment: AppointmentType) => void;
 };
 
-function AppointmentRow({ appointment, onDelete, onDuplicate }: AppointmentRowProps) {
+function AppointmentRow({ appointment, onDelete, onDuplicate, onEdit }: AppointmentRowProps) {
   const [isHidden, setIsHidden] = useState(Boolean(appointment.hidden));
   const [copied, setCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -153,7 +155,15 @@ function AppointmentRow({ appointment, onDelete, onDuplicate }: AppointmentRowPr
                     onCheckedChange={setIsHidden}
                   />
                 </div>
-                <button className={styles.menuItem} onClick={() => setMenuOpen(false)} role="menuitem" type="button">
+                <button
+                  className={styles.menuItem}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    onEdit({ ...appointment, hidden: isHidden });
+                  }}
+                  role="menuitem"
+                  type="button"
+                >
                   <Image alt="" height={16} src="/icons/appointments/menu/edit.svg" width={16} />
                   <span>Edit</span>
                 </button>
@@ -375,6 +385,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
   const [addOpen, setAddOpen] = useState(false);
   const [duplicateTarget, setDuplicateTarget] = useState<AppointmentType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AppointmentType | null>(null);
+  const [editTarget, setEditTarget] = useState<AppointmentType | null>(null);
   const filteredAppointments = useMemo(() => {
     const query = search.trim().toLowerCase();
     return query ? appointmentItems.filter((appointment) => appointment.name.toLowerCase().includes(query)) : appointmentItems;
@@ -396,6 +407,15 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
     setAppointmentItems((items) => items.filter((appointment) => appointment.id !== deleteTarget.id));
     setDeleteTarget(null);
   };
+
+  const finishEditing = (updatedAppointment: AppointmentType) => {
+    setAppointmentItems((items) => items.map((item) => item.id === updatedAppointment.id ? updatedAppointment : item));
+    setEditTarget(null);
+  };
+
+  if (editTarget) {
+    return <AppointmentEditScreen appointment={editTarget} onBack={finishEditing} />;
+  }
 
   return (
     <main className={styles.page}>
@@ -436,6 +456,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
                   key={appointment.id}
                   onDelete={setDeleteTarget}
                   onDuplicate={setDuplicateTarget}
+                  onEdit={setEditTarget}
                 />
               ))}
               {filteredAppointments.length === 0 ? <p className={styles.emptyResults}>No appointments found.</p> : null}
