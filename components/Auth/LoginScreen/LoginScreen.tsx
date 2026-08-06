@@ -14,10 +14,10 @@ import { FieldContainer } from "@/components/Input";
 import styles from "./LoginScreen.module.css";
 
 export type LoginScreenProps = {
-  onAppleLogin?: () => void;
-  onGoogleLogin?: () => void;
-  onPhoneLogin?: (phoneNumber: string, countryCode: string) => void;
-  onVerifyCode?: (code: string, phoneNumber: string, countryCode: string) => void;
+  onAppleLogin?: () => void | Promise<void>;
+  onGoogleLogin?: () => void | Promise<void>;
+  onPhoneLogin?: (phoneNumber: string, countryCode: string) => void | Promise<void>;
+  onVerifyCode?: (code: string, phoneNumber: string, countryCode: string) => void | Promise<void>;
 };
 
 const phoneRules = {
@@ -51,6 +51,11 @@ function formatPhoneNumber(value: string, countryCode: CountryCode) {
 }
 
 const verificationCodeLength = 5;
+const minimumLoadingTime = 500;
+
+function waitForLoadingCue() {
+  return new Promise((resolve) => window.setTimeout(resolve, minimumLoadingTime));
+}
 
 export function LoginScreen({
   onAppleLogin,
@@ -62,12 +67,17 @@ export function LoginScreen({
   const [countryCode, setCountryCode] = useState<CountryCode>("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
+  const [isPhoneSubmitting, setIsPhoneSubmitting] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(
     Array(verificationCodeLength).fill(""),
   );
   const codeInputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const normalizedPhoneNumber = phoneDigits(phoneNumber);
+  const isPhoneValid = normalizedPhoneNumber.length === phoneRules[countryCode].digits;
+  const isVerificationComplete = verificationCode.every((digit) => digit.length === 1);
 
-  const submitPhone = (event: FormEvent<HTMLFormElement>) => {
+  const submitPhone = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const normalizedPhone = phoneDigits(phoneNumber);
     const rule = phoneRules[countryCode];
@@ -83,8 +93,18 @@ export function LoginScreen({
     }
 
     setError("");
-    onPhoneLogin?.(normalizedPhone, countryCode);
-    setStep("verification");
+    setIsPhoneSubmitting(true);
+    try {
+      await Promise.all([
+        Promise.resolve(onPhoneLogin?.(normalizedPhone, countryCode)),
+        waitForLoadingCue(),
+      ]);
+      setStep("verification");
+    } catch {
+      setError("Unable to send the verification code. Try again.");
+    } finally {
+      setIsPhoneSubmitting(false);
+    }
   };
 
   const updateCodeDigit = (index: number, value: string) => {
@@ -109,7 +129,7 @@ export function LoginScreen({
     setError("");
   };
 
-  const submitVerification = (event: FormEvent<HTMLFormElement>) => {
+  const submitVerification = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const code = verificationCode.join("");
     if (code.length !== verificationCodeLength) {
@@ -118,7 +138,17 @@ export function LoginScreen({
     }
 
     setError("");
-    onVerifyCode?.(code, phoneDigits(phoneNumber), countryCode);
+    setIsVerifying(true);
+    try {
+      await Promise.all([
+        Promise.resolve(onVerifyCode?.(code, phoneDigits(phoneNumber), countryCode)),
+        waitForLoadingCue(),
+      ]);
+    } catch {
+      setError("Unable to verify the code. Try again.");
+    } finally {
+      setIsVerifying(false);
+    }
   };
 
   const returnToPhone = () => {
@@ -144,6 +174,7 @@ export function LoginScreen({
             <div className={styles.countrySelect}>
               <select
                 aria-label="Country code"
+                disabled={isPhoneSubmitting}
                 onChange={(event) => {
                   const nextCountry = event.target.value as CountryCode;
                   setCountryCode(nextCountry);
@@ -177,12 +208,24 @@ export function LoginScreen({
                 setError("");
               }}
               placeholder=""
+              state={isPhoneSubmitting ? "disabled" : "enabled"}
               type="tel"
               value={phoneNumber}
             />
+            {isPhoneSubmitting ? (
+              <span aria-label="Sending verification code" className={`${styles.loader} ${styles.phoneLoader}`} role="status">
+                <Image alt="" height={18} src="/icons/auth/loader.png" width={18} />
+              </span>
+            ) : null}
           </div>
           <p aria-live="polite" className={styles.error} id="phone-error">{error}</p>
-          <Button className={styles.continueButton} type="submit" variant="primary">
+          <Button
+            className={`${styles.continueButton} ${!isPhoneValid || isPhoneSubmitting ? styles.disabledAction : ""}`}
+            disabled={!isPhoneValid || isPhoneSubmitting}
+            state={!isPhoneValid || isPhoneSubmitting ? "disabled" : "enabled"}
+            type="submit"
+            variant="primary"
+          >
             Continue with Phone
           </Button>
           </form>
@@ -213,7 +256,10 @@ export function LoginScreen({
 
           <form className={styles.verificationForm} onSubmit={submitVerification}>
             <label htmlFor="verification-code-0">One Time Password (OTP)</label>
-            <div className={styles.codeInputs} onPaste={handleCodePaste}>
+            <div
+              className={`${styles.codeInputs} ${isVerificationComplete ? styles.codeInputsComplete : ""}`}
+              onPaste={handleCodePaste}
+            >
               {verificationCode.map((digit, index) => (
                 <input
                   aria-label={`Verification code digit ${index + 1}`}
@@ -222,6 +268,7 @@ export function LoginScreen({
                   inputMode="numeric"
                   key={index}
                   maxLength={1}
+                  disabled={isVerifying}
                   onChange={(event) => {
                     const digit = event.target.value.replace(/\D/g, "").slice(-1);
                     updateCodeDigit(index, digit);
@@ -234,10 +281,17 @@ export function LoginScreen({
                   value={digit}
                 />
               ))}
+              {isVerifying ? (
+                <span aria-label="Verifying code" className={styles.loader} role="status">
+                  <Image alt="" height={18} src="/icons/auth/loader.png" width={18} />
+                </span>
+              ) : null}
             </div>
             <p aria-live="polite" className={styles.verificationError}>{error}</p>
             <Button
-              className={styles.verifyButton}
+              className={`${styles.verifyButton} ${!isVerificationComplete || isVerifying ? styles.disabledAction : ""}`}
+              disabled={!isVerificationComplete || isVerifying}
+              state={!isVerificationComplete || isVerifying ? "disabled" : "enabled"}
               trailingIcon={<Image alt="" height={14} src="/icons/auth/arrow-right.svg" width={14} />}
               type="submit"
               variant="primary"

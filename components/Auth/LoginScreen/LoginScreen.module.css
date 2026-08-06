@@ -59,6 +59,7 @@
   display: grid;
   gap: 8px;
   grid-template-columns: 84px 1fr;
+  position: relative;
 }
 
 .countrySelect {
@@ -111,6 +112,17 @@
   box-sizing: border-box;
   height: 32px;
   width: 376px;
+}
+
+button.disabledAction:disabled {
+  background: #e6ebf7;
+  box-shadow: inset 0 0 0 1px rgba(41, 84, 194, 0.08);
+  color: #8796bd;
+}
+
+.disabledAction img {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(15%) saturate(925%) hue-rotate(187deg) brightness(94%) contrast(87%);
+  opacity: 1;
 }
 
 .createAccount {
@@ -213,6 +225,8 @@
 .codeInputs {
   display: grid;
   gap: 8px;
+  grid-auto-columns: 34px;
+  grid-auto-flow: column;
   grid-template-columns: repeat(5, 44px);
 }
 
@@ -223,7 +237,7 @@
   border-radius: 8px;
   box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44);
   box-sizing: border-box;
-  color: #191b1c;
+  color: #858887;
   font: 480 18px/24px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
   height: 44px;
   outline: 0;
@@ -234,6 +248,47 @@
 .codeInputs input:focus {
   background: #fafcfa;
   box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56), inset 0 0 0 2px rgba(60, 137, 251, 0.4), 0 0 0 2px rgba(35, 30, 98, 0.12);
+}
+
+.codeInputsComplete input,
+.codeInputsComplete input:focus {
+  color: #142a61;
+  box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56);
+}
+
+.codeInputs input:disabled {
+  cursor: default;
+}
+
+.loader {
+  align-items: center;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  padding: 0 8px;
+  width: 34px;
+}
+
+.loader img {
+  animation: login-loader-spin 800ms linear infinite;
+  display: block;
+  height: 18px;
+  width: 18px;
+}
+
+.phoneLoader {
+  height: 36px;
+  left: calc(100% + 2px);
+  position: absolute;
+  top: 0;
+}
+
+@keyframes login-loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader img { animation: none; }
 }
 
 .verificationError {
