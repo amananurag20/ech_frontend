@@ -1,0 +1,222 @@
+.button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-8);
+  corner-shape: squircle;
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-4);
+  height: 28px;
+  justify-content: center;
+  padding: var(--space-6) var(--space-16);
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.label {
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: 480;
+  letter-spacing: 0;
+  line-height: var(--line-height-small);
+  white-space: nowrap;
+}
+
+.icon {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 14px;
+  height: 14px;
+  justify-content: center;
+  width: 14px;
+}
+
+.icon > * {
+  display: block;
+  height: 10.5px;
+  width: 10.5px;
+}
+
+.button:has(.icon:first-child) {
+  padding-left: var(--space-6);
+  padding-right: var(--space-8);
+}
+
+.button:has(.icon:last-child) {
+  padding-left: var(--space-8);
+  padding-right: var(--space-6);
+}
+
+.button:has(.icon:first-child):has(.icon:last-child),
+.iconOnly {
+  height: 26px;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+  width: 26px;
+}
+
+.primary {
+  background: var(--button-primary-fill);
+  box-shadow: var(--button-raised-shadow);
+  color: var(--button-on-primary);
+}
+
+.neutral {
+  background: var(--button-neutral-fill);
+  box-shadow: var(--button-raised-shadow);
+  color: var(--button-on-primary);
+}
+
+.bordered {
+  background: var(--button-elevation);
+  box-shadow: inset 0 0 0 1px var(--button-stroke), var(--button-raised-shadow);
+  color: var(--button-content-primary);
+}
+
+.link {
+  color: var(--button-primary-fill);
+}
+
+.hover.primary,
+.enabled.primary:hover {
+  background: linear-gradient(
+      var(--button-primary-hover-layer),
+      var(--button-primary-hover-layer)
+    ),
+    var(--button-primary-fill);
+}
+
+.hover.neutral,
+.enabled.neutral:hover {
+  background: linear-gradient(var(--button-light-hover-layer), var(--button-light-hover-layer)),
+    var(--button-neutral-fill);
+}
+
+.hover.bordered,
+.enabled.bordered:hover {
+  background: linear-gradient(var(--button-hover-dark), var(--button-hover-dark)),
+    var(--button-elevation);
+}
+
+.hover.link,
+.enabled.link:hover {
+  background: linear-gradient(var(--button-link-hover), var(--button-link-hover)),
+    var(--button-secondary-fill);
+}
+
+.pressed.primary {
+  background: linear-gradient(var(--button-pressed-dark), var(--button-pressed-dark)),
+    var(--button-primary-fill);
+  box-shadow: var(--button-pressed-shadow);
+}
+
+.pressed.neutral {
+  background: linear-gradient(var(--button-pressed-dark), var(--button-pressed-dark)),
+    var(--button-neutral-fill);
+  box-shadow: var(--button-pressed-shadow);
+}
+
+.pressed.bordered {
+  background: linear-gradient(var(--button-pressed-border), var(--button-pressed-border)),
+    var(--button-elevation);
+  box-shadow: inset 0 0 0 1px var(--button-stroke), var(--button-pressed-shadow);
+}
+
+.pressed.link {
+  background: var(--button-secondary-fill);
+}
+
+.enabled:active:not(:disabled).primary {
+  background: linear-gradient(var(--button-pressed-dark), var(--button-pressed-dark)),
+    var(--button-primary-fill);
+  box-shadow: var(--button-pressed-shadow);
+}
+
+.enabled:active:not(:disabled).neutral {
+  background: linear-gradient(var(--button-pressed-dark), var(--button-pressed-dark)),
+    var(--button-neutral-fill);
+  box-shadow: var(--button-pressed-shadow);
+}
+
+.enabled:active:not(:disabled).bordered {
+  background: linear-gradient(var(--button-pressed-border), var(--button-pressed-border)),
+    var(--button-elevation);
+  box-shadow: inset 0 0 0 1px var(--button-stroke), var(--button-pressed-shadow);
+}
+
+.enabled:active:not(:disabled).link {
+  background: var(--button-secondary-fill);
+}
+
+.destructive.primary {
+  background: var(--button-error-fill);
+  color: var(--button-on-primary);
+}
+
+.destructive.hover.primary,
+.destructive.enabled.primary:hover {
+  background: linear-gradient(var(--button-light-hover-layer), var(--button-light-hover-layer)),
+    var(--button-error-fill);
+}
+
+.destructive.pressed.primary,
+.destructive.enabled.primary:active:not(:disabled) {
+  background: linear-gradient(var(--button-pressed-dark), var(--button-pressed-dark)),
+    var(--button-error-fill);
+}
+
+.destructive.bordered {
+  background: var(--button-elevation);
+  box-shadow: inset 0 0 0 1px var(--button-destructive-stroke), var(--button-raised-shadow);
+  color: var(--button-error-fill);
+}
+
+.destructive.hover.bordered {
+  background: linear-gradient(var(--button-hover-dark), var(--button-hover-dark)),
+    var(--button-elevation);
+}
+
+.destructive.pressed.bordered {
+  background: linear-gradient(var(--button-pressed-border), var(--button-pressed-border)),
+    var(--button-elevation);
+  box-shadow: inset 0 0 0 1px var(--button-destructive-stroke),
+    var(--button-pressed-shadow);
+}
+
+.disabled {
+  box-shadow: none;
+  cursor: default;
+  transition: none;
+}
+
+.disabled.link {
+  background: transparent;
+  color: var(--button-disabled-content);
+}
+
+.disabled.primary:not(.destructive) {
+  background: linear-gradient(
+      var(--button-primary-disabled-layer),
+      var(--button-primary-disabled-layer)
+    ),
+    var(--button-neutral-fill);
+  color: var(--button-disabled-content);
+}
+
+.disabled.neutral {
+  background: linear-gradient(
+      var(--button-neutral-disabled-layer),
+      var(--button-neutral-disabled-layer)
+    ),
+    var(--button-disabled-fill);
+  color: var(--button-disabled-content);
+}
+
+.disabled.bordered {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--button-disabled-stroke);
+  color: var(--button-disabled-content);
+}

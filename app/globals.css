@@ -3,6 +3,37 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --button-primary-fill: #2954c2;
+  --button-on-primary: #f6f8f3;
+  --button-neutral-fill: #26292a;
+  --button-secondary-fill: #d7e1fd;
+  --button-elevation: #fbfdfc;
+  --button-stroke: rgba(50, 54, 56, 0.56);
+  --button-content-primary: #191b1c;
+  --button-error-fill: #dd1010;
+  --button-disabled-content: #858887;
+  --button-disabled-fill: #e4e5e5;
+  --button-disabled-stroke: rgba(133, 133, 133, 0.44);
+  --button-destructive-stroke: rgba(133, 133, 133, 0.72);
+  --button-primary-disabled-layer: rgba(229, 243, 255, 0.84);
+  --button-neutral-disabled-layer: rgba(3, 14, 17, 0.08);
+  --button-primary-hover-layer: rgba(119, 213, 242, 0.16);
+  --button-light-hover-layer: rgba(218, 242, 250, 0.16);
+  --button-hover-dark: rgba(3, 14, 17, 0.14);
+  --button-link-hover: rgba(119, 213, 242, 0.12);
+  --button-pressed-dark: rgba(3, 14, 17, 0.12);
+  --button-pressed-border: rgba(3, 14, 17, 0.08);
+  --button-raised-shadow: inset 1px 1px 2px rgba(104, 188, 247, 0.2),
+    inset -1px -1px 1px rgba(8, 27, 76, 0.24);
+  --button-pressed-shadow: inset 1px -1px 2px rgba(104, 188, 247, 0.2),
+    inset -1px 1px 1px rgba(8, 27, 76, 0.24);
+  --radius-8: 8px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-16: 16px;
+  --font-size-small: 14px;
+  --line-height-small: 16px;
 }
 
 @theme inline {
@@ -12,15 +43,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
