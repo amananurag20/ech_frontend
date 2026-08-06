@@ -14,6 +14,120 @@
   width: 780px;
 }
 
+.tooltipSheet {
+  background: #f4f6f5;
+  border-radius: 48px;
+  margin: 48px auto 0;
+  min-height: 606px;
+  padding: 24px 33px 43px;
+  width: 391px;
+}
+
+.tooltipEyebrow {
+  color: #0787ed;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 0;
+}
+
+.tooltipSwatch {
+  align-items: center;
+  background: linear-gradient(135deg, #e0e2e1, #fff);
+  border: 0;
+  border-radius: 18px;
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0;
+  width: 56px;
+}
+
+.tooltipSwatch span {
+  background: #fcfdfc;
+  border: 1px solid #5680eb;
+  border-radius: 10px;
+  box-shadow: -5px -3px 8px rgba(44, 91, 207, 0.25);
+  height: 20px;
+  width: 38px;
+}
+
+.tooltipTitle {
+  color: #050606;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  line-height: 36px;
+  margin: 20px 0 12px;
+}
+
+.tooltipDescription {
+  color: #535756;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.35px;
+  line-height: 24px;
+  margin: 0;
+  width: 325px;
+}
+
+.tooltipSpecimen {
+  margin-top: 78px;
+}
+
+.tooltipComponentName {
+  align-items: center;
+  color: #8b3dff;
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 5px;
+  line-height: 16px;
+  margin: 0 0 9px;
+}
+
+.tooltipComponentName span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tooltipFrame {
+  border: 1px dashed #9747ff;
+  border-radius: 6px;
+  display: grid;
+  gap: 26px 15px;
+  grid-template-columns: repeat(3, 85px);
+  grid-template-rows: repeat(3, 28px);
+  height: 177px;
+  padding: 20px;
+  width: 325px;
+}
+
+.tooltipFrame > :nth-child(4) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.tooltipFrame > :nth-child(5) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.tooltipFrame > :nth-child(6) {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.tooltipFrame > :nth-child(7) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.tooltipFrame > :nth-child(8) {
+  grid-column: 3;
+  grid-row: 3;
+}
+
 .inputEyebrow {
   color: #a9acab;
   font-size: 20px;
@@ -248,5 +362,9 @@
 
   .inputSheet {
     margin-left: 200px;
+  }
+
+  .tooltipSheet {
+    margin-left: 394px;
   }
 }

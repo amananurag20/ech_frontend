@@ -1,5 +1,6 @@
 import { Button, type ButtonState, type ButtonVariant } from "@/components/Button";
 import { FieldContainer, InputField, SearchField, SubSection } from "@/components/Input";
+import { Tooltip, TooltipTrigger, type TooltipOrigin } from "@/components/Tooltip";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
 
@@ -169,9 +170,42 @@ export default function Home() {
           </Specimen>
         </div>
       </section>
+
+      <section className={styles.tooltipSheet}>
+        <p className={styles.tooltipEyebrow}>Descriptions</p>
+        <TooltipTrigger originPosition="top-left" text="Tooltip example">
+          <button aria-label="Tooltip example" className={styles.tooltipSwatch} type="button"><span /></button>
+        </TooltipTrigger>
+
+        <h2 className={styles.tooltipTitle}>Tooltips</h2>
+        <p className={styles.tooltipDescription}>
+          A small contextual label that appears on hover/focus to clarify an element&apos;s purpose —
+          mainly icon-only buttons, truncated text, or disabled states that need a reason.
+        </p>
+
+        <section className={styles.tooltipSpecimen}>
+          <h3 className={styles.tooltipComponentName}><span aria-hidden>❖</span>Tooltip</h3>
+          <div className={styles.tooltipFrame}>
+            {tooltipOrigins.map((origin) => (
+              <Tooltip key={origin} originPosition={origin} />
+            ))}
+          </div>
+        </section>
+      </section>
     </main>
   );
 }
+
+const tooltipOrigins: TooltipOrigin[] = [
+  "top-left",
+  "top",
+  "top-right",
+  "left",
+  "right",
+  "bottom-left",
+  "bottom",
+  "bottom-right",
+];
 
 type SpecimenProps = {
   children: ReactNode;
