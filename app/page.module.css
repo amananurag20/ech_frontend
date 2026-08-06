@@ -376,6 +376,33 @@
   grid-template-rows: repeat(3, 22px);
 }
 
+.navigationSheet {
+  background: #f4f6f5;
+  border-radius: 48px;
+  box-sizing: border-box;
+  height: 999px;
+  margin: 48px auto 0;
+  padding: 32px;
+  width: 881px;
+}
+
+.navigationDescription { display: flex; flex-direction: column; gap: 20px; height: 196px; width: 638px; }
+.navigationLogo { background: radial-gradient(circle at 78% 82%, #fff 0, #c2c6c6 87%); border-radius: 16px; height: 56px; position: relative; width: 56px; }
+.navigationLogo span { background: linear-gradient(90deg, #858887 0 34%, transparent 34%); border: 1px solid #2954c2; border-radius: 8px; box-shadow: 5px 5px 5px rgba(43,74,177,.24); display: block; height: 38px; left: 9px; position: absolute; top: 9px; width: 30px; }
+.navigationCopy { display: flex; flex-direction: column; gap: 12px; width: 638px; }
+.navigationCopy h2 { color: #000; font: 480 32px/36px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; letter-spacing: -.24px; margin: 0; }
+.navigationCopy p { color: #535250; font: 480 20px/24px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; letter-spacing: -.14px; margin: 0; }
+.navigationShowcase { display: grid; gap: 59px; grid-template-columns: 260px 498px; margin-top: 97px; }
+.navigationLeftColumn { display: flex; flex-direction: column; gap: 35px; }
+.navigationComponentFrame { border: 1px dashed #9747ff; border-radius: 8px; box-sizing: border-box; position: relative; }
+.navigationComponentFrame > h3 { align-items: center; bottom: calc(100% + 9px); color: #8b3dff; display: flex; font-size: 14px; font-weight: 500; gap: 5px; left: 0; line-height: 16px; margin: 0; position: absolute; }
+.navigationComponentFrame > h3 span { font-size: 14px; line-height: 1; }
+.iconCandyFrame { display: grid; gap: 12px 7px; grid-template-columns: repeat(4,24px); grid-template-rows: repeat(2,24px); height: 100px; padding: 19px; width: 164px; }
+.navTabFrame { display: flex; flex-direction: column; height: 170px; padding: 19px; width: 260px; }
+.navTabFrame > button:nth-of-type(2) { margin-top: 16px; }
+.navTabFrame > button:nth-of-type(3) { margin-top: 20px; }
+.navigationFrame { background: #e7e8ec; height: 642px; padding: 19px; width: 498px; }
+
 .inputEyebrow {
   color: #a9acab;
   font-size: 20px;
@@ -622,5 +649,9 @@
 
   .togglesSheet {
     margin-left: 298px;
+  }
+
+  .navigationSheet {
+    margin-left: 180px;
   }
 }

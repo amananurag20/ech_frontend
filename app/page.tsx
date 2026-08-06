@@ -2,6 +2,12 @@ import { Button, type ButtonState, type ButtonVariant } from "@/components/Butto
 import { FieldContainer, InputField, SearchField, SubSection } from "@/components/Input";
 import { Tag, type TagState, type TagType } from "@/components/Tag";
 import {
+  IconCandy,
+  Navigation,
+  NavTab,
+  type IconCandyTone,
+} from "@/components/Navigation";
+import {
   Segment,
   Toggle,
   type SegmentIconPlacement,
@@ -247,7 +253,63 @@ export default function Home() {
           </ToggleSpecimen>
         </div>
       </section>
+
+      <section className={styles.navigationSheet}>
+        <div className={styles.navigationDescription}>
+          <div aria-hidden className={styles.navigationLogo}><span /></div>
+          <div className={styles.navigationCopy}>
+            <h2>Navigation</h2>
+            <p>
+              Tags label, filter, and hold search parameters — never actions (Button) or
+              single-choice selections (Toggle). The same pill adapts across all three roles through
+              its icon and state configuration.
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.navigationShowcase}>
+          <div className={styles.navigationLeftColumn}>
+            <NavigationSpecimen title="Icon_candy" className={styles.iconCandyFrame}>
+              <IconCandyGallery />
+            </NavigationSpecimen>
+            <NavigationSpecimen title="Nav_tab" className={styles.navTabFrame}>
+              <NavTab state="enabled" />
+              <NavTab state="hover" />
+              <NavTab state="selected" />
+            </NavigationSpecimen>
+          </div>
+          <NavigationSpecimen title="Navigation" className={styles.navigationFrame}>
+            <Navigation />
+          </NavigationSpecimen>
+        </div>
+      </section>
     </main>
+  );
+}
+
+const iconCandyTones: IconCandyTone[] = [
+  "glaze-blue", "sea-green", "night-haze", "glass",
+  "glow-violet", "warm-brick", "bronze", "clear",
+];
+
+function IconCandyGallery() {
+  return iconCandyTones.map((tone) => <IconCandy key={tone} tone={tone} />);
+}
+
+function NavigationSpecimen({
+  children,
+  className,
+  title,
+}: {
+  children: ReactNode;
+  className: string;
+  title: string;
+}) {
+  return (
+    <section className={`${styles.navigationComponentFrame} ${className}`}>
+      <h3><span aria-hidden>❖</span>{title}</h3>
+      {children}
+    </section>
   );
 }
 
