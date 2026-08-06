@@ -267,7 +267,7 @@
 
 .duplicateDialog,
 .deleteDialog {
-  background: rgba(241, 241, 241, 0.88);
+  background: #f5f5f5;
   border: 1px solid rgba(129, 129, 129, 0.12);
   box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
   box-sizing: border-box;
