@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useRef,
   useState,
@@ -64,6 +65,7 @@ export function SignupScreen({
   onPhoneSignup,
   onRegister,
 }: SignupScreenProps) {
+  const router = useRouter();
   const [step, setStep] = useState<SignupStep>("options");
   const [countryCode, setCountryCode] = useState<CountryCode>("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -160,6 +162,7 @@ export function SignupScreen({
         Promise.resolve(onRegister?.(code, phoneDigits(phoneNumber), countryCode)),
         waitForLoadingCue(),
       ]);
+      router.push("/signup/profile");
     } catch {
       setError("Unable to complete registration. Try again.");
     } finally {
