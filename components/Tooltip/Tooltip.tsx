@@ -64,7 +64,7 @@ export function Tooltip({
       role="tooltip"
       style={style}
     >
-      {text}
+      <span className={styles.label}>{text}</span>
     </span>
   );
 }

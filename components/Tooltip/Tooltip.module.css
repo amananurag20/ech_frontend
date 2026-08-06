@@ -2,19 +2,11 @@
   --gradient-x: 0%;
   --gradient-y: 0%;
   align-items: center;
-  background: linear-gradient(rgba(52, 77, 90, 0.04), rgba(52, 77, 90, 0.04)) padding-box,
-    linear-gradient(#fcfdfc, #fcfdfc) padding-box,
-    radial-gradient(
-        farthest-corner at var(--gradient-x) var(--gradient-y),
-        rgba(28, 57, 142, 0.8) 0%,
-        rgba(242, 245, 245, 0) 100%
-      ) border-box,
-    linear-gradient(rgba(25, 27, 28, 0.12), rgba(25, 27, 28, 0.12)) border-box;
-  border: 1px solid transparent;
+  background: transparent;
+  border: 0;
   border-radius: 40px;
   box-sizing: border-box;
   color: #535250;
-  corner-shape: squircle;
   display: inline-flex;
   font-family: "Saans Medium", var(--font-geist-sans), Arial, sans-serif;
   font-size: 14px;
@@ -23,9 +15,37 @@
   justify-content: center;
   letter-spacing: 0;
   line-height: 16px;
-  padding: 5px 7px;
+  padding: 6px 8px;
   position: relative;
   white-space: nowrap;
+}
+
+.tooltip::before,
+.tooltip::after {
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+}
+
+.tooltip::before {
+  background: radial-gradient(
+      farthest-corner at var(--gradient-x) var(--gradient-y),
+      rgba(28, 57, 142, 0.8) 0%,
+      rgba(242, 245, 245, 0) 100%
+    ),
+    rgba(25, 27, 28, 0.12);
+  inset: 0;
+}
+
+.tooltip::after {
+  background: linear-gradient(rgba(52, 77, 90, 0.04), rgba(52, 77, 90, 0.04)), #fcfdfc;
+  inset: 1px;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
 }
 
 .topLeft {

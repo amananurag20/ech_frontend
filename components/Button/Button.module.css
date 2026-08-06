@@ -4,7 +4,6 @@
   background: transparent;
   border: 0;
   border-radius: var(--radius-8);
-  corner-shape: squircle;
   cursor: pointer;
   display: inline-flex;
   flex: none;
