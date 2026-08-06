@@ -30,6 +30,10 @@
   width: 440px;
 }
 
+.verificationCard {
+  height: 400px;
+}
+
 .mark {
   display: block;
   height: 36px;
@@ -163,6 +167,88 @@
   width: auto;
 }
 
+.verificationCard h1 {
+  font-size: 32px;
+  letter-spacing: -0.64px;
+  line-height: 36px;
+  margin: 38px 0 12px;
+}
+
+.verificationCopy {
+  color: #535250;
+  font: 480 14px/20px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.verificationCopy p {
+  margin: 0;
+}
+
+.verificationCopy strong {
+  color: #191b1c;
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-weight: 480;
+}
+
+.verificationCopy button {
+  background: transparent;
+  border: 0;
+  color: #2954c2;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.verificationForm {
+  margin-top: 56px;
+}
+
+.verificationForm > label {
+  display: block;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin-bottom: 6px;
+}
+
+.codeInputs {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(5, 44px);
+}
+
+.codeInputs input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44);
+  box-sizing: border-box;
+  color: #191b1c;
+  font: 480 18px/24px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 44px;
+  outline: 0;
+  text-align: center;
+  width: 44px;
+}
+
+.codeInputs input:focus {
+  background: #fafcfa;
+  box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56), inset 0 0 0 2px rgba(60, 137, 251, 0.4), 0 0 0 2px rgba(35, 30, 98, 0.12);
+}
+
+.verificationError {
+  color: #dd1010;
+  font: 400 11px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 16px;
+  margin: 4px 0 4px;
+}
+
+.verifyButton {
+  box-sizing: border-box;
+  height: 28px;
+  width: 70px;
+}
+
 @media (max-width: 560px) {
   .header { left: 24px; top: 24px; }
   .card {
@@ -172,6 +258,9 @@
     top: 54%;
     width: calc(100% - 32px);
   }
+  .verificationCard { height: auto; }
+  .codeInputs { gap: 8px; }
+  .codeInputs input { width: 100%; }
   .phoneRow { grid-template-columns: 84px minmax(0, 1fr); }
   .phoneInput,
   .continueButton,
