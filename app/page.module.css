@@ -128,6 +128,115 @@
   grid-row: 3;
 }
 
+.tagsSheet {
+  background: #f4f6f5;
+  border-radius: 48px;
+  margin: 48px auto 0;
+  min-height: 765px;
+  padding: 32px;
+  width: 584px;
+}
+
+.tagsEyebrow {
+  color: #a9acab;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 0;
+}
+
+.tagsSwatch {
+  align-items: center;
+  background: linear-gradient(135deg, #e0e2e1, #fff);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 56px;
+  justify-content: center;
+  margin-top: 10px;
+  width: 56px;
+}
+
+.tagsSwatch span {
+  border-radius: 56px;
+  height: 13px;
+  width: 38px;
+}
+
+.tagsSwatch span:first-child {
+  background: #aeb1b0;
+  filter: blur(3px);
+}
+
+.tagsSwatch span:last-child {
+  background: #f2f5f5;
+  box-shadow: 0 0 0 1px #2954c2;
+}
+
+.tagsTitle {
+  color: #050606;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  line-height: 36px;
+  margin: 20px 0 12px;
+}
+
+.tagsDescription {
+  color: #535756;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.35px;
+  line-height: 24px;
+  margin: 0;
+  width: 520px;
+}
+
+.tagsSpecimen {
+  margin-top: 10px;
+}
+
+.tagsComponentName {
+  align-items: center;
+  color: #8b3dff;
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 5px;
+  line-height: 16px;
+  margin: 0 0 9px;
+}
+
+.tagsComponentName span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tagsFrame {
+  border: 1px dashed #9747ff;
+  border-radius: 24px;
+  box-sizing: border-box;
+  height: 449px;
+  padding: 19px 22px 20px;
+  width: 494px;
+}
+
+.tagMatrix {
+  align-items: center;
+  display: grid;
+  gap: 10px 20px;
+  grid-template-columns: 94px 69px 69px 85px 51px;
+  grid-template-rows: repeat(5, 28px);
+}
+
+.tagMatrix + .tagMatrix {
+  margin-top: 48px;
+}
+
+.tagMatrix > * {
+  justify-self: start;
+}
+
 .inputEyebrow {
   color: #a9acab;
   font-size: 20px;
@@ -366,5 +475,9 @@
 
   .tooltipSheet {
     margin-left: 394px;
+  }
+
+  .tagsSheet {
+    margin-left: 298px;
   }
 }

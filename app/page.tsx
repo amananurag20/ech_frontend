@@ -1,5 +1,6 @@
 import { Button, type ButtonState, type ButtonVariant } from "@/components/Button";
 import { FieldContainer, InputField, SearchField, SubSection } from "@/components/Input";
+import { Tag, type TagState, type TagType } from "@/components/Tag";
 import { Tooltip, TooltipTrigger, type TooltipOrigin } from "@/components/Tooltip";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
@@ -192,7 +193,47 @@ export default function Home() {
           </div>
         </section>
       </section>
+
+      <section className={styles.tagsSheet}>
+        <p className={styles.tagsEyebrow}>Descriptions</p>
+        <div aria-hidden className={styles.tagsSwatch}><span /><span /></div>
+
+        <h2 className={styles.tagsTitle}>Tags</h2>
+        <p className={styles.tagsDescription}>
+          Tags label, filter, and hold search parameters — never actions (Button) or single-choice
+          selections (Toggle). The same pill adapts across all three roles through its icon and state
+          configuration.
+        </p>
+
+        <section className={styles.tagsSpecimen}>
+          <h3 className={styles.tagsComponentName}><span aria-hidden>❖</span>Tags</h3>
+          <div className={styles.tagsFrame}>
+            <TagMatrix type="neutral" />
+            <TagMatrix type="color" />
+          </div>
+        </section>
+      </section>
     </main>
+  );
+}
+
+const tagStates: TagState[] = ["disabled", "enabled", "hover", "pressed", "selected"];
+
+function TagMatrix({ type }: { type: TagType }) {
+  const layouts = [
+    { leadingIcon: true, subLabel: "24" },
+    { leadingIcon: true },
+    { trailingIcon: true },
+    { leadingIcon: true, trailingIcon: true },
+    {},
+  ];
+
+  return (
+    <div className={styles.tagMatrix}>
+      {tagStates.flatMap((state) => layouts.map((layout, index) => (
+        <Tag key={`${type}-${state}-${index}`} state={state} type={type} {...layout} />
+      )))}
+    </div>
   );
 }
 
