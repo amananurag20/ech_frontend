@@ -167,105 +167,12 @@
   width: 665px;
 }
 
-.calendar {
-  display: flex;
+.bookingCalendar {
   flex: 0 0 400px;
-  flex-direction: column;
-  gap: 13px;
-  overflow: hidden;
-  padding: 16px 0;
 }
 
-.selectedLayout .calendar {
+.selectedLayout .bookingCalendar {
   border-right: 1px solid rgba(133, 133, 133, 0.44);
-}
-
-.calendarHeader {
-  align-items: center;
-  display: flex;
-  gap: 13px;
-  padding: 0 16px;
-}
-
-.calendarHeader button {
-  align-items: center;
-  appearance: none;
-  background: #fff;
-  border: 0;
-  border-radius: 40px;
-  cursor: pointer;
-  display: inline-flex;
-  height: 26px;
-  justify-content: center;
-  padding: 6px 4px;
-  width: 22px;
-}
-
-.calendarHeader h2 {
-  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  letter-spacing: 0.2px;
-}
-
-.calendarHeader h2 span {
-  color: #858887;
-}
-
-.calendarGrid {
-  display: grid;
-  gap: 4px;
-  grid-template-columns: repeat(7, 48px);
-  justify-content: center;
-  padding: 0 12px;
-}
-
-.weekday {
-  align-items: center;
-  color: #858887;
-  display: flex;
-  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  height: 32px;
-  justify-content: center;
-}
-
-.dateButton,
-.emptyDate {
-  height: 48px;
-  width: 48px;
-}
-
-.dateButton {
-  align-items: center;
-  appearance: none;
-  background: rgba(229, 232, 231, 0.48);
-  border: 1px solid transparent;
-  border-radius: 12px;
-  color: #191b1c;
-  cursor: pointer;
-  display: flex;
-  font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  justify-content: center;
-  letter-spacing: 0.2px;
-  padding: 8px;
-}
-
-.dateButton:hover:not(:disabled):not(.selected),
-.dateButton:focus-visible:not(.selected),
-.dateButton.today:not(.selected) {
-  border-color: #239c69;
-  outline: none;
-}
-
-.dateButton.unavailable {
-  background: transparent;
-  cursor: default;
-}
-
-.dateButton.selected {
-  background: #207853;
-  border-color: #207853;
-  border-radius: 28px;
-  color: #fffaf2;
-  outline: none;
 }
 
 .timings {

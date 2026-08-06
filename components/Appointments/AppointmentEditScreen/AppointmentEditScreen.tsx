@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/Button";
+import { AppointmentCalendar } from "@/components/Calendar/AppointmentCalendar";
 import { SecondaryNavigation } from "@/components/Navigation";
 import { Toggle } from "@/components/Toggle";
+import { AppointmentPreviewCard } from "../AppointmentPreviewCard";
 import type { AppointmentType } from "../AppointmentsScreen/AppointmentsScreen";
 import styles from "./AppointmentEditScreen.module.css";
 
@@ -12,9 +14,6 @@ type AppointmentEditScreenProps = {
   appointment: AppointmentType;
   onBack: (appointment: AppointmentType) => void;
 };
-
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const julyDays = Array.from({ length: 35 }, (_, index) => index < 2 || index > 32 ? 0 : index - 1);
 
 type Location = "Video Call" | "Phone Call" | "In-Person" | "More";
 
@@ -35,8 +34,11 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
   const [location, setLocation] = useState<Location>("In-Person");
   const [limitsOpen, setLimitsOpen] = useState(true);
   const [limitedMeetingsOpen, setLimitedMeetingsOpen] = useState(true);
+  const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 6, 1));
   const [selectedDate, setSelectedDate] = useState(16);
   const safeDuration = useMemo(() => Math.max(1, Number.parseInt(duration, 10) || 1), [duration]);
+  const previewYear = visibleMonth.getFullYear();
+  const previewMonth = visibleMonth.getMonth();
 
   const finishEditing = () => {
     onBack({
@@ -186,42 +188,20 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
 
             <aside aria-label="Appointment preview" className={styles.previewPanel}>
               <div className={styles.previewStack}>
-                <article className={styles.summaryCard}>
-                  <div className={styles.doctorRow}>
-                    <Image alt="Dr. Giana Hart" className={styles.avatar} height={40} src="/images/booking/date/doctor-avatar.png" width={40} />
-                    <span><strong>Dr. Giana Hart</strong><small>Cardiologist</small></span>
-                  </div>
-                  <h2>{title.trim() || "Appointment"}</h2>
-                  <div className={styles.summaryTags}>
-                    <span><Image alt="" height={13} src="/icons/booking/date/clock.svg" width={13} />{safeDuration}m</span>
-                    <span><Image alt="" height={13} src="/icons/booking/date/location.svg" width={10} />Medical Clinic</span>
-                    <span><Image alt="" height={13} src="/icons/booking/date/globe.svg" width={13} />Asia/Singapore</span>
-                  </div>
-                </article>
-
-                <section className={styles.calendar}>
-                  <header className={styles.calendarHeader}>
-                    <button aria-label="Previous month" type="button">‹</button>
-                    <h3>July <span>2026</span></h3>
-                    <button aria-label="Next month" type="button">›</button>
-                  </header>
-                  <div className={styles.calendarGrid}>
-                    {weekdays.map((weekday) => <span className={styles.weekday} key={weekday}>{weekday}</span>)}
-                    {julyDays.map((day, index) => day ? (
-                      <button
-                        aria-current={day === 7 ? "date" : undefined}
-                        aria-label={`July ${day}, 2026`}
-                        aria-pressed={day === selectedDate}
-                        className={`${styles.calendarDay} ${day === 7 ? styles.today : ""} ${day === selectedDate ? styles.selectedDay : ""}`}
-                        key={day}
-                        onClick={() => setSelectedDate(day)}
-                        type="button"
-                      >
-                        {day}
-                      </button>
-                    ) : <span aria-hidden className={styles.emptyDay} key={`empty-${index}`} />)}
-                  </div>
-                </section>
+                <AppointmentPreviewCard duration={safeDuration} title={title.trim() || "Appointment"} />
+                <AppointmentCalendar
+                  className={styles.previewCalendar}
+                  compact
+                  month={previewMonth}
+                  onMonthChange={(offset) => {
+                    setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() + offset, 1));
+                    setSelectedDate(0);
+                  }}
+                  onSelectDate={setSelectedDate}
+                  selectedDate={selectedDate}
+                  todayDate={previewYear === 2026 && previewMonth === 6 ? 7 : undefined}
+                  year={previewYear}
+                />
               </div>
             </aside>
           </div>

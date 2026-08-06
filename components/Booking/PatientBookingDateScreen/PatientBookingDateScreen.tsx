@@ -2,40 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/Button";
+import { AppointmentCalendar } from "@/components/Calendar/AppointmentCalendar";
 import styles from "./PatientBookingDateScreen.module.css";
 
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long" });
 const timeSlots12 = ["9:30 am", "10:00 am", "10:30 am", "11:00 am", "11:30 am", "12:00 pm", "12:30 pm", "1:00 pm"];
 const timeSlots24 = ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"];
-
-type CalendarDay = {
-  date: number;
-  key: string;
-  leading: boolean;
-};
-
-function buildCalendarDays(year: number, month: number): CalendarDay[] {
-  const firstWeekday = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const days: CalendarDay[] = [];
-
-  for (let index = 0; index < firstWeekday; index += 1) {
-    days.push({ date: 0, key: `leading-${index}`, leading: true });
-  }
-
-  for (let date = 1; date <= daysInMonth; date += 1) {
-    days.push({ date, key: `${year}-${month}-${date}`, leading: false });
-  }
-
-  while (days.length % 7 !== 0) {
-    days.push({ date: 0, key: `trailing-${days.length}`, leading: true });
-  }
-
-  return days;
-}
 
 export function PatientBookingDateScreen() {
   const router = useRouter();
@@ -45,7 +18,6 @@ export function PatientBookingDateScreen() {
   const [timeFormat, setTimeFormat] = useState<"12" | "24">("12");
   const year = visibleMonth.getFullYear();
   const month = visibleMonth.getMonth();
-  const calendarDays = useMemo(() => buildCalendarDays(year, month), [month, year]);
   const timeSlots = timeFormat === "12" ? timeSlots12 : timeSlots24;
   const canConfirm = selectedDate > 0 && selectedTimeIndex >= 0;
 
@@ -128,53 +100,19 @@ export function PatientBookingDateScreen() {
           </article>
 
           <div className={styles.setAppointment}>
-            <section className={styles.calendar}>
-              <div className={styles.calendarHeader}>
-                <button aria-label="Previous month" onClick={() => changeMonth(-1)} type="button">
-                  <Image alt="" height={10} src="/icons/booking/date/previous.svg" width={6} />
-                </button>
-                <h2>
-                  {monthFormatter.format(visibleMonth)} <span>{year}</span>
-                </h2>
-                <button aria-label="Next month" onClick={() => changeMonth(1)} type="button">
-                  <Image alt="" height={10} src="/icons/booking/date/next.svg" width={6} />
-                </button>
-              </div>
-
-              <div className={styles.calendarGrid}>
-                {weekdays.map((weekday) => (
-                  <div className={styles.weekday} key={weekday}>{weekday}</div>
-                ))}
-                {calendarDays.map((day) => {
-                  if (day.leading) {
-                    return <span aria-hidden className={styles.emptyDate} key={day.key} />;
-                  }
-
-                  const isFigmaMonth = year === 2026 && month === 6;
-                  const isUnavailable = isFigmaMonth && day.date < 7;
-                  const isToday = isFigmaMonth && day.date === 7;
-                  const isSelected = day.date === selectedDate;
-
-                  return (
-                    <button
-                      aria-current={isToday ? "date" : undefined}
-                      aria-label={`${monthFormatter.format(visibleMonth)} ${day.date}, ${year}`}
-                      aria-pressed={isSelected}
-                      className={`${styles.dateButton} ${isUnavailable ? styles.unavailable : ""} ${isToday ? styles.today : ""} ${isSelected ? styles.selected : ""}`}
-                      disabled={isUnavailable}
-                      key={day.key}
-                      onClick={() => {
-                        setSelectedDate(day.date);
-                        setSelectedTimeIndex(-1);
-                      }}
-                      type="button"
-                    >
-                      {day.date}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
+            <AppointmentCalendar
+              className={styles.bookingCalendar}
+              isDateDisabled={(date) => year === 2026 && month === 6 && date < 7}
+              month={month}
+              onMonthChange={changeMonth}
+              onSelectDate={(date) => {
+                setSelectedDate(date);
+                setSelectedTimeIndex(-1);
+              }}
+              selectedDate={selectedDate}
+              todayDate={year === 2026 && month === 6 ? 7 : undefined}
+              year={year}
+            />
 
             {selectedDate ? (
               <aside aria-label="Select appointment time" className={styles.timings}>

@@ -299,58 +299,15 @@
 
 .previewStack { width: 380px; }
 
-.summaryCard {
-  background: #172629;
-  border-radius: 16px 16px 0 0;
-  color: #f6f7f9;
-  height: 156px;
-  padding: 16px;
-}
-
-.doctorRow { align-items: center; display: flex; gap: 12px; }
-.avatar { border-radius: 50%; object-fit: cover; }
-.doctorRow > span { display: flex; flex-direction: column; gap: 2px; }
-.doctorRow strong { font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif; }
-.doctorRow small { color: rgba(225, 228, 243, 0.48); font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif; }
-.summaryCard h2 { font: 480 20px/24px "Saans", var(--font-geist-sans), Arial, sans-serif; margin: 20px 0 10px; }
-
-.summaryTags {
-  color: rgba(241, 249, 251, 0.64);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 12px;
-}
-
-.summaryTags span { align-items: center; display: inline-flex; font: 480 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif; gap: 4px; }
-
-.calendar {
+.previewCalendar {
   background: #fefdff;
-  border-radius: 0 0 16px 16px;
+  border-radius: 24px;
   box-shadow: 0 8px 18px -12px rgba(10, 10, 14, 0.28);
+  box-sizing: border-box;
   height: 353px;
-  padding: 16px;
+  margin-top: 12px;
+  width: 380px;
 }
-
-.calendarHeader { align-items: center; display: flex; gap: 12px; }
-.calendarHeader h3 { flex: 1; font: 480 16px/20px "Saans", var(--font-geist-sans), Arial, sans-serif; margin: 0; }
-.calendarHeader h3 span { color: #858887; }
-.calendarHeader button { background: #fff; border: 0; border-radius: 40px; cursor: pointer; font-size: 18px; height: 24px; width: 24px; }
-
-.calendarGrid {
-  display: grid;
-  gap: 4px;
-  grid-template-columns: repeat(7, 44px);
-  justify-content: center;
-  margin-top: 13px;
-}
-
-.weekday,
-.calendarDay,
-.emptyDay { height: 40px; width: 40px; }
-.weekday { align-items: center; color: #858887; display: flex; font: 480 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif; justify-content: center; }
-.calendarDay { background: rgba(229, 232, 231, 0.48); border: 1px solid transparent; border-radius: 10px; color: #191b1c; cursor: pointer; font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif; }
-.calendarDay:hover, .calendarDay.today { border-color: #239c69; }
-.calendarDay.selectedDay { background: #207853; border-color: #207853; border-radius: 50%; color: #fffaf2; }
 
 @media (max-width: 1180px) {
   .editorSurface { grid-template-columns: 520px 520px; }

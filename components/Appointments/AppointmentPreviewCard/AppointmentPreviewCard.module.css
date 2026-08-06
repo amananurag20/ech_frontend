@@ -1,0 +1,35 @@
+.card {
+  align-items: flex-end;
+  background: #172629;
+  border-radius: 24px;
+  box-sizing: border-box;
+  color: #f6f7f9;
+  display: flex;
+  height: 156px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 16px 8px 16px 0;
+  width: 380px;
+}
+
+.leftColumn {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.details { display: flex; flex-direction: column; gap: 20px; padding: 0 8px; }
+.doctor { align-items: center; display: flex; gap: 12px; }
+.avatarFrame { border-radius: 23px; flex: 0 0 40px; height: 40px; overflow: hidden; position: relative; }
+.avatarFrame img { object-fit: cover; object-position: center 14%; }
+.doctorInfo { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.doctorInfo strong { font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif; }
+.doctorInfo small { color: rgba(225, 228, 243, 0.48); font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif; }
+.details h2 { font: 480 20px/24px "Saans", var(--font-geist-sans), Arial, sans-serif; letter-spacing: -0.14px; margin: 0; }
+.leftTags { align-items: flex-start; display: flex; min-width: 0; }
+.previewTag { color: rgba(241, 249, 251, 0.64) !important; }
+.locationTag { flex: 1 1 auto; min-width: 0; }
+.timeZoneTag { flex: 0 0 auto; padding-left: 6px !important; padding-right: 6px !important; }
