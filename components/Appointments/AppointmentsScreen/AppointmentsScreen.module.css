@@ -99,6 +99,12 @@
   min-width: 0;
   padding: 16px 16px 16px 8px;
   position: relative;
+  transition: background-color 120ms ease;
+}
+
+.appointmentRow:hover,
+.appointmentRow:focus-within {
+  background-color: rgb(245, 246, 246);
 }
 
 .appointmentRow:first-child {
@@ -603,6 +609,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .appointmentRow,
   .compactActions > button,
   .menuAnchor > button { transition: none; }
 }

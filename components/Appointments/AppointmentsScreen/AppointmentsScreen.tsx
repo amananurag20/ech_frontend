@@ -27,7 +27,7 @@ type AppointmentsScreenProps = {
   appointments?: AppointmentType[];
 };
 
-function EmptyAppointments() {
+function EmptyAppointments({ onCreate }: { onCreate: () => void }) {
   return (
     <div className={styles.emptyAppointments}>
       <div aria-hidden className={styles.emptyIllustration}>
@@ -47,7 +47,7 @@ function EmptyAppointments() {
         <h2>Create your Appointments</h2>
         <p>Share links that show available times on your calendar<br />and allow people to make bookings with you.</p>
       </div>
-      <Button className={styles.createButton} variant="primary">Create</Button>
+      <Button className={styles.createButton} onClick={onCreate} variant="primary">Create</Button>
     </div>
   );
 }
@@ -200,6 +200,86 @@ type DuplicateAppointmentModalProps = {
   onDuplicate: (appointment: AppointmentType) => void;
 };
 
+type AddAppointmentModalProps = {
+  onClose: () => void;
+  onCreate: (appointment: AppointmentType) => void;
+};
+
+function AddAppointmentModal({ onClose, onCreate }: AddAppointmentModalProps) {
+  const [title, setTitle] = useState("Pre-Operative");
+  const [duration, setDuration] = useState("20");
+  const [slug, setSlug] = useState("routine-visits");
+  const [allowMultipleDurations, setAllowMultipleDurations] = useState(false);
+
+  const submitAppointment = () => {
+    if (!title.trim() || !duration.trim() || !slug.trim()) return;
+    const normalizedSlug = slug.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    onCreate({
+      duration: `${Math.max(1, Number.parseInt(duration, 10) || 1)}m`,
+      id: `${normalizedSlug}-${Date.now()}`,
+      name: title.trim(),
+    });
+  };
+
+  return (
+    <Modal ariaLabel="Add a new Appointment" className={styles.duplicateDialog} isOpen onClose={onClose}>
+      <header className={styles.duplicateHeader}>
+        <div className={styles.modalHeading}>
+          <h2>Add a new Appointment</h2>
+          <p>Set up a new type of appointment meeting for patients</p>
+        </div>
+        <button aria-label="Close add appointment dialog" className={styles.closeButton} onClick={onClose} type="button">
+          <Image alt="" className={styles.closeLineOne} height={16} src="/icons/appointments/modal/close-1.svg" width={16} />
+          <Image alt="" className={styles.closeLineTwo} height={16} src="/icons/appointments/modal/close-2.svg" width={16} />
+        </button>
+      </header>
+
+      <div className={styles.duplicateContent}>
+        <label className={styles.modalField}>
+          <span>Title</span>
+          <input onChange={(event) => setTitle(event.target.value)} value={title} />
+        </label>
+        <div className={styles.durationSection}>
+          <label className={styles.modalField}>
+            <span>Duration</span>
+            <span className={styles.inputWithSuffix}>
+              <input inputMode="numeric" onChange={(event) => setDuration(event.target.value.replace(/\D/g, ""))} value={duration} />
+              <span>minutes</span>
+            </span>
+          </label>
+          <div className={styles.multipleDurationRow}>
+            <span>Allow multiple durations</span>
+            <Toggle
+              aria-label="Allow multiple durations"
+              checked={allowMultipleDurations}
+              onCheckedChange={setAllowMultipleDurations}
+            />
+          </div>
+        </div>
+        <label className={styles.modalField}>
+          <span>URL</span>
+          <span className={styles.urlInput}>
+            <span>medqtcare.com/appointments?type=</span>
+            <input onChange={(event) => setSlug(event.target.value)} value={slug} />
+          </span>
+        </label>
+      </div>
+
+      <div className={styles.modalActions}>
+        <Button onClick={onClose} variant="bordered">Cancel</Button>
+        <Button
+          disabled={!title.trim() || !duration.trim() || !slug.trim()}
+          onClick={submitAppointment}
+          trailingIcon={<Image alt="" height={14} src="/icons/appointments/modal/arrow-right.svg" width={14} />}
+          variant="primary"
+        >
+          Create
+        </Button>
+      </div>
+    </Modal>
+  );
+}
+
 function DuplicateAppointmentModal({ appointment, onClose, onDuplicate }: DuplicateAppointmentModalProps) {
   const [title, setTitle] = useState(appointment.name);
   const [duration, setDuration] = useState(appointment.duration.replace(/\D/g, "") || "20");
@@ -292,6 +372,7 @@ function DeleteAppointmentModal({ appointment, onClose, onDelete }: DeleteAppoin
 export function AppointmentsScreen({ appointments = initialAppointments }: AppointmentsScreenProps) {
   const [search, setSearch] = useState("");
   const [appointmentItems, setAppointmentItems] = useState(appointments);
+  const [addOpen, setAddOpen] = useState(false);
   const [duplicateTarget, setDuplicateTarget] = useState<AppointmentType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AppointmentType | null>(null);
   const filteredAppointments = useMemo(() => {
@@ -303,6 +384,11 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
   const duplicateAppointment = (appointment: AppointmentType) => {
     setAppointmentItems((items) => [...items, appointment]);
     setDuplicateTarget(null);
+  };
+
+  const createAppointment = (appointment: AppointmentType) => {
+    setAppointmentItems((items) => [...items, appointment]);
+    setAddOpen(false);
   };
 
   const deleteAppointment = () => {
@@ -335,6 +421,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
             <Button
               className={styles.addButton}
               leadingIcon={<Image alt="" height={14} src="/icons/appointments/plus.svg" width={14} />}
+              onClick={() => setAddOpen(true)}
               variant="primary"
             >
               Add New
@@ -342,7 +429,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
           </header>
 
           <div className={`${styles.appointmentsSurface} ${!hasAppointments ? styles.emptySurface : ""}`}>
-            {!hasAppointments ? <EmptyAppointments /> : <>
+            {!hasAppointments ? <EmptyAppointments onCreate={() => setAddOpen(true)} /> : <>
               {filteredAppointments.map((appointment) => (
                 <AppointmentRow
                   appointment={appointment}
@@ -356,6 +443,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
           </div>
         </section>
       </div>
+      {addOpen ? <AddAppointmentModal onClose={() => setAddOpen(false)} onCreate={createAppointment} /> : null}
       {duplicateTarget ? (
         <DuplicateAppointmentModal
           appointment={duplicateTarget}
