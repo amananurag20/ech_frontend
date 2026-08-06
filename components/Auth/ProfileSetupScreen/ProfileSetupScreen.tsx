@@ -78,7 +78,11 @@ export function ProfileSetupScreen({ onContinue }: ProfileSetupScreenProps) {
     setError("");
     setIsSubmitting(true);
     try {
-      await onContinue?.({ name: name.trim(), role, profilePicture });
+      if (onContinue) {
+        await onContinue({ name: name.trim(), role, profilePicture });
+      } else {
+        router.push("/signup/working-hours");
+      }
     } catch {
       setError("Unable to save your profile. Try again.");
     } finally {
