@@ -39,10 +39,11 @@ export function Button({
   ...props
 }: ButtonProps) {
   const isDisabled = disabled || state === "disabled";
+  const visualState = isDisabled ? "disabled" : state;
   const classNames = [
     styles.button,
     styles[variant],
-    styles[state],
+    styles[visualState],
     destructive && styles.destructive,
     !children && styles.iconOnly,
     className,

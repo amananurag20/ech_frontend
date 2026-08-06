@@ -1,0 +1,1 @@
+export { PatientBookingConfirmationScreen } from "./PatientBookingConfirmationScreen";

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { Button } from "@/components/Button";
 import styles from "./PatientBookingDateScreen.module.css";
 
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -40,12 +41,13 @@ export function PatientBookingDateScreen() {
   const router = useRouter();
   const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 6, 1));
   const [selectedDate, setSelectedDate] = useState(0);
-  const [selectedTimeIndex, setSelectedTimeIndex] = useState(2);
+  const [selectedTimeIndex, setSelectedTimeIndex] = useState(-1);
   const [timeFormat, setTimeFormat] = useState<"12" | "24">("12");
   const year = visibleMonth.getFullYear();
   const month = visibleMonth.getMonth();
   const calendarDays = useMemo(() => buildCalendarDays(year, month), [month, year]);
   const timeSlots = timeFormat === "12" ? timeSlots12 : timeSlots24;
+  const canConfirm = selectedDate > 0 && selectedTimeIndex >= 0;
 
   const goBack = () => {
     if (window.history.length > 1) {
@@ -58,6 +60,17 @@ export function PatientBookingDateScreen() {
   const changeMonth = (offset: number) => {
     setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() + offset, 1));
     setSelectedDate(0);
+    setSelectedTimeIndex(-1);
+  };
+
+  const confirmBooking = () => {
+    if (!canConfirm) return;
+
+    const params = new URLSearchParams({
+      date: `${year}-${String(month + 1).padStart(2, "0")}-${String(selectedDate).padStart(2, "0")}`,
+      timeIndex: String(selectedTimeIndex),
+    });
+    router.push(`/patient/new-booking/confirmation?${params.toString()}`);
   };
 
   return (
@@ -150,7 +163,10 @@ export function PatientBookingDateScreen() {
                       className={`${styles.dateButton} ${isUnavailable ? styles.unavailable : ""} ${isToday ? styles.today : ""} ${isSelected ? styles.selected : ""}`}
                       disabled={isUnavailable}
                       key={day.key}
-                      onClick={() => setSelectedDate(day.date)}
+                      onClick={() => {
+                        setSelectedDate(day.date);
+                        setSelectedTimeIndex(-1);
+                      }}
                       type="button"
                     >
                       {day.date}
@@ -195,6 +211,18 @@ export function PatientBookingDateScreen() {
                       {time}
                     </button>
                   ))}
+                </div>
+                <div className={styles.confirmAction}>
+                  <Button
+                    disabled={!canConfirm}
+                    onClick={confirmBooking}
+                    trailingIcon={
+                      <Image alt="" height={9} src="/icons/booking/arrow-right.svg" width={11} />
+                    }
+                    variant="primary"
+                  >
+                    Confirm Booking
+                  </Button>
                 </div>
               </aside>
             ) : null}

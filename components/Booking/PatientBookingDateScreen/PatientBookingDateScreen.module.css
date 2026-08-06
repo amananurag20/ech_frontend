@@ -48,8 +48,12 @@
 
 .selectedLayout {
   flex-direction: row;
-  height: 363px;
+  height: 419px;
   width: 945px;
+}
+
+.selectedLayout .appointmentSummary {
+  height: 419px;
 }
 
 .appointmentSummary {
@@ -159,7 +163,7 @@
 
 .selectedLayout .setAppointment {
   border-radius: 36px;
-  height: 363px;
+  height: 419px;
   width: 665px;
 }
 
@@ -346,6 +350,13 @@
   background: #fefdff;
   border-color: rgba(133, 133, 133, 0.44);
   outline: none;
+}
+
+.confirmAction {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
 }
 
 .footer a {

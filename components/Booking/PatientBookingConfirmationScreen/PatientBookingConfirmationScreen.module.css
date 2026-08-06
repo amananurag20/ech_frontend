@@ -1,0 +1,181 @@
+.page {
+  align-items: center;
+  background: #e6e5e9;
+  color: #191b1c;
+  display: flex;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 24px;
+}
+
+.receipt {
+  background: rgba(180, 177, 170, 0.36);
+  border: 1px solid rgba(129, 129, 129, 0.12);
+  border-radius: 40px;
+  box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+  padding: 20px;
+  width: 690px;
+}
+
+.successBanner {
+  align-items: center;
+  background: #207853;
+  border-radius: 24px;
+  color: #f6f8f3;
+  display: flex;
+  gap: 20px;
+  min-height: 120px;
+  padding: 14px;
+}
+
+.successIcon {
+  align-items: center;
+  background: #f6f8f3;
+  border-radius: 80px;
+  display: flex;
+  flex: 0 0 92px;
+  height: 92px;
+  justify-content: center;
+}
+
+.successBanner h1,
+.successBanner p,
+.detailsCard h2,
+.detailsCard h3,
+.detailsCard p {
+  margin: 0;
+}
+
+.successBanner h1 {
+  font: 480 28px/32px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.44px;
+}
+
+.successBanner p {
+  font: 480 18px/24px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.14px;
+  margin-top: 6px;
+}
+
+.detailsCard {
+  background: #fefefd;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 432px;
+  padding: 20px 16px;
+}
+
+.doctorSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detailsCard h2 {
+  font: 480 32px/36px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.24px;
+}
+
+.doctorRow {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.avatar {
+  border-radius: 80px;
+  display: block;
+  height: 64px;
+  overflow: hidden;
+  position: relative;
+  width: 64px;
+}
+
+.avatar img {
+  object-fit: cover;
+  object-position: 50% 18%;
+  transform: scale(1.38);
+}
+
+.doctorRow h3,
+.detailRow p {
+  font: 480 18px/24px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.14px;
+}
+
+.doctorRow p {
+  color: #858887;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin-top: 2px;
+}
+
+.divider {
+  background: rgba(206, 205, 204, 0.72);
+  height: 1px;
+  width: 100%;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.detailRow {
+  align-items: center;
+  color: #535250;
+  display: flex;
+  gap: 4px;
+  min-height: 36px;
+  padding: 6px 8px 6px 6px;
+}
+
+.detailRow strong {
+  color: #191b1c;
+  font-weight: 480;
+}
+
+.detailIcon {
+  flex: 0 0 20px;
+  height: 20px;
+  position: relative;
+  width: 20px;
+}
+
+.detailIcon img {
+  position: absolute;
+}
+
+.calendar-2 { height: 16.25px; left: 2.5px; top: 1.25px; width: 15px; }
+.calendar-1 { height: 3.75px; left: 3.125px; top: 3.125px; width: 13.75px; }
+.globe-1 { height: 15px; left: 2.5px; top: 2.5px; width: 15px; }
+.globe-2 { height: 16.25px; left: 1.875px; top: 1.875px; width: 16.25px; }
+.location-1 { height: 16.25px; left: 3.75px; top: 1.875px; width: 12.5px; }
+.location-2 { height: 17.5px; left: 3.125px; top: 1.25px; width: 13.75px; }
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  padding: 0 4px;
+}
+
+@media (max-width: 720px) {
+  .page { align-items: flex-start; padding: 12px; }
+  .receipt { border-radius: 28px; padding: 12px; width: 100%; }
+  .successBanner { align-items: flex-start; border-radius: 20px; gap: 12px; }
+  .successIcon { flex-basis: 56px; height: 56px; }
+  .successIcon img { height: 34px; width: 38px; }
+  .successBanner h1 { font-size: 22px; line-height: 26px; }
+  .successBanner p { font-size: 14px; line-height: 18px; }
+  .detailsCard h2 { font-size: 26px; line-height: 30px; }
+  .detailRow { align-items: flex-start; }
+  .detailRow p { white-space: normal; }
+}
