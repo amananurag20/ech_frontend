@@ -114,42 +114,12 @@
 }
 
 .quantityValue,
-.toggle {
+.subSection > button[role="switch"] {
   margin-left: auto;
 }
 
 .quantityValue {
   color: #191b1c;
-}
-
-.toggle {
-  background: rgba(131, 145, 143, 0.28);
-  border: 0;
-  border-radius: 40px;
-  cursor: pointer;
-  display: flex;
-  height: 22px;
-  padding: 2px;
-  transition: background 120ms ease;
-  width: 44px;
-}
-
-.toggle span {
-  background: #fefdff;
-  border-radius: 44px;
-  height: 18px;
-  transform: translateX(0);
-  transition: transform 120ms ease;
-  width: 26px;
-}
-
-.toggleOn {
-  background: #239c69;
-}
-
-.toggleOn span {
-  background: #f6f8f3;
-  transform: translateX(14px);
 }
 
 .searchField {

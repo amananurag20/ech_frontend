@@ -1,6 +1,13 @@
 import { Button, type ButtonState, type ButtonVariant } from "@/components/Button";
 import { FieldContainer, InputField, SearchField, SubSection } from "@/components/Input";
 import { Tag, type TagState, type TagType } from "@/components/Tag";
+import {
+  Segment,
+  Toggle,
+  type SegmentIconPlacement,
+  type SegmentState,
+  type ToggleState,
+} from "@/components/Toggle";
 import { Tooltip, TooltipTrigger, type TooltipOrigin } from "@/components/Tooltip";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
@@ -213,7 +220,84 @@ export default function Home() {
           </div>
         </section>
       </section>
+
+      <section className={styles.togglesSheet}>
+        <div className={styles.togglesDescription}>
+          <div aria-hidden className={styles.togglesLogo}><span /><span /></div>
+          <div className={styles.togglesCopy}>
+            <h2>Toggles</h2>
+            <p>
+              Not a standalone button — always lives inside a segmented control / toggle group
+              container. Represents one option among a set; its job is to show which option is
+              currently selected.
+            </p>
+            <p>
+              A binary on/off control for a single independent setting (e.g. notifications, dark
+              mode, a feature flag).
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.togglesSpecimens}>
+          <ToggleSpecimen title="Segment Container" className={styles.segmentSpecimen}>
+            <SegmentMatrix />
+          </ToggleSpecimen>
+          <ToggleSpecimen title="Toggle" className={styles.toggleSpecimen}>
+            <ToggleMatrix />
+          </ToggleSpecimen>
+        </div>
+      </section>
     </main>
+  );
+}
+
+const segmentPlacements: SegmentIconPlacement[] = ["none", "leading", "trailing", "only"];
+const unselectedSegmentStates: SegmentState[] = ["enabled", "hover", "pressed", "disabled"];
+
+function SegmentMatrix() {
+  return (
+    <div className={styles.segmentMatrix}>
+      {segmentPlacements.map((iconPlacement) => (
+        <Segment iconPlacement={iconPlacement} key={`selected-${iconPlacement}`} selected />
+      ))}
+      {unselectedSegmentStates.flatMap((state) => segmentPlacements.map((iconPlacement) => (
+        <Segment iconPlacement={iconPlacement} key={`${state}-${iconPlacement}`} state={state} />
+      )))}
+    </div>
+  );
+}
+
+const toggleStates: ToggleState[] = ["enabled", "pressed", "disabled"];
+
+function ToggleMatrix() {
+  return (
+    <div className={styles.toggleMatrix}>
+      {toggleStates.flatMap((state) => [false, true].map((isOn) => (
+        <Toggle
+          aria-label={`${state} ${isOn ? "on" : "off"} toggle`}
+          defaultChecked={isOn}
+          key={`${state}-${isOn}`}
+          state={state}
+        />
+      )))}
+    </div>
+  );
+}
+
+function ToggleSpecimen({
+  children,
+  className,
+  title,
+}: {
+  children: ReactNode;
+  className: string;
+  title: string;
+}) {
+  return (
+    <section className={`${styles.toggleComponentFrame} ${className}`}>
+      <h3 className={styles.toggleComponentName}><span aria-hidden>❖</span>{title}</h3>
+      {children}
+    </section>
   );
 }
 

@@ -1,0 +1,144 @@
+.toggle {
+  align-items: center;
+  appearance: none;
+  background: rgba(131, 145, 143, 0.28);
+  border: 0;
+  border-radius: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 44px;
+  height: 22px;
+  overflow: hidden;
+  padding: 2px;
+  transition: background-color 120ms ease;
+  width: 44px;
+}
+
+.knob {
+  background: #fefdff;
+  border-radius: 44px;
+  display: block;
+  flex: 0 0 26px;
+  height: 18px;
+  transition: flex-basis 120ms ease, margin-left 120ms ease;
+}
+
+.on {
+  background: #239c69;
+}
+
+.on .knob {
+  background: #f6f8f3;
+  margin-left: auto;
+}
+
+.pressed .knob,
+.enabled:active .knob {
+  flex-basis: 32px;
+}
+
+.disabled {
+  cursor: default;
+}
+
+.disabled.off {
+  background: rgba(152, 152, 152, 0.18);
+}
+
+.disabled.on {
+  background: #c2c6c6;
+}
+
+.segment {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #535250;
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  gap: 4px;
+  height: 28px;
+  justify-content: center;
+  padding: 6px 8px;
+  transition: background-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+
+.segmentLabel {
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.segmentIcon {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 14px;
+  height: 14px;
+  justify-content: center;
+  width: 14px;
+}
+
+.segmentIcon img {
+  display: block;
+}
+
+.placementLeading {
+  padding-left: 6px;
+}
+
+.placementTrailing {
+  padding-right: 6px;
+}
+
+.placementOnly {
+  height: 26px;
+  padding: 6px 8px;
+  width: 30px;
+}
+
+.segmentSelected {
+  background: #fff;
+  color: #191b1c;
+}
+
+.segmentHover:not(.segmentSelected),
+.segmentEnabled:not(.segmentSelected):hover {
+  background: rgba(52, 77, 90, 0.12);
+}
+
+.segmentPressed:not(.segmentSelected),
+.segmentEnabled:not(.segmentSelected):active {
+  background: linear-gradient(rgba(52, 77, 90, 0.08), rgba(52, 77, 90, 0.08)), #fff;
+}
+
+.segmentDisabled {
+  color: #858887;
+  cursor: default;
+}
+
+.segmentGroup {
+  align-items: center;
+  display: inline-flex;
+}
+
+.segment:focus-visible,
+.toggle:focus-visible {
+  outline: 2px solid rgba(21, 134, 240, 0.72);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knob,
+  .segment,
+  .toggle {
+    transition: none;
+  }
+}

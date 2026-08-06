@@ -1,49 +1,13 @@
 "use client";
 
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Toggle, type ToggleProps } from "@/components/Toggle";
+import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./Input.module.css";
 
-export type ToggleProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "aria-checked" | "onChange"> & {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
-};
-
-export function Toggle({
-  "aria-label": ariaLabel = "Toggle",
-  checked,
-  className = "",
-  defaultChecked = false,
-  onCheckedChange,
-  onClick,
-  ...props
-}: ToggleProps) {
-  const [internalChecked, setInternalChecked] = useState(defaultChecked);
-  const isControlled = checked !== undefined;
-  const isChecked = isControlled ? checked : internalChecked;
-
-  return (
-    <button
-      {...props}
-      aria-checked={isChecked}
-      aria-label={ariaLabel}
-      className={`${styles.toggle} ${isChecked ? styles.toggleOn : ""} ${className}`}
-      onClick={(event) => {
-        const nextChecked = !isChecked;
-
-        if (!isControlled) setInternalChecked(nextChecked);
-        onCheckedChange?.(nextChecked);
-        onClick?.(event);
-      }}
-      role="switch"
-      type="button"
-    >
-      <span />
-    </button>
-  );
-}
+export { Toggle };
+export type { ToggleProps };
 
 export type SubSectionProps = {
   checked?: boolean;
