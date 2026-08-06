@@ -48,7 +48,8 @@ export function PatientBookingConfirmationScreen({ date, timeIndex }: PatientBoo
 
   return (
     <main className={styles.page}>
-      <section aria-label="Appointment confirmation" className={styles.receipt}>
+      <div className={styles.content}>
+        <section aria-label="Appointment confirmation" className={styles.receipt}>
         <header className={styles.successBanner}>
           <span className={styles.successIcon}>
             <Image alt="" height={51} src="/icons/booking/confirmation/success.svg" width={56} />
@@ -97,8 +98,14 @@ export function PatientBookingConfirmationScreen({ date, timeIndex }: PatientBoo
             <Button variant="neutral">Visit Us</Button>
             <Button variant="bordered">See Doctor</Button>
           </div>
-        </article>
-      </section>
+          </article>
+        </section>
+      </div>
+
+      <footer className={styles.footer}>
+        <a href="#cookie-settings">Cookie Settings</a>
+        <a href="#privacy-policy">Privacy Policy</a>
+      </footer>
     </main>
   );
 }
