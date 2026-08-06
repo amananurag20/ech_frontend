@@ -32,8 +32,8 @@
 
 .mark {
   display: block;
-  height: 38px;
-  width: 32px;
+  height: 36px;
+  width: 30px;
 }
 
 .card h1 {
@@ -65,6 +65,7 @@
   height: 36px;
   overflow: hidden;
   padding: 0 8px 0 10px;
+  position: relative;
 }
 
 .countrySelect select {
@@ -76,13 +77,18 @@
   font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
   min-width: 0;
   outline: 0;
+  padding-right: 22px;
   width: 100%;
 }
 
-.countrySelect span {
-  color: #858887;
-  font-size: 14px;
+.countryCaret {
+  height: 6px;
   pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
 }
 
 .phoneInput {

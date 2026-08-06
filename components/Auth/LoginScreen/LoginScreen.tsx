@@ -13,17 +13,53 @@ export type LoginScreenProps = {
   onPhoneLogin?: (phoneNumber: string, countryCode: string) => void;
 };
 
+const phoneRules = {
+  "+1": { digits: 10, label: "US" },
+  "+44": { digits: 10, label: "UK" },
+  "+91": { digits: 10, label: "Indian" },
+} as const;
+
+type CountryCode = keyof typeof phoneRules;
+
+function phoneDigits(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+function formatPhoneNumber(value: string, countryCode: CountryCode) {
+  const digits = phoneDigits(value).slice(0, phoneRules[countryCode].digits);
+
+  if (countryCode === "+1") {
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  }
+
+  if (countryCode === "+44") {
+    if (digits.length <= 4) return digits;
+    return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+  }
+
+  if (digits.length <= 5) return digits;
+  return `${digits.slice(0, 5)} ${digits.slice(5)}`;
+}
+
 export function LoginScreen({ onAppleLogin, onGoogleLogin, onPhoneLogin }: LoginScreenProps) {
-  const [countryCode, setCountryCode] = useState("+1");
+  const [countryCode, setCountryCode] = useState<CountryCode>("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
 
   const submitPhone = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const normalizedPhone = phoneNumber.trim();
+    const normalizedPhone = phoneDigits(phoneNumber);
+    const rule = phoneRules[countryCode];
 
     if (!normalizedPhone) {
       setError("Enter your phone number");
+      return;
+    }
+
+    if (normalizedPhone.length !== rule.digits) {
+      setError(`Enter a valid ${rule.label} phone number`);
       return;
     }
 
@@ -38,7 +74,7 @@ export function LoginScreen({ onAppleLogin, onGoogleLogin, onPhoneLogin }: Login
       </header>
 
       <section aria-labelledby="login-title" className={styles.card}>
-        <Image alt="" className={styles.mark} height={38} priority src="/logos/medqt-mark.svg" width={32} />
+        <Image alt="" className={styles.mark} height={36} priority src="/logos/medqt-mark.svg" width={30} />
         <h1 id="login-title">Log into my Account</h1>
 
         <form className={styles.form} onSubmit={submitPhone}>
@@ -47,14 +83,26 @@ export function LoginScreen({ onAppleLogin, onGoogleLogin, onPhoneLogin }: Login
             <div className={styles.countrySelect}>
               <select
                 aria-label="Country code"
-                onChange={(event) => setCountryCode(event.target.value)}
+                onChange={(event) => {
+                  const nextCountry = event.target.value as CountryCode;
+                  setCountryCode(nextCountry);
+                  setPhoneNumber((current) => formatPhoneNumber(current, nextCountry));
+                  setError("");
+                }}
                 value={countryCode}
               >
                 <option value="+1">US (+1)</option>
                 <option value="+44">UK (+44)</option>
                 <option value="+91">IN (+91)</option>
               </select>
-              <span aria-hidden>⌄</span>
+              <Image
+                alt=""
+                aria-hidden
+                className={styles.countryCaret}
+                height={6}
+                src="/icons/navigation/caret-secondary.svg"
+                width={10}
+              />
             </div>
             <FieldContainer
               aria-describedby={error ? "phone-error" : undefined}
@@ -62,7 +110,11 @@ export function LoginScreen({ onAppleLogin, onGoogleLogin, onPhoneLogin }: Login
               className={styles.phoneInput}
               id="phone-number"
               inputMode="tel"
-              onChange={(event) => setPhoneNumber(event.target.value)}
+              maxLength={14}
+              onChange={(event) => {
+                setPhoneNumber(formatPhoneNumber(event.target.value, countryCode));
+                setError("");
+              }}
               placeholder=""
               type="tel"
               value={phoneNumber}
