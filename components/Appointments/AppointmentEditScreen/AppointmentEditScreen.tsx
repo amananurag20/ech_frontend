@@ -18,10 +18,10 @@ type AppointmentEditScreenProps = {
 type Location = "Video Call" | "Phone Call" | "In-Person" | "More";
 
 const locationOptions: Array<{ icon: string; label: Location }> = [
-  { icon: "▣", label: "Video Call" },
-  { icon: "☎", label: "Phone Call" },
-  { icon: "⌖", label: "In-Person" },
-  { icon: "•••", label: "More" },
+  { icon: "/icons/appointments/editor/video.svg", label: "Video Call" },
+  { icon: "/icons/appointments/editor/phone.svg", label: "Phone Call" },
+  { icon: "/icons/appointments/editor/map-pin.svg", label: "In-Person" },
+  { icon: "/icons/appointments/editor/more.svg", label: "More" },
 ];
 
 export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditScreenProps) {
@@ -112,19 +112,28 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
 
               <label className={styles.field}>
                 <span>URL</span>
-                <input readOnly value={`medqtcare.com/appointments?type=${appointment.id}`} />
+                <span className={styles.urlReadout}>
+                  <span>medqtcare.com/appointments?type=</span>
+                  <strong>{appointment.id}</strong>
+                </span>
               </label>
 
               <label className={styles.field}>
                 <span>Description</span>
                 <span className={styles.descriptionEditor}>
                   <span className={styles.editorToolbar}>
-                    <button type="button">Normal⌄</button>
-                    <button aria-label="Bold" className={styles.boldTool} type="button">B</button>
-                    <button aria-label="Italic" className={styles.italicTool} type="button">I</button>
-                    <button aria-label="Insert link" type="button">↗</button>
+                    <button className={styles.normalTool} type="button">
+                      Normal
+                      <Image alt="" height={14} src="/icons/appointments/editor/caret.svg" width={14} />
+                    </button>
+                    <span aria-hidden className={styles.toolbarDivider} />
+                    <button aria-label="Bold" type="button"><Image alt="" height={18} src="/icons/appointments/editor/bold.svg" width={18} /></button>
+                    <button aria-label="Italic" type="button"><Image alt="" height={18} src="/icons/appointments/editor/italic.svg" width={18} /></button>
+                    <span aria-hidden className={styles.toolbarDivider} />
+                    <button aria-label="Insert link" type="button"><Image alt="" height={18} src="/icons/appointments/editor/link.svg" width={18} /></button>
                   </span>
                   <textarea onChange={(event) => setDescription(event.target.value)} value={description} />
+                  <Image alt="" className={styles.resizeNotches} height={14} src="/icons/appointments/editor/notches.svg" width={14} />
                 </span>
               </label>
 
@@ -139,7 +148,7 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
                       onClick={() => setLocation(option.label)}
                       type="button"
                     >
-                      <span aria-hidden>{option.icon}</span>
+                      <Image alt="" height={18} src={option.icon} width={18} />
                       {option.label}
                     </button>
                   ))}
@@ -148,8 +157,8 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
 
               <section className={styles.expandableSection}>
                 <button className={styles.sectionHeading} onClick={() => setLimitsOpen((open) => !open)} type="button">
-                  <span><strong>Limits &amp; Buffers</strong><small>Define how soon before and after an appointment can be booked.</small></span>
-                  <span aria-hidden>{limitsOpen ? "⌃" : "⌄"}</span>
+                  <span><strong>Limits &amp; Buffers</strong><small>Add buffer time before or after an appointment</small></span>
+                  <Image alt="" className={!limitsOpen ? styles.caretClosed : ""} height={14} src="/icons/appointments/editor/caret.svg" width={14} />
                 </button>
                 {limitsOpen ? (
                   <div className={styles.sectionFields}>
@@ -167,20 +176,22 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
 
               <section className={styles.expandableSection}>
                 <button className={styles.sectionHeading} onClick={() => setLimitedMeetingsOpen((open) => !open)} type="button">
-                  <span><strong>Limited Meetings</strong><small>Set the maximum number of meetings allowed in a period.</small></span>
-                  <span aria-hidden>{limitedMeetingsOpen ? "−" : "+"}</span>
+                  <span><strong>Limited Meetings</strong><small>Set maximum number of meetings for this appointment</small></span>
+                  <Image alt="" height={14} src="/icons/appointments/editor/plus.svg" width={14} />
                 </button>
                 {limitedMeetingsOpen ? (
                   <div className={styles.limitFields}>
                     <label className={styles.field}>
                       <span>No. of meetings</span>
-                      <select defaultValue="1"><option>1</option><option>2</option><option>3</option></select>
+                      <select defaultValue="No buffer"><option>No buffer</option><option>1</option><option>2</option><option>3</option></select>
                     </label>
                     <label className={styles.field}>
                       <span>per</span>
                       <select defaultValue="day"><option>day</option><option>week</option><option>month</option></select>
                     </label>
-                    <button aria-label="Remove limit" className={styles.removeLimit} type="button">−</button>
+                    <button aria-label="Remove limit" className={styles.removeLimit} type="button">
+                      <Image alt="" height={14} src="/icons/appointments/editor/minus.svg" width={14} />
+                    </button>
                   </div>
                 ) : null}
               </section>
