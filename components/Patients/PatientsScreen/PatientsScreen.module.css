@@ -1,0 +1,578 @@
+/* Tokens resolved from the Figma "Patients" frame (node 164:5760). */
+.page {
+  --content-primary: #191b1c;
+  --content-secondary: #535250;
+  --content-tertiary: #858887;
+  --accent-blue: #0068fe;
+  --container-fill: #d7e1fd;
+  --container-on: #142a61;
+  --gender-female: #dd1fbe;
+  --gender-male: #2954c2;
+  --stroke-10: rgba(25, 27, 28, 0.12);
+  --stroke-20: rgba(206, 205, 204, 0.72);
+
+  background: #f0eff3;
+  color: var(--content-primary);
+  min-height: 100svh;
+  overflow: auto;
+  padding: 0 16px;
+}
+
+.layout {
+  display: flex;
+  gap: 16px;
+  min-height: 100svh;
+  min-width: 980px;
+}
+
+.sidebar {
+  flex: 0 0 220px;
+  height: calc(100svh - 32px);
+  min-height: 700px;
+}
+
+.workspace {
+  background: #f9f9fa;
+  border-radius: 20px;
+  box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.breadcrumb {
+  align-items: center;
+  color: var(--content-secondary);
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--stroke-20);
+  box-sizing: border-box;
+  flex: 0 0 40px;
+  height: 40px;
+  padding: 8px 12px;
+}
+
+.breadcrumb span {
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  line-height: 16px;
+}
+
+.workspaceHeader {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.headingCopy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.headingCopy h1 {
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.44px;
+  line-height: 32px;
+  margin: 0;
+}
+
+.headingCopy p {
+  color: var(--content-tertiary);
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  line-height: 16px;
+  margin: 0;
+}
+
+/* View toggle -------------------------------------------------------------- */
+
+.viewToggle {
+  align-items: center;
+  background: rgba(118, 128, 128, 0.12);
+  border-radius: 40px;
+  display: flex;
+  flex: none;
+  gap: 0;
+  padding: 2px;
+}
+
+.viewButton {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+  width: 34px;
+}
+
+.viewButton:hover {
+  background: rgba(27, 31, 40, 0.06);
+}
+
+.viewButtonActive,
+.viewButtonActive:hover {
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(8, 27, 76, 0.12);
+}
+
+.viewButton img {
+  display: block;
+}
+
+/* Tabs --------------------------------------------------------------------- */
+
+.tabsRow {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+  height: 44px;
+  padding: 0 36px;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+  height: 44px;
+}
+
+.tab {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.15px solid transparent;
+  color: var(--content-tertiary);
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.tab:hover {
+  color: var(--content-secondary);
+}
+
+.tabActive,
+.tabActive:hover {
+  border-bottom-color: var(--content-primary);
+  color: var(--content-primary);
+}
+
+.tabLabel {
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.tabBadge {
+  background: rgba(30, 32, 32, 0.1);
+  border-radius: 8px;
+  color: var(--content-secondary);
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 480;
+  line-height: 14px;
+  padding: 4px;
+}
+
+.tabActive .tabBadge {
+  background: #191b1c;
+  color: #fafdff;
+}
+
+.sortButton {
+  align-items: center;
+  appearance: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(148, 153, 154, 0.64);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px -1px rgba(21, 21, 21, 0.16);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  transition: background-color 120ms ease;
+  width: 32px;
+}
+
+.sortButton:hover {
+  background: #f2f3f5;
+}
+
+.sortButton img {
+  display: block;
+}
+
+/* List --------------------------------------------------------------------- */
+
+.listSurface {
+  background: #f0eff3;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 16px 16px;
+  padding: 10px;
+}
+
+.row {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--stroke-10);
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 12px;
+  min-height: 76px;
+  overflow: hidden;
+  padding: 12px 28px 12px 12px;
+  transition: background-color 140ms ease, box-shadow 140ms ease;
+}
+
+.row:hover,
+.row:focus-visible {
+  background: #f9f9fa;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.16);
+  cursor: pointer;
+  outline: none;
+}
+
+.identity {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.avatar {
+  align-items: center;
+  display: inline-flex;
+  flex: none;
+  height: 52px;
+  justify-content: center;
+  width: 52px;
+}
+
+.avatar img {
+  border-radius: 50%;
+  display: block;
+  height: 45px;
+  object-fit: cover;
+  width: 45px;
+}
+
+.identityCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.identityCompact {
+  flex: none;
+  gap: 10px;
+  min-width: 0;
+  width: 100%;
+}
+
+.identityCompact .avatar {
+  height: 48px;
+  width: 48px;
+}
+
+.identityCompact .avatar img {
+  height: 40px;
+  width: 40px;
+}
+
+.identityCompact .identityCopy {
+  width: 136px;
+}
+
+.name {
+  color: var(--content-secondary);
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 480;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
+.meta {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.age {
+  color: var(--content-secondary);
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+/* The tone classes below set colour only; the dot paints itself with currentColor. */
+.metaDot {
+  background: currentColor;
+  border-radius: 50%;
+  flex: none;
+  height: 4px;
+  width: 4px;
+}
+
+.gender {
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.genderFemale {
+  color: var(--gender-female);
+}
+
+.genderMale {
+  color: var(--gender-male);
+}
+
+.genderNeutral {
+  color: var(--content-tertiary);
+}
+
+.bloodType {
+  color: var(--content-secondary);
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  margin-left: 26px;
+}
+
+.rowFields {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 34px;
+  justify-content: flex-end;
+  min-width: 0;
+  overflow: hidden;
+  padding-left: 8px;
+}
+
+.rolePill {
+  align-items: center;
+  background: var(--container-fill);
+  border-radius: 56px;
+  box-sizing: border-box;
+  color: var(--container-on);
+  display: inline-flex;
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  height: 26px;
+  line-height: 14px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.roleFullAccess {
+  background: #142a61;
+  color: #d7e1fd;
+}
+
+.roleNoAccess {
+  background: rgba(118, 128, 128, 0.16);
+  color: #858887;
+}
+
+.field {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fieldLabel {
+  color: var(--content-tertiary);
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.fieldValue {
+  color: var(--content-secondary);
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 480;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.statusField {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.statusTag {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(62, 66, 67, 0.14);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: var(--content-secondary);
+  display: inline-flex;
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  gap: 6px;
+  line-height: 14px;
+  padding: 6px 12px 6px 8px;
+  white-space: nowrap;
+}
+
+.statusDot {
+  border-radius: 50%;
+  flex: none;
+  height: 10px;
+  width: 10px;
+}
+
+.statusApproved .statusDot {
+  background: var(--accent-blue);
+}
+
+.statusPending .statusDot {
+  background: #e8973a;
+}
+
+.statusDeclined .statusDot {
+  background: #dd1010;
+}
+
+/* Grid --------------------------------------------------------------------- */
+
+.gridSurface {
+  background: #f0eff3;
+  border-radius: 20px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 16px 16px;
+  padding: 10px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  padding: 16px 12px;
+  transition: background-color 140ms ease;
+}
+
+.card:hover {
+  background: #f9f9fa;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardTags {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 4px;
+}
+
+.cardDivider {
+  border-top: 1px solid rgba(206, 205, 204, 0.72);
+  height: 0;
+  width: 100%;
+}
+
+.cardFields {
+  display: flex;
+  gap: 16px;
+  padding-left: 8px;
+}
+
+.cardFields .field {
+  align-items: flex-start;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardFields .field:first-child {
+  flex: 0 0 135px;
+}
+
+.cardFields .fieldLabel {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.profileButton {
+  background: linear-gradient(rgba(143, 150, 165, 0.08), rgba(143, 150, 165, 0.08)), #fefdff;
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  color: #535250;
+  height: 38px;
+  width: 100%;
+}
+
+.profileButton:hover {
+  background: linear-gradient(rgba(143, 150, 165, 0.14), rgba(143, 150, 165, 0.14)), #fefdff;
+}
+
+@media (max-width: 1050px) {
+  .gridSurface {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.emptyResults {
+  color: var(--content-tertiary);
+  font-family: "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 32px 0 0;
+  padding: 0 36px;
+}

@@ -1,0 +1,378 @@
+.page {
+  --content-primary: #191b1c;
+  --content-secondary: #535250;
+  --content-tertiary: #858887;
+  --stroke-10: rgba(25, 27, 28, 0.12);
+  --stroke-20: rgba(206, 205, 204, 0.72);
+  background: #f0eff3;
+  color: var(--content-primary);
+  min-height: 100svh;
+  overflow: auto;
+  padding: 0 16px;
+}
+
+.layout {
+  display: flex;
+  gap: 16px;
+  min-height: 100svh;
+  min-width: 980px;
+}
+
+.sidebar {
+  flex: 0 0 220px;
+  height: calc(100svh - 32px);
+  min-height: 700px;
+}
+
+.workspace {
+  align-self: flex-start;
+  background: #f9f9fa;
+  border-radius: 16px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin: 16px 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.breadcrumb {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--stroke-20);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 40px;
+  gap: 0;
+  height: 40px;
+  min-height: 40px;
+  padding: 8px;
+}
+
+.breadcrumb a,
+.currentCrumb {
+  align-items: center;
+  color: var(--content-secondary);
+  display: inline-flex;
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  gap: 8px;
+  line-height: 16px;
+  padding: 4px;
+  text-decoration: none;
+}
+
+.breadcrumb a {
+  flex: none;
+  gap: 8px;
+}
+
+.currentCrumb {
+  color: var(--content-primary);
+  gap: 6px;
+}
+
+.usersIcon,
+.userIcon {
+  flex: 0 0 16px;
+  height: 16px;
+  position: relative;
+  width: 16px;
+}
+
+.usersGlyph,
+.userGlyph {
+  inset: 9.36%;
+  position: absolute;
+}
+
+.caretIcon {
+  flex: 0 0 14px;
+  height: 14px;
+  position: relative;
+  width: 14px;
+}
+
+.profileSection {
+  border-bottom: 1px solid var(--stroke-10);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.patientInfo,
+.timelineSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding: 20px 28px;
+}
+
+.patientInfo {
+  border-right: 1px solid var(--stroke-10);
+}
+
+.timelineSection {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.infoHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoHeader > span {
+  color: #57565c;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.infoHeader h1,
+.timelineSection h2 {
+  color: var(--content-primary);
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 480;
+  letter-spacing: -0.44px;
+  line-height: 32px;
+  margin: 0;
+}
+
+.segmented {
+  align-items: center;
+  background: rgba(118, 128, 128, 0.12);
+  border-radius: 40px;
+  display: flex;
+  padding: 2px;
+  width: 100%;
+}
+
+.segmented button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  color: rgba(25, 27, 28, 0.64);
+  cursor: pointer;
+  flex: 1 1 0;
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 6px 8px;
+}
+
+.segmented .segmentActive {
+  background: #ffffff;
+  color: #070e11;
+}
+
+.detailsTable {
+  filter: drop-shadow(0 4px 4px rgba(30, 30, 30, 0.12));
+}
+
+.detailRow {
+  align-items: center;
+  border-bottom: 1px solid var(--stroke-10);
+  display: flex;
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+  gap: 6px;
+  line-height: 16px;
+  padding: 12px 0;
+}
+
+.detailRow:last-child {
+  border-bottom: 0;
+}
+
+.detailRow span,
+.detailRow strong {
+  flex: 1 1 0;
+}
+
+.detailRow span {
+  color: var(--content-tertiary);
+}
+
+.detailRow strong {
+  color: var(--content-primary);
+  font-weight: 480;
+  text-align: right;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timelineGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.timelineItem {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.timelineIcon {
+  align-items: center;
+  border: 1px solid rgba(133, 133, 133, 0.44);
+  border-radius: 80px;
+  display: inline-flex;
+  flex: 0 0 42px;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.timelineCopy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.timelineCopy strong {
+  color: var(--content-secondary);
+  font-size: 16px;
+  font-weight: 480;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timelineGroup:first-child .timelineCopy strong {
+  color: var(--content-primary);
+}
+
+.timelineCopy > span {
+  color: var(--content-tertiary);
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.timelineActions {
+  align-items: center;
+  display: inline-flex;
+  flex: none;
+  gap: 10px;
+  padding: 8px;
+}
+
+.timelineLine {
+  border-left: 1px solid rgba(133, 133, 133, 0.44);
+  height: 37px;
+  margin-left: 20px;
+}
+
+.recordsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 24px;
+}
+
+.recordsSection h2 {
+  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 480;
+  letter-spacing: -0.14px;
+  line-height: 24px;
+  margin: 0;
+}
+
+.recordsTable {
+  border: 1px solid rgba(62, 66, 67, 0.14);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.record {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--stroke-10);
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px 28px 12px 12px;
+}
+
+.record:last-child {
+  border-bottom: 0;
+}
+
+.recordCopy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+}
+
+.recordCopy strong {
+  color: var(--content-primary);
+  font-size: 16px;
+  font-weight: 480;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recordCopy span,
+.reference {
+  color: var(--content-secondary);
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.reference {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+.reference span {
+  color: var(--content-tertiary);
+}
+
+.reference strong {
+  font-weight: 480;
+}
+
+.contributor {
+  background: #d7e1fd;
+  border-radius: 100px;
+  color: #142a61;
+  flex: none;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 6px 12px;
+}
+
+@media (max-width: 1120px) {
+  .profileSection {
+    grid-template-columns: 1fr;
+  }
+
+  .patientInfo {
+    border-bottom: 1px solid var(--stroke-10);
+    border-right: 0;
+  }
+
+  .record {
+    flex-wrap: wrap;
+  }
+
+  .reference {
+    margin-left: 63px;
+  }
+}

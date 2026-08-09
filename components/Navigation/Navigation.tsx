@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   useState,
   type ButtonHTMLAttributes,
@@ -81,6 +82,8 @@ export function NavTab({
 }
 
 export type NavigationItem = {
+  /** Route pushed when the tab is activated. Items without one only change selection. */
+  href?: string;
   icon?: string;
   id: string;
   label: string;
@@ -105,10 +108,10 @@ export type PrimaryNavigationProps = SelectableNavigationProps & {
 
 export const defaultPrimaryItems: NavigationItem[] = [
   { id: "dashboard", label: "Dashboard", tone: "night-haze" },
-  { id: "patients", label: "Patients", tone: "sea-green", icon: "/icons/navigation/patients.svg" },
+  { id: "patients", label: "Patients", tone: "sea-green", icon: "/icons/navigation/patients.svg", href: "/patients" },
   { id: "reminders", label: "Reminders", tone: "sea-green", icon: "/icons/navigation/reminders.svg" },
   { id: "availability", label: "Availability", tone: "glaze-blue", icon: "/icons/navigation/availability.svg" },
-  { id: "appointments", label: "Appointments", tone: "glaze-blue", icon: "/icons/navigation/appointments.svg" },
+  { id: "appointments", label: "Appointments", tone: "glaze-blue", icon: "/icons/navigation/appointments.svg", href: "/appointments" },
   { id: "settings", label: "Settings", tone: "glaze-blue", icon: "/icons/navigation/settings.svg" },
 ];
 
@@ -139,6 +142,12 @@ export function PrimaryNavigation({
   onSearch,
 }: PrimaryNavigationProps) {
   const { selectedId, select } = useSelection({ activeId, defaultActiveId, onActiveChange });
+  const router = useRouter();
+
+  const activate = (item: NavigationItem) => {
+    select(item.id);
+    if (item.href) router.push(item.href);
+  };
 
   return (
     <nav aria-label="Primary" className={`${styles.navigationPanel} ${fullHeight ? styles.fullHeight : ""} ${className}`}>
@@ -168,7 +177,7 @@ export function PrimaryNavigation({
               icon={itemIcon(item)}
               key={item.id}
               label={item.label}
-              onClick={() => select(item.id)}
+              onClick={() => activate(item)}
               state={selectedId === item.id ? "selected" : "enabled"}
               subLabel={item.subLabel}
               tone={item.tone}
@@ -181,7 +190,7 @@ export function PrimaryNavigation({
               icon={itemIcon(item)}
               key={item.id}
               label={item.label}
-              onClick={() => select(item.id)}
+              onClick={() => activate(item)}
               state={selectedId === item.id ? "selected" : "enabled"}
               subLabel={item.subLabel}
               tone={item.tone}
