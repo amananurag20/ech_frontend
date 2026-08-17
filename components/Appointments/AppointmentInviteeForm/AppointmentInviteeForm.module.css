@@ -45,7 +45,6 @@
 
 .questionRow,
 .guestRow {
-  align-items: center;
   background: #fefefd;
   border: 0;
   border-bottom: 1px solid rgba(25, 27, 28, 0.12);
@@ -53,24 +52,26 @@
   color: #191b1c;
   display: flex;
   min-height: 68px;
-  padding: 0 14px 0 0;
   text-align: left;
   width: 100%;
 }
 
 .questionRow {
-  cursor: pointer;
+  align-items: stretch;
 }
 
-.questionRow:hover,
-.questionRow:focus-visible {
+.questionRow:hover {
   background: rgba(111, 111, 129, 0.08);
-  outline: 0;
 }
 
 .questionRow:hover .dragHandle,
-.questionRow:focus-visible .dragHandle {
+.questionRow:focus-within .dragHandle {
   opacity: 1;
+}
+
+.expandedRow,
+.expandedRow:hover {
+  background: #fefdff;
 }
 
 .mutedRow,
@@ -79,7 +80,9 @@
 }
 
 .guestRow {
+  align-items: center;
   border-bottom: 0;
+  padding-right: 14px;
 }
 
 .dragColumn {
@@ -111,6 +114,32 @@
   flex-direction: column;
   gap: 4px;
   min-width: 0;
+}
+
+.questionBody {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.questionSummary {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  min-height: 68px;
+  padding: 12px 14px 12px 0;
+  text-align: left;
+  width: 100%;
+}
+
+.questionSummary:focus-visible {
+  outline: 2px solid rgba(21, 134, 240, 0.72);
+  outline-offset: -2px;
 }
 
 .questionCopy strong {
@@ -155,6 +184,11 @@
   color: #007eae;
 }
 
+.name {
+  background: rgba(116, 140, 250, 0.32);
+  color: #1e6ef4;
+}
+
 .required {
   background: rgba(175, 207, 255, 0.32);
   color: #2954c2;
@@ -168,6 +202,99 @@
 
 .rowCaret {
   opacity: 0.64;
+  transition: transform 120ms ease;
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+.editBadge {
+  background: #fbfdfc;
+  border: 1px solid rgba(50, 54, 56, 0.56);
+  border-radius: 8px;
+  box-shadow: inset 1px 1px 2px rgba(104, 188, 247, 0.2), inset -1px -1px 1px rgba(8, 27, 76, 0.24);
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  padding: 6px 10px;
+}
+
+.questionEditor {
+  background: #fefefd;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 8px 16px 0;
+}
+
+.editorColumns {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.editorField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editorField > span:first-child,
+.requiredRow {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.editorField input,
+.selectControl {
+  background: rgba(253, 253, 253, 0.64);
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 8px;
+  box-sizing: border-box;
+  height: 36px;
+  width: 100%;
+}
+
+.editorField input {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  outline: none;
+  padding: 9px 10px;
+}
+
+.editorField input:focus,
+.selectControl:focus-within {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
+}
+
+.selectControl {
+  align-items: center;
+  display: flex;
+  padding-right: 10px;
+}
+
+.selectControl select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #858887;
+  flex: 1 1 auto;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 100%;
+  min-width: 0;
+  outline: none;
+  padding: 9px 10px;
+}
+
+.requiredRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.neutralToggle[aria-checked="true"] {
+  background: #26292a;
 }
 
 .addQuestion {
@@ -202,22 +329,26 @@
   padding: 16px;
 }
 
+.previewQuestion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .previewField {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.previewField > span:first-child,
-.complaintGroup h3 {
+.previewField > span:first-child {
   color: #191b1c;
   font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
   margin: 0;
 }
 
 .previewField input,
-.previewField textarea,
-.selectPreview {
+.previewField textarea {
   background: rgba(253, 253, 253, 0.64);
   border: 1px solid rgba(206, 205, 204, 0.72);
   border-radius: 8px;
@@ -229,14 +360,12 @@
   width: 100%;
 }
 
-.previewField input,
-.selectPreview {
+.previewField input {
   height: 36px;
 }
 
 .previewField input::placeholder,
-.previewField textarea::placeholder,
-.selectPreview {
+.previewField textarea::placeholder {
   color: #858887;
   opacity: 1;
 }
@@ -246,23 +375,11 @@
   resize: none;
 }
 
-.selectPreview {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-
 .formDivider {
   background: rgba(25, 27, 28, 0.12);
   display: block;
   height: 1px;
   width: 100%;
-}
-
-.complaintGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .previewActions {
@@ -280,6 +397,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .dragHandle {
+    transition: none;
+  }
+
+  .rowCaret {
     transition: none;
   }
 }
