@@ -340,10 +340,6 @@
   background: linear-gradient(rgba(27, 31, 40, 0.08), rgba(27, 31, 40, 0.08)), #2954c2;
 }
 
-.hiddenUpload {
-  display: none;
-}
-
 .recordsTable {
   border: 1px solid rgba(62, 66, 67, 0.14);
   border-radius: 16px;

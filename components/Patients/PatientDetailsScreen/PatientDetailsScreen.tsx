@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/Button";
 import { PrimaryNavigation } from "@/components/Navigation";
+import { UploadDocumentModal } from "@/components/Patients/UploadDocumentModal";
 import styles from "./PatientDetailsScreen.module.css";
 
 export type PatientDetailsData = {
@@ -23,7 +24,7 @@ const timelineItems = [
   { icon: "stethoscope", title: "Consultation with Dr. Smith", date: "13/03/2026", actionable: false },
 ] as const;
 
-const medicalRecords = [
+const initialMedicalRecords = [
   "Aakashbhai Chaudhary - Renal Doppler Ultrasound (Kidneys and renal Arteries)",
   "Aakashbhai Chaudhary - Renal Doppler Ultrasound (Kidneys and renal Arteries)",
 ];
@@ -39,7 +40,8 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 
 export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData }) {
   const [tab, setTab] = useState<"general" | "health">("general");
-  const uploadInputRef = useRef<HTMLInputElement>(null);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [medicalRecords, setMedicalRecords] = useState(initialMedicalRecords);
 
   return (
     <main className={styles.page}>
@@ -151,18 +153,11 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
                 </Button>
                 <Button
                   className={styles.uploadButton}
-                  onClick={() => uploadInputRef.current?.click()}
+                  onClick={() => setIsUploadOpen(true)}
                   variant="primary"
                 >
                   Upload Document
                 </Button>
-                <input
-                  accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                  aria-label="Upload medical document"
-                  className={styles.hiddenUpload}
-                  ref={uploadInputRef}
-                  type="file"
-                />
               </div>
             </div>
             <div className={styles.recordsTable}>
@@ -184,6 +179,17 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
           </section>
         </section>
       </div>
+      <UploadDocumentModal
+        isOpen={isUploadOpen}
+        onAddDocuments={(files, recordName) => {
+          const label = recordName.trim();
+          setMedicalRecords((records) => [
+            ...records,
+            ...files.map((file) => label || file.name),
+          ]);
+        }}
+        onClose={() => setIsUploadOpen(false)}
+      />
     </main>
   );
 }
