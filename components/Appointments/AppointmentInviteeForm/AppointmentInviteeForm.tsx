@@ -124,7 +124,7 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
 }
 
 function PreviewQuestion({ question }: { question: InviteeQuestion }) {
-  const label = `${question.label}${question.state === "required" ? "" : " (Optional)"}`;
+  const label = question.label;
 
   if (question.type === "Long Text") {
     return <label className={styles.previewField}><span>{label}</span><textarea placeholder={question.placeholder} readOnly /></label>;
@@ -139,6 +139,8 @@ function PatientFormPreview({ questions }: { questions: InviteeQuestion[] }) {
   return (
     <aside aria-label="Patient invite form preview" className={styles.previewPanel} inert>
       <div className={styles.previewShell}>
+        <span aria-hidden className={styles.previewBaseLayer} />
+        <span aria-hidden className={styles.previewBlendLayer} />
         <form className={styles.previewForm}>
           {visibleQuestions.map((question, index) => (
             <div className={styles.previewQuestion} key={question.id}>
@@ -146,11 +148,11 @@ function PatientFormPreview({ questions }: { questions: InviteeQuestion[] }) {
               <PreviewQuestion question={question} />
             </div>
           ))}
-          <div className={styles.previewActions}>
-            <Button variant="bordered">Cancel</Button>
-            <Button trailingIcon={<Image alt="" height={14} src="/icons/appointments/modal/arrow-right.svg" width={14} />} variant="neutral">Create</Button>
-          </div>
         </form>
+        <div className={styles.previewActions}>
+          <Button variant="bordered">Cancel</Button>
+          <Button trailingIcon={<Image alt="" height={14} src="/icons/appointments/modal/arrow-right.svg" width={14} />} variant="neutral">Create</Button>
+        </div>
       </div>
     </aside>
   );
