@@ -169,6 +169,7 @@
 }
 
 .receipt {
+  background: #f8f7f6;
   border: 1px solid rgba(129, 129, 129, 0.12);
   border-radius: 36px;
   box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
@@ -183,9 +184,7 @@
 }
 
 .receipt::before {
-  backdrop-filter: blur(48px);
-  background: linear-gradient(rgba(167, 167, 167, 0.64), rgba(167, 167, 167, 0.64)), rgba(208, 208, 208, 0.4);
-  background-blend-mode: color-dodge, normal;
+  background: #f8f7f6;
   border-radius: inherit;
   content: "";
   inset: 0;
