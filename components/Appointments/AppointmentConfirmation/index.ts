@@ -1,0 +1,1 @@
+export { AppointmentConfirmation } from "./AppointmentConfirmation";
