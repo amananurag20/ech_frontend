@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
 import styles from "./UploadDocumentModal.module.css";
@@ -18,6 +18,36 @@ const ACCEPTED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 function formatSize(bytes: number) {
   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+}
+
+function isImageFile(file: File) {
+  return file.type.startsWith("image/") || /\.(?:jpe?g|png)$/i.test(file.name);
+}
+
+function FileVisual({ file, view }: { file: File; view: "grid" | "list" }) {
+  const [previewUrl] = useState(() => URL.createObjectURL(file));
+
+  useEffect(() => () => URL.revokeObjectURL(previewUrl), [previewUrl]);
+
+  if (isImageFile(file)) {
+    return (
+      <span
+        aria-label={`${file.name} preview`}
+        className={view === "grid" ? styles.gridImagePreview : styles.listImagePreview}
+        role="img"
+        style={{ backgroundImage: `url(${previewUrl})` }}
+      />
+    );
+  }
+
+  if (view === "list") return <span className={styles.pdfIcon}>PDF</span>;
+
+  return (
+    <div className={`${styles.documentPreview} ${styles.pdfPreview}`}>
+      <b>PDF</b>
+      <span /><span /><span /><span /><span />
+    </div>
+  );
 }
 
 export function UploadDocumentModal({ isOpen, onAddDocuments, onClose }: UploadDocumentModalProps) {
@@ -101,13 +131,7 @@ export function UploadDocumentModal({ isOpen, onAddDocuments, onClose }: UploadD
             <div className={view === "grid" ? styles.fileGrid : styles.fileList}>
               {files.map((file, index) => (
                 <article className={styles.fileCard} key={`${file.name}-${file.size}-${index}`}>
-                  {view === "grid" ? (
-                    <div className={styles.documentPreview}>
-                      <span /><span /><span /><span /><span />
-                    </div>
-                  ) : (
-                    <span className={styles.pdfIcon}>PDF</span>
-                  )}
+                  <FileVisual file={file} view={view} />
                   <div className={styles.fileInfo}>
                     <strong>{file.name}</strong>
                     <span>{formatSize(file.size)}</span>

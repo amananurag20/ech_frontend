@@ -231,6 +231,24 @@
   width: 40px;
 }
 
+.listImagePreview,
+.gridImagePreview {
+  background-color: #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+}
+
+.listImagePreview {
+  border: 1px solid rgba(25, 27, 28, 0.08);
+  border-radius: 8px;
+  box-sizing: border-box;
+  flex: 0 0 40px;
+  height: 40px;
+  width: 40px;
+}
+
 .fileInfo {
   display: flex;
   flex: 1 1 auto;
@@ -274,7 +292,8 @@
 .fileGrid {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, 166px);
+  justify-content: start;
   width: 100%;
 }
 
@@ -282,29 +301,75 @@
   align-items: stretch;
   background: transparent;
   flex-direction: column;
-  gap: 6px;
+  gap: 16px;
   overflow: visible;
   padding: 0;
+  width: 166px;
 }
 
 .fileGrid .removeFile {
-  background: #fff;
+  background: #fafcfa;
+  border-color: rgba(177, 12, 12, 0.12);
+  height: 24px;
   position: absolute;
-  right: 6px;
-  top: 6px;
+  right: 8px;
+  top: 8px;
+  width: 24px;
   z-index: 1;
 }
 
 .documentPreview {
   background: #fff;
   border: 1px solid rgba(25, 27, 28, 0.08);
-  border-radius: 8px;
+  border-radius: 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 7px;
-  height: 116px;
+  height: 139px;
   padding: 16px 14px;
+}
+
+.gridImagePreview {
+  border: 1px solid rgba(25, 27, 28, 0.08);
+  border-radius: 16px;
+  background-size: cover;
+  box-sizing: border-box;
+  height: 139px;
+  width: 166px;
+}
+
+.fileGrid .fileInfo {
+  gap: 4px;
+  padding: 0 6px;
+}
+
+.fileGrid .fileInfo strong {
+  color: #535250;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
+.fileGrid .fileInfo span {
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.pdfPreview {
+  position: relative;
+}
+
+.pdfPreview b {
+  background: #e9152d;
+  border-radius: 4px;
+  color: #fff;
+  font: 700 9px/11px Arial, sans-serif;
+  padding: 5px 4px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .documentPreview span {
@@ -314,15 +379,15 @@
   height: 4px;
 }
 
-.documentPreview span:first-child {
+.documentPreview span:first-of-type {
   background: #2954c2;
   height: 6px;
   width: 38%;
 }
 
-.documentPreview span:nth-child(3) { width: 88%; }
-.documentPreview span:nth-child(4) { width: 74%; }
-.documentPreview span:nth-child(5) { width: 82%; }
+.documentPreview span:nth-of-type(2) { width: 88%; }
+.documentPreview span:nth-of-type(3) { width: 74%; }
+.documentPreview span:nth-of-type(4) { width: 82%; }
 
 .recordForm {
   box-sizing: border-box;
