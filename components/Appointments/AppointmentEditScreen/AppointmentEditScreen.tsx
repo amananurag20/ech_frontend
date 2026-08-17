@@ -8,12 +8,13 @@ import { AppointmentCalendar } from "@/components/Calendar/AppointmentCalendar";
 import { SecondaryNavigation } from "@/components/Navigation";
 import { Toggle } from "@/components/Toggle";
 import { AppointmentAvailability } from "../AppointmentAvailability";
+import { AppointmentInviteeForm } from "../AppointmentInviteeForm";
 import { AppointmentPreviewCard } from "../AppointmentPreviewCard";
 import type { AppointmentType } from "../appointments";
 import styles from "./AppointmentEditScreen.module.css";
 
 type AppointmentEditScreenProps = {
-  activeSection?: "basic" | "host" | "secondary-availability";
+  activeSection?: "basic" | "host" | "invitee-form" | "secondary-availability";
   appointment: AppointmentType;
   onBack?: (appointment: AppointmentType) => void;
 };
@@ -50,6 +51,7 @@ export function AppointmentEditScreen({ activeSection = "basic", appointment, on
     if (sectionId === "basic") router.push(`/appointments/${encodeURIComponent(appointment.id)}`);
     if (sectionId === "host") router.push(`/appointments/${encodeURIComponent(appointment.id)}/host`);
     if (sectionId === "secondary-availability") router.push(`/appointments/${encodeURIComponent(appointment.id)}/availability`);
+    if (sectionId === "invitee-form") router.push(`/appointments/${encodeURIComponent(appointment.id)}/invitee-form`);
   };
 
   const addAttendee = () => {
@@ -106,9 +108,11 @@ export function AppointmentEditScreen({ activeSection = "basic", appointment, on
             </div>
           </header>
 
-          <div className={`${styles.editorSurface} ${activeSection === "secondary-availability" ? styles.availabilitySurface : ""}`}>
+          <div className={`${styles.editorSurface} ${activeSection === "secondary-availability" || activeSection === "invitee-form" ? styles.fullWidthSurface : ""}`}>
             {activeSection === "secondary-availability" ? (
               <AppointmentAvailability duration={safeDuration} title={title.trim() || "Appointment"} />
+            ) : activeSection === "invitee-form" ? (
+              <AppointmentInviteeForm />
             ) : activeSection === "host" ? (
               <form className={`${styles.formPanel} ${styles.hostForm}`} onSubmit={(event) => event.preventDefault()}>
                 <section className={styles.hostGroup}>
@@ -287,7 +291,7 @@ export function AppointmentEditScreen({ activeSection = "basic", appointment, on
             </form>
             )}
 
-            {activeSection !== "secondary-availability" ? <aside aria-label="Appointment preview" className={styles.previewPanel}>
+            {activeSection !== "secondary-availability" && activeSection !== "invitee-form" ? <aside aria-label="Appointment preview" className={styles.previewPanel}>
               <div className={styles.previewStack}>
                 <AppointmentPreviewCard duration={safeDuration} title={title.trim() || "Appointment"} />
                 <AppointmentCalendar
