@@ -425,18 +425,21 @@
   border: 1px solid var(--stroke-10);
   border-radius: 12px;
   overflow: hidden;
+  padding-bottom: 12px;
 }
 
 .testResults summary {
   align-items: center;
+  background: rgba(143, 150, 165, 0.08);
   cursor: pointer;
   display: flex;
   font-size: 16px;
   justify-content: space-between;
+  letter-spacing: 0.14px;
   line-height: 20px;
   list-style: none;
   min-height: 48px;
-  padding: 12px 16px;
+  padding: 4px 14px 4px 16px;
 }
 
 .testResults summary::-webkit-details-marker {
@@ -446,52 +449,154 @@
 .resultCaret {
   border-bottom: 1.5px solid var(--content-tertiary);
   border-right: 1.5px solid var(--content-tertiary);
-  height: 8px;
+  height: 7px;
   transform: rotate(45deg) translate(-2px, 2px);
   transition: transform 120ms ease;
-  width: 8px;
+  width: 7px;
 }
 
 .testResults[open] .resultCaret {
   transform: rotate(225deg) translate(-2px, 2px);
 }
 
-.testResults dl {
-  border-top: 1px solid var(--stroke-10);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0;
-  padding: 8px 16px 16px;
+.testResultList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 12px;
 }
 
-.testResults dl div {
+.testResultItem {
+  background: #fbfdfc;
   border-bottom: 1px solid var(--stroke-10);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 0;
+  gap: 12px;
+  padding: 16px 8px;
 }
 
-.testResults dl div:nth-child(odd) {
-  padding-right: 16px;
+.testResultItem:last-child {
+  border-bottom: 0;
 }
 
-.testResults dl div:nth-child(even) {
-  border-left: 1px solid var(--stroke-10);
-  padding-left: 16px;
+.testResultItem > header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
 }
 
-.testResults dt {
-  color: var(--content-tertiary);
-  font-size: 12px;
-  line-height: 14px;
-}
-
-.testResults dd {
-  font-size: 14px;
-  line-height: 18px;
+.testResultItem h3 {
+  color: var(--content-secondary);
+  font-size: 16px;
+  font-weight: 480;
+  letter-spacing: -0.1216px;
+  line-height: normal;
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+.testResultItem dl {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.testResultItem dl > div {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.testResultItem dt {
+  color: var(--content-tertiary);
+  font-size: 14px;
+  font-weight: 480;
+  letter-spacing: -0.1064px;
+  line-height: normal;
+}
+
+.testResultItem dd {
+  color: var(--content-primary);
+  font-size: 14px;
+  font-weight: 480;
+  letter-spacing: -0.1064px;
+  line-height: normal;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.testResultItem dl > .testStatus {
+  flex: 0 0 auto;
+  gap: 4px;
+}
+
+.testStatus dd {
+  border-radius: 100px;
+  font-size: 12px;
+  letter-spacing: 0.2688px;
+  line-height: normal;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
+.testStatus .statusHigh {
+  background: rgba(177, 12, 12, 0.12);
+  color: #dd1010;
+}
+
+.testStatus .statusLow {
+  background: rgba(197, 137, 14, 0.12);
+  color: #c5890e;
+}
+
+.testStatus .statusNormal {
+  background: rgba(129, 219, 181, 0.64);
+  color: #239c69;
+}
+
+.neutralTrend,
+.trendIcon {
+  flex: 0 0 18px;
+  height: 18px;
+  position: relative;
+  width: 18px;
+}
+
+.neutralTrend {
+  align-items: center;
+  color: var(--content-tertiary);
+  display: inline-flex;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.trendIcon {
+  display: inline-block;
+}
+
+.trendLine,
+.trendHead {
+  position: absolute;
+}
+
+.trendLine {
+  left: 0;
+  top: 4px;
+}
+
+.trendHead {
+  right: 0;
+}
+
+.trendIcon[data-trend="up"] .trendHead {
+  top: 1px;
+}
+
+.trendIcon[data-trend="down"] .trendHead {
+  bottom: 1px;
 }
 
 .aiGeneratedTag {

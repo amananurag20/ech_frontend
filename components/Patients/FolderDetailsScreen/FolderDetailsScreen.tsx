@@ -11,6 +11,7 @@ import type { PatientDetailsData } from "@/components/Patients/PatientDetailsScr
 import {
   patientRecordFolders,
   type PatientRecordSource,
+  type PatientTestResult,
 } from "@/components/Patients/patientRecords";
 import styles from "./FolderDetailsScreen.module.css";
 
@@ -88,6 +89,33 @@ function MetadataRow({ accent = false, label, value }: { accent?: boolean; label
   );
 }
 
+function TestTrend({ trend = "neutral" }: { trend?: "down" | "neutral" | "up" }) {
+  if (trend === "neutral") {
+    return <span aria-label="No change" className={styles.neutralTrend}>-</span>;
+  }
+
+  const isUp = trend === "up";
+
+  return (
+    <span aria-label={isUp ? "Trending up" : "Trending down"} className={styles.trendIcon} data-trend={trend}>
+      <Image
+        alt=""
+        className={styles.trendLine}
+        height={11}
+        src={`/icons/patients/folder-details/trend-${trend}-line.svg`}
+        width={17}
+      />
+      <Image
+        alt=""
+        className={styles.trendHead}
+        height={6}
+        src={`/icons/patients/folder-details/trend-${trend}-head.svg`}
+        width={6}
+      />
+    </span>
+  );
+}
+
 export function FolderDetailsScreen({ patient, scope }: FolderDetailsScreenProps) {
   const [sources, setSources] = useState(scope.sources);
   const [selectedSourceId, setSelectedSourceId] = useState(scope.sources[0]?.id ?? "");
@@ -110,6 +138,11 @@ export function FolderDetailsScreen({ patient, scope }: FolderDetailsScreenProps
     { href: `/patients/${patient.id}/records/all`, id: "all", label: "All Sources" },
     { href: `/patients/${patient.id}/records/unfiled`, id: "unfiled", label: "Unfiled" },
   ];
+  const displayedTestResults: PatientTestResult[] = selectedSource?.testResults
+    ?? Object.entries(selectedSource?.rawData ?? {}).map(([label, value]) => ({
+      fields: [{ label: "Result", value }],
+      title: label,
+    }));
 
   return (
     <main className={styles.page}>
@@ -238,16 +271,45 @@ export function FolderDetailsScreen({ patient, scope }: FolderDetailsScreenProps
                         </dl>
                       </section>
 
-                      <details className={styles.testResults}>
+                      <details className={styles.testResults} open>
                         <summary>
-                          <span>Test Results ({String(Object.keys(selectedSource.rawData ?? {}).length).padStart(2, "0")})</span>
+                          <span>Test Results ({String(displayedTestResults.length).padStart(2, "0")})</span>
                           <span aria-hidden className={styles.resultCaret} />
                         </summary>
-                        <dl>
-                          {Object.entries(selectedSource.rawData ?? {}).map(([label, value]) => (
-                            <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+                        <div className={styles.testResultList}>
+                          {displayedTestResults.map((result) => (
+                            <article className={styles.testResultItem} key={result.title}>
+                              <header>
+                                <h3>{result.title}</h3>
+                                <TestTrend trend={result.trend} />
+                              </header>
+                              <dl>
+                                {result.fields.map((field) => (
+                                  <div key={`${result.title}-${field.label}`}>
+                                    <dt>{field.label}</dt>
+                                    <dd>{field.value}</dd>
+                                  </div>
+                                ))}
+                                {result.status ? (
+                                  <div className={styles.testStatus}>
+                                    <dt>Status</dt>
+                                    <dd
+                                      className={
+                                        result.status === "High"
+                                          ? styles.statusHigh
+                                          : result.status === "Low"
+                                            ? styles.statusLow
+                                            : styles.statusNormal
+                                      }
+                                    >
+                                      {result.status}
+                                    </dd>
+                                  </div>
+                                ) : null}
+                              </dl>
+                            </article>
                           ))}
-                        </dl>
+                        </div>
                       </details>
 
                       <section className={styles.insightSection}>

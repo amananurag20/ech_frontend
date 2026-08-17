@@ -15,10 +15,21 @@ export type PatientRecordSource = {
   rawText?: string;
   referencedBy?: string[];
   status: "Processed" | "Processing" | "Needs review";
+  testResults?: PatientTestResult[];
   title: string;
   type: "Image" | "PDF" | "Text";
   updatedAt: string;
   version: string;
+};
+
+export type PatientTestResult = {
+  fields: Array<{
+    label: string;
+    value: string;
+  }>;
+  status?: "High" | "Low" | "Normal";
+  title: string;
+  trend?: "down" | "neutral" | "up";
 };
 
 export type PatientRecordFolder = {
@@ -62,6 +73,71 @@ export const patientRecordFolders: PatientRecordFolder[] = [
         },
         referencedBy: ["Dr. Sarah Downey", "Dr. Jane Foster"],
         status: "Processed",
+        testResults: [
+          {
+            fields: [
+              { label: "Route", value: "Oral" },
+              { label: "Strength", value: "200 mg" },
+              { label: "Frequency", value: "Twice a Day" },
+            ],
+            title: "Tab. Flasyl 200 (IV)",
+            trend: "up",
+          },
+          {
+            fields: [
+              { label: "Result", value: "118 mg/dL" },
+              { label: "Reference", value: "<100" },
+            ],
+            status: "High",
+            title: "LDL Cholestrol",
+            trend: "up",
+          },
+          {
+            fields: [
+              { label: "Result", value: "45 mg/dL" },
+              { label: "Reference", value: ">40" },
+            ],
+            status: "Low",
+            title: "HDL Cholestrol",
+            trend: "neutral",
+          },
+          {
+            fields: [
+              { label: "Result", value: "134 mg/dL" },
+              { label: "Reference", value: ">40" },
+            ],
+            status: "Normal",
+            title: "Triglycerides",
+            trend: "down",
+          },
+          {
+            fields: [
+              { label: "Result", value: "118 mg/dL" },
+              { label: "Reference", value: "<100" },
+            ],
+            status: "High",
+            title: "Glucose (Fasting)",
+            trend: "up",
+          },
+          {
+            fields: [
+              { label: "Result", value: "6.2%" },
+              { label: "Reference", value: "<5.7" },
+            ],
+            status: "High",
+            title: "Hemoglobin A1C",
+            trend: "up",
+          },
+          {
+            fields: [
+              { label: "Result", value: "7.2 10³/µL" },
+              { label: "Reference", value: "4.2 - 5.4" },
+            ],
+            status: "Normal",
+            title: "White Blood Cell",
+            trend: "neutral",
+          },
+        ],
         title: renalFolderName,
         type: "PDF",
         updatedAt: "July 19, 2026",
