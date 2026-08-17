@@ -1,0 +1,256 @@
+.dialog {
+  -webkit-backdrop-filter: blur(48px);
+  backdrop-filter: blur(48px);
+  background: #f5f5f5;
+  border: 1px solid rgba(129, 129, 129, 0.12);
+  border-radius: 36px;
+  box-shadow: 0 8px 12px -8px rgba(10, 10, 14, 0.32);
+  box-sizing: border-box;
+  color: #191b1c;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  padding: 24px 20px;
+  position: relative;
+  width: min(438px, calc(100vw - 48px));
+}
+
+.header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header > div {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.header h2,
+.header p {
+  margin: 0;
+}
+
+.header h2 {
+  font: 480 20px/24px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: -0.14px;
+}
+
+.header p {
+  color: #858887;
+  font: 480 12px/15.36px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.1488px;
+  max-width: 346px;
+}
+
+.closeButton {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 24px;
+  cursor: pointer;
+  flex: 0 0 40px;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  width: 40px;
+}
+
+.closeButton:hover {
+  background: rgba(111, 111, 129, 0.08);
+}
+
+.closeButton img {
+  height: 16px;
+  left: 12px;
+  position: absolute;
+  top: 12px;
+  width: 16px;
+}
+
+.divider {
+  background: rgba(25, 27, 28, 0.12);
+  flex: 0 0 1px;
+  height: 1px;
+  width: 100%;
+}
+
+.linkField {
+  color: #535250;
+  display: flex;
+  flex-direction: column;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 6px;
+}
+
+.linkValue {
+  align-items: center;
+  border: 1px solid rgba(133, 133, 133, 0.44);
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #858887;
+  display: flex;
+  height: 36px;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 10px;
+}
+
+.linkValue > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linkValue button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  flex: 0 0 16px;
+  height: 16px;
+  padding: 0;
+  width: 16px;
+}
+
+.copyIcon,
+.copyIcon::after {
+  border: 1px solid #858887;
+  box-sizing: border-box;
+  display: block;
+  height: 9px;
+  position: relative;
+  width: 9px;
+}
+
+.copyIcon::after {
+  content: "";
+  left: 3px;
+  position: absolute;
+  top: -4px;
+}
+
+.copiedIcon {
+  align-items: center;
+  background: #28a66e;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  font: 700 10px/1 Arial, sans-serif;
+  height: 14px;
+  justify-content: center;
+  width: 14px;
+}
+
+.accessInfo {
+  background: #f0eff3;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+}
+
+.accessInfoExpanded {
+  border-radius: 20px;
+  gap: 16px;
+}
+
+.accessToggle {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #191b1c;
+  cursor: pointer;
+  display: flex;
+  font: 480 16px/20px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  justify-content: space-between;
+  letter-spacing: 0.2px;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.caret {
+  color: #535250;
+  display: inline-block;
+  font: 400 24px/16px Arial, sans-serif;
+  transform: rotate(0deg);
+  transition: transform 120ms ease;
+}
+
+.accessInfoExpanded .caret {
+  transform: rotate(90deg);
+}
+
+.accessDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.accessDetails p {
+  color: #858887;
+  font: 480 12px/15.36px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.1488px;
+  margin: 0;
+}
+
+.accessDetails ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.accessDetails li {
+  align-items: center;
+  color: #858887;
+  display: flex;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  justify-content: space-between;
+}
+
+.accessDetails li i {
+  align-items: center;
+  background: #28a66e;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  font: normal 700 8px/1 Arial, sans-serif;
+  height: 12px;
+  justify-content: center;
+  width: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+.actions > button {
+  flex: 1 1 0;
+}
+
+.copyStatus {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    transition: none;
+  }
+}

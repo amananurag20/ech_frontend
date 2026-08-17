@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/Button";
 import { PrimaryNavigation } from "@/components/Navigation";
+import { RequestAccessModal } from "@/components/Patients/RequestAccessModal";
 import { UploadDocumentModal } from "@/components/Patients/UploadDocumentModal";
 import styles from "./PatientDetailsScreen.module.css";
 
@@ -41,6 +42,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData }) {
   const [tab, setTab] = useState<"general" | "health">("general");
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isAccessOpen, setIsAccessOpen] = useState(false);
   const [medicalRecords, setMedicalRecords] = useState(initialMedicalRecords);
 
   return (
@@ -147,6 +149,7 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
                       width={16}
                     />
                   }
+                  onClick={() => setIsAccessOpen(true)}
                   variant="link"
                 >
                   Access
@@ -179,6 +182,7 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
           </section>
         </section>
       </div>
+      <RequestAccessModal isOpen={isAccessOpen} onClose={() => setIsAccessOpen(false)} />
       <UploadDocumentModal
         isOpen={isUploadOpen}
         onAddDocuments={(files, recordName) => {
