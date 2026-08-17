@@ -287,6 +287,100 @@
   box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
 }
 
+.optionsEditor {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.optionsEditor legend {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.optionRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optionRow {
+  align-items: center;
+  background: rgba(253, 253, 253, 0.64);
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  min-height: 40px;
+  padding: 4px 6px 4px 8px;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.optionRow:focus-within {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
+}
+
+.optionMarker {
+  align-items: center;
+  background: rgba(41, 84, 194, 0.1);
+  border-radius: 50%;
+  color: #2954c2;
+  display: inline-flex;
+  flex: 0 0 24px;
+  font: 480 12px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 24px;
+  justify-content: center;
+}
+
+.optionRow input {
+  background: transparent;
+  border: 0;
+  color: #191b1c;
+  flex: 1 1 auto;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 30px;
+  min-width: 0;
+  outline: 0;
+  padding: 7px 0;
+}
+
+.optionRow button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 30px;
+  height: 30px;
+  justify-content: center;
+  opacity: 0.6;
+  padding: 0;
+}
+
+.optionRow button:hover {
+  background: rgba(234, 16, 23, 0.08);
+  opacity: 1;
+}
+
+.optionRow button:focus-visible {
+  outline: 2px solid rgba(41, 84, 194, 0.4);
+  outline-offset: -2px;
+}
+
+.addOptionButton {
+  align-self: flex-start;
+}
+
 .selectControl {
   align-items: center;
   display: flex;
@@ -419,6 +513,25 @@
   justify-content: space-between;
 }
 
+.dropdownPreview select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #858887;
+  flex: 1 1 auto;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 100%;
+  min-width: 0;
+  outline: 0;
+}
+
+.dropdownPreview:focus-within,
+.previewField input:focus,
+.previewField textarea:focus {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
+}
+
 .choicePreview {
   border: 0;
   display: flex;
@@ -456,6 +569,23 @@
   width: 16px;
 }
 
+.choiceOptions label:has(input:focus-visible) {
+  border-radius: 4px;
+  outline: 2px solid rgba(41, 84, 194, 0.28);
+  outline-offset: 2px;
+}
+
+.previewFieldError input,
+.previewFieldError textarea,
+.previewFieldError .dropdownPreview {
+  border-color: #ea1017;
+}
+
+.fieldError {
+  color: #c90c12;
+  font: 480 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
 .previewField input::placeholder,
 .previewField textarea::placeholder {
   color: #858887;
@@ -484,6 +614,13 @@
   position: relative;
   width: 100%;
   z-index: 1;
+}
+
+.previewStatus {
+  color: #16845c;
+  flex: 1 1 auto;
+  font: 480 12px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  min-height: 16px;
 }
 
 @media (max-width: 1180px) {
