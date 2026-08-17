@@ -7,6 +7,8 @@ import { Modal } from "@/components/Modal";
 import styles from "./UploadDocumentModal.module.css";
 
 export type UploadDocumentModalProps = {
+  defaultRecord?: string;
+  existingRecords?: string[];
   isOpen: boolean;
   onAddDocuments?: (files: File[], recordName: string) => void;
   onClose: () => void;
@@ -50,20 +52,26 @@ function FileVisual({ file, view }: { file: File; view: "grid" | "list" }) {
   );
 }
 
-export function UploadDocumentModal({ isOpen, onAddDocuments, onClose }: UploadDocumentModalProps) {
+export function UploadDocumentModal({
+  defaultRecord = "",
+  existingRecords = ["Weekly Report", "Renal Doppler Ultrasound"],
+  isOpen,
+  onAddDocuments,
+  onClose,
+}: UploadDocumentModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [view, setView] = useState<"grid" | "list">("list");
   const [newRecord, setNewRecord] = useState("");
-  const [existingRecord, setExistingRecord] = useState("");
+  const [existingRecord, setExistingRecord] = useState(defaultRecord);
 
   const closeModal = () => {
     setFiles([]);
     setError("");
     setNewRecord("");
-    setExistingRecord("");
+    setExistingRecord(defaultRecord);
     setView("list");
     onClose();
   };
@@ -159,8 +167,9 @@ export function UploadDocumentModal({ isOpen, onAddDocuments, onClose }: UploadD
               <span>Add to Existing</span>
               <select onChange={(event) => setExistingRecord(event.target.value)} value={existingRecord}>
                 <option value="">Select a Record</option>
-                <option value="Weekly Report">Weekly Report</option>
-                <option value="Renal Doppler Ultrasound">Renal Doppler Ultrasound</option>
+                {existingRecords.map((record) => (
+                  <option key={record} value={record}>{record}</option>
+                ))}
               </select>
             </label>
           </section>

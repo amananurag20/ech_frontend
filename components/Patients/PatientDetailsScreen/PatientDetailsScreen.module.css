@@ -346,6 +346,22 @@
   overflow: hidden;
 }
 
+.recordsTable > a,
+.recordsTable > div {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.recordsTable > a:hover .record {
+  background: #f9fbfa;
+}
+
+.recordsTable > a:focus-visible {
+  outline: 2px solid rgba(21, 134, 240, 0.72);
+  outline-offset: -2px;
+}
+
 .record {
   align-items: center;
   background: #ffffff;
@@ -356,7 +372,7 @@
   padding: 12px 28px 12px 12px;
 }
 
-.record:last-child {
+.recordsTable > :last-child .record {
   border-bottom: 0;
 }
 

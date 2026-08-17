@@ -7,6 +7,7 @@ import { Button } from "@/components/Button";
 import { PrimaryNavigation } from "@/components/Navigation";
 import { RequestAccessModal } from "@/components/Patients/RequestAccessModal";
 import { UploadDocumentModal } from "@/components/Patients/UploadDocumentModal";
+import { patientRecordFolders } from "@/components/Patients/patientRecords";
 import styles from "./PatientDetailsScreen.module.css";
 
 export type PatientDetailsData = {
@@ -16,6 +17,7 @@ export type PatientDetailsData = {
   email: string;
   emergencyContact: string;
   gender: string;
+  id: string;
   name: string;
 };
 
@@ -25,10 +27,18 @@ const timelineItems = [
   { icon: "stethoscope", title: "Consultation with Dr. Smith", date: "13/03/2026", actionable: false },
 ] as const;
 
-const initialMedicalRecords = [
-  "Aakashbhai Chaudhary - Renal Doppler Ultrasound (Kidneys and renal Arteries)",
-  "Aakashbhai Chaudhary - Renal Doppler Ultrasound (Kidneys and renal Arteries)",
-];
+const initialMedicalRecords = patientRecordFolders.map((folder) => {
+  const source = folder.sources[0];
+
+  return {
+    accessLevel: source?.accessLevel ?? "Contributor",
+    createdAt: source?.createdAt ?? "",
+    id: folder.id,
+    linked: true,
+    name: folder.name,
+    referencedBy: source?.referencedBy ?? [],
+  };
+});
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -164,20 +174,32 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
               </div>
             </div>
             <div className={styles.recordsTable}>
-              {medicalRecords.map((record, index) => (
-                <article className={styles.record} key={`${record}-${index}`}>
-                  <Image alt="" height={48} src="/icons/patients/details/folder.svg" width={51} />
-                  <div className={styles.recordCopy}>
-                    <strong>{record}</strong>
-                    <span>July 19, 2026</span>
-                  </div>
-                  <div className={styles.reference}>
-                    <span>Ref. By</span>
-                    <strong>Dr. Sarah Downey, Dr.Jane Foster</strong>
-                  </div>
-                  <span className={styles.contributor}>Contributor</span>
-                </article>
-              ))}
+              {medicalRecords.map((record, index) => {
+                const content = (
+                  <article className={styles.record}>
+                    <Image alt="" height={48} src="/icons/patients/details/folder.svg" width={51} />
+                    <div className={styles.recordCopy}>
+                      <strong>{record.name}</strong>
+                      <span>{record.createdAt}</span>
+                    </div>
+                    {record.referencedBy.length ? (
+                      <div className={styles.reference}>
+                        <span>Ref. By</span>
+                        <strong>{record.referencedBy.join(", ")}</strong>
+                      </div>
+                    ) : null}
+                    <span className={styles.contributor}>{record.accessLevel}</span>
+                  </article>
+                );
+
+                return record.linked ? (
+                  <Link href={`/patients/${patient.id}/records/${record.id}`} key={record.id}>
+                    {content}
+                  </Link>
+                ) : (
+                  <div key={`${record.id}-${index}`}>{content}</div>
+                );
+              })}
             </div>
           </section>
         </section>
@@ -189,7 +211,18 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
           const label = recordName.trim();
           setMedicalRecords((records) => [
             ...records,
-            ...files.map((file) => label || file.name),
+            ...files.map((file, index) => ({
+              accessLevel: "Contributor",
+              createdAt: new Intl.DateTimeFormat("en-US", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              }).format(new Date()),
+              id: `uploaded-${file.name}-${index}`,
+              linked: false,
+              name: label || file.name,
+              referencedBy: [],
+            })),
           ]);
         }}
         onClose={() => setIsUploadOpen(false)}
