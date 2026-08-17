@@ -15,6 +15,7 @@ type InviteeQuestion = {
   description: string;
   id: string;
   label: string;
+  lastVisibleState?: Exclude<QuestionState, "hidden">;
   options?: string[];
   placeholder: string;
   state: QuestionState;
@@ -27,7 +28,7 @@ const initialQuestions: InviteeQuestion[] = [
   { description: "Email address", id: "contact", label: "Email", placeholder: "Enter your email address", state: "required", title: "Contact Information", type: "Email" },
   { description: "Reason for visit, Symptoms", id: "complaint", label: "Chief Complaint (CC)", placeholder: "Reason for visit", state: "required", title: "Chief Complaint (CC)", type: "Text" },
   { description: "Max 1000 char.", id: "notes", label: "Additional notes", placeholder: "if you anything else to add...", state: "optional", title: "Additional notes", type: "Long Text" },
-  { description: "Max 1000 char.", id: "reschedule", label: "Reason for reschedule", placeholder: "Tell us why you need to reschedule", state: "hidden", title: "Reason for reschedule", type: "Long Text" },
+  { description: "Max 1000 char.", id: "reschedule", label: "Reason for reschedule", lastVisibleState: "optional", placeholder: "Tell us why you need to reschedule", state: "hidden", title: "Reason for reschedule", type: "Long Text" },
 ];
 
 const typeOptions: InputType[] = ["Name", "Email", "Text", "Long Text", "Dropdown", "Checkbox", "Radio"];
@@ -56,12 +57,13 @@ type QuestionRowProps = {
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: (event: DragEvent<HTMLElement>) => void;
+  onDelete: () => void;
   onDrop: (event: DragEvent<HTMLElement>) => void;
   onToggle: () => void;
   question: InviteeQuestion;
 };
 
-function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDragEnter, onDragStart, onDrop, onToggle, question }: QuestionRowProps) {
+function QuestionRow({ dragging, dropTarget, expanded, onChange, onDelete, onDragEnd, onDragEnter, onDragStart, onDrop, onToggle, question }: QuestionRowProps) {
   const update = <Key extends keyof InviteeQuestion>(key: Key, value: InviteeQuestion[Key]) => {
     const nextQuestion = { ...question, [key]: value };
     if (key === "label" && question.title === question.label) nextQuestion.title = String(value);
@@ -87,6 +89,23 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
 
   const removeOption = (index: number) => {
     update("options", (question.options ?? []).filter((_, optionIndex) => optionIndex !== index));
+  };
+
+  const updateRequired = (checked: boolean) => {
+    const nextState = checked ? "required" : "optional";
+    onChange({ ...question, lastVisibleState: nextState, state: nextState });
+  };
+
+  const updateHidden = (checked: boolean) => {
+    if (checked) {
+      onChange({
+        ...question,
+        lastVisibleState: question.state === "hidden" ? question.lastVisibleState ?? "optional" : question.state,
+        state: "hidden",
+      });
+      return;
+    }
+    onChange({ ...question, state: question.lastVisibleState ?? "optional" });
   };
 
   return (
@@ -163,9 +182,19 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
               </fieldset>
             ) : null}
 
-            <div className={styles.requiredRow}>
-              <span>Make this field required</span>
-              <Toggle aria-label={`Make ${question.title} required`} checked={question.state === "required"} className={styles.neutralToggle} onCheckedChange={(checked) => update("state", checked ? "required" : "optional")} />
+            <div className={styles.fieldSettings}>
+              <div className={styles.settingRow}>
+                <span>Make this field required</span>
+                <Toggle aria-label={`Make ${question.title} required`} checked={question.state === "required"} className={styles.neutralToggle} disabled={question.state === "hidden"} onCheckedChange={updateRequired} />
+              </div>
+              <div className={styles.settingRow}>
+                <span>Hide this field</span>
+                <Toggle aria-label={`Hide ${question.title}`} checked={question.state === "hidden"} className={styles.neutralToggle} onCheckedChange={updateHidden} />
+              </div>
+              <button className={styles.deleteQuestionButton} onClick={onDelete} type="button">
+                <Image alt="" height={13} src="/icons/appointments/menu/delete.svg" width={12} />
+                <span>Delete field</span>
+              </button>
             </div>
           </div>
         ) : null}
@@ -320,6 +349,11 @@ export function AppointmentInviteeForm() {
     setQuestions((current) => current.map((question) => question.id === nextQuestion.id ? nextQuestion : question));
   };
 
+  const deleteQuestion = (questionId: string) => {
+    setQuestions((current) => current.filter((question) => question.id !== questionId));
+    setExpandedId((current) => current === questionId ? null : current);
+  };
+
   const addQuestion = () => {
     const id = `question-${crypto.randomUUID()}`;
     const newQuestion: InviteeQuestion = { description: "Add a prompt", id, label: "New question", placeholder: "Enter your answer", state: "optional", title: "New question", type: "Text" };
@@ -363,6 +397,7 @@ export function AppointmentInviteeForm() {
               expanded={expandedId === question.id}
               key={question.id}
               onChange={updateQuestion}
+              onDelete={() => deleteQuestion(question.id)}
               onDragEnd={finishDragging}
               onDragEnter={() => draggedId && setDropTargetId(question.id)}
               onDragStart={(event) => {
