@@ -45,8 +45,9 @@ export const patientRecordFolders: PatientRecordFolder[] = [
         category: "Lab report",
         createdAt: "July 19, 2026",
         findings: [
-          "Source indexing completed",
-          "Document is available to the patient care team",
+          "Elevated LDL Cholestrol (118 mg/dL)",
+          "Elevated fasting glucose (102 mg/dL)",
+          "Elevated HbA1c (6.2%) - indicates prediabetes",
         ],
         folderId: "renal-doppler-ultrasound",
         folderName: renalFolderName,

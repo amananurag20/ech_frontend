@@ -328,7 +328,13 @@ export function FolderDetailsScreen({ patient, scope }: FolderDetailsScreenProps
                       {selectedSource.findings?.length ? (
                         <div className={styles.keyFindings}>
                           <span>Key Findings</span>
-                          <ul>{findingItems(selectedSource.findings).map((finding) => <li key={finding}>{finding}</li>)}</ul>
+                          <ul>
+                            {findingItems(selectedSource.findings).map((finding, index) => (
+                              <li key={`${finding}-${index}`}>
+                                <span>{finding}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       ) : null}
                     </div>
