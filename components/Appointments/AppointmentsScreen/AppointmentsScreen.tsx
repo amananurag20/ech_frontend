@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { SearchField } from "@/components/Input";
@@ -8,21 +9,10 @@ import { Modal } from "@/components/Modal";
 import { PrimaryNavigation } from "@/components/Navigation";
 import { Tag } from "@/components/Tag";
 import { Toggle } from "@/components/Toggle";
-import { AppointmentEditScreen } from "../AppointmentEditScreen";
+import { initialAppointments, type AppointmentType } from "../appointments";
 import styles from "./AppointmentsScreen.module.css";
 
-export type AppointmentType = {
-  duration: string;
-  hidden?: boolean;
-  id: string;
-  name: string;
-};
-
-const initialAppointments: AppointmentType[] = [
-  { id: "routine", name: "Routine Visits", duration: "30m" },
-  { id: "specialty", name: "Specialty Consultation", duration: "15m", hidden: true },
-  { id: "follow-up", name: "Follow-up", duration: "10m" },
-];
+export type { AppointmentType } from "../appointments";
 
 type AppointmentsScreenProps = {
   appointments?: AppointmentType[];
@@ -380,12 +370,12 @@ function DeleteAppointmentModal({ appointment, onClose, onDelete }: DeleteAppoin
 }
 
 export function AppointmentsScreen({ appointments = initialAppointments }: AppointmentsScreenProps) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [appointmentItems, setAppointmentItems] = useState(appointments);
   const [addOpen, setAddOpen] = useState(false);
   const [duplicateTarget, setDuplicateTarget] = useState<AppointmentType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AppointmentType | null>(null);
-  const [editTarget, setEditTarget] = useState<AppointmentType | null>(null);
   const filteredAppointments = useMemo(() => {
     const query = search.trim().toLowerCase();
     return query ? appointmentItems.filter((appointment) => appointment.name.toLowerCase().includes(query)) : appointmentItems;
@@ -407,15 +397,6 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
     setAppointmentItems((items) => items.filter((appointment) => appointment.id !== deleteTarget.id));
     setDeleteTarget(null);
   };
-
-  const finishEditing = (updatedAppointment: AppointmentType) => {
-    setAppointmentItems((items) => items.map((item) => item.id === updatedAppointment.id ? updatedAppointment : item));
-    setEditTarget(null);
-  };
-
-  if (editTarget) {
-    return <AppointmentEditScreen appointment={editTarget} onBack={finishEditing} />;
-  }
 
   return (
     <main className={styles.page}>
@@ -456,7 +437,7 @@ export function AppointmentsScreen({ appointments = initialAppointments }: Appoi
                   key={appointment.id}
                   onDelete={setDeleteTarget}
                   onDuplicate={setDuplicateTarget}
-                  onEdit={setEditTarget}
+                  onEdit={(appointment) => router.push(`/appointments/${encodeURIComponent(appointment.id)}`)}
                 />
               ))}
               {filteredAppointments.length === 0 ? <p className={styles.emptyResults}>No appointments found.</p> : null}

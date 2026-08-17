@@ -1,0 +1,73 @@
+.availabilityGrid {
+  --availability-time-pane: 318px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(520px, 1fr) minmax(500px, 1fr);
+  min-height: 760px;
+  padding: 10px;
+  width: 100%;
+}
+
+.hoursPanel {
+  align-self: stretch;
+  background: #fefefd;
+  border-radius: 14px;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 16px;
+}
+
+.hoursHeader { align-items: center; display: flex; gap: 16px; justify-content: space-between; }
+.hoursCopy { display: flex; flex-direction: column; gap: 8px; }
+.hoursCopy h2 { align-items: center; color: #191b1c; display: flex; font: 480 16px/20px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; gap: 6px; letter-spacing: .2px; margin: 0; }
+.hoursCopy h2 img { display: block; }
+.hoursCopy p { color: #858887; font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; margin: 0; }
+.timezone { align-items: center; color: #535250; display: inline-flex; font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; gap: 4px; white-space: nowrap; }
+.timezone img:last-child { margin-left: 8px; }
+.divider { background: rgba(25, 27, 28, .12); height: 1px; margin: 18px 0; }
+
+.previewPanel { background: #fefbf6; border-radius: 14px; min-width: 0; overflow: hidden; padding: 128px 64px 16px 8px; position: relative; }
+.previewPanel::after {
+  background: linear-gradient(to left, rgba(254, 251, 246, 0) 0%, #fefbf6 81.298%);
+  content: "";
+  filter: blur(30px);
+  inset: 0 auto 0 0;
+  pointer-events: none;
+  position: absolute;
+  width: calc(100% - var(--availability-time-pane));
+  z-index: 2;
+}
+.previewCard { filter: drop-shadow(0 2px 4px rgba(0,0,0,.12)); margin-left: calc(100% - 698px); overflow: hidden; position: relative; width: 698px; z-index: 1; }
+.previewCard > article { border-radius: 24px; box-shadow: none; max-width: 100%; }
+.bookingPreview { align-items: stretch; background: #fefdff; border-radius: 24px; display: grid; grid-template-columns: 380px 318px; overflow: hidden; }
+.calendarPane { border-right: 1px solid rgba(133,133,133,.44); min-width: 0; overflow: hidden; }
+.calendar { min-width: 380px; }
+.timePane { box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; padding: 16px 12px; }
+.timePane header { align-items: center; display: flex; justify-content: space-between; }
+.timePane h3 { color: #191b1c; font: 480 16px/20px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; margin: 0; }
+.clockToggle { background: rgba(229,232,231,.48); border-radius: 40px; display: inline-flex; padding: 2px; }
+.clockToggle > span { background: transparent; border-radius: 40px; color: #535250; font: 480 12px/14px "Saans Medium", "Saans", sans-serif; padding: 4px 8px; }
+.clockToggle .activeClock { background: #fff; color: #191b1c; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.timeList { display: flex; flex-direction: column; gap: 8px; }
+.timeList > span { background: #f0eff3; border-radius: 8px; color: #191b1c; font: 480 14px/16px "Saans Medium", "Saans", sans-serif; min-height: 31px; padding: 7px 10px; text-align: center; }
+
+@media (max-width: 1260px) {
+  .availabilityGrid { --availability-time-pane: 240px; grid-template-columns: minmax(500px, 1fr) minmax(380px, .8fr); }
+  .bookingPreview { grid-template-columns: 380px 240px; width: 620px; }
+  .previewCard { margin-left: calc(100% - 620px); width: 620px; }
+  .previewPanel { padding-right: 28px; }
+}
+
+@media (max-width: 980px) {
+  .availabilityGrid { --availability-time-pane: 318px; display: flex; flex-direction: column; }
+  .previewPanel { padding-top: 40px; }
+  .previewCard { margin-inline: auto; max-width: 698px; width: 100%; }
+}
+
+@media (max-width: 700px) {
+  .hoursHeader { align-items: flex-start; flex-direction: column; }
+  .bookingPreview { display: flex; flex-direction: column; width: 100%; }
+  .calendarPane { border-bottom: 1px solid rgba(133,133,133,.44); border-right: 0; overflow-x: auto; }
+  .availabilityGrid { padding: 4px; }
+  .previewPanel::after { display: none; }
+}

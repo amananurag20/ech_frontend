@@ -1,18 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/Button";
 import { AppointmentCalendar } from "@/components/Calendar/AppointmentCalendar";
 import { SecondaryNavigation } from "@/components/Navigation";
 import { Toggle } from "@/components/Toggle";
+import { AppointmentAvailability } from "../AppointmentAvailability";
 import { AppointmentPreviewCard } from "../AppointmentPreviewCard";
-import type { AppointmentType } from "../AppointmentsScreen/AppointmentsScreen";
+import type { AppointmentType } from "../appointments";
 import styles from "./AppointmentEditScreen.module.css";
 
 type AppointmentEditScreenProps = {
+  activeSection?: "basic" | "host" | "secondary-availability";
   appointment: AppointmentType;
-  onBack: (appointment: AppointmentType) => void;
+  onBack?: (appointment: AppointmentType) => void;
 };
 
 type Location = "Video Call" | "Phone Call" | "In-Person" | "More";
@@ -24,13 +27,16 @@ const locationOptions: Array<{ icon: string; label: Location }> = [
   { icon: "/icons/appointments/editor/more.svg", label: "More" },
 ];
 
-export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditScreenProps) {
+export function AppointmentEditScreen({ activeSection = "basic", appointment, onBack }: AppointmentEditScreenProps) {
+  const router = useRouter();
   const initialDuration = appointment.duration.replace(/\D/g, "") || "30";
   const [title, setTitle] = useState(appointment.name);
   const [duration, setDuration] = useState(initialDuration);
   const [hidden, setHidden] = useState(Boolean(appointment.hidden));
   const [allowMultipleDurations, setAllowMultipleDurations] = useState(false);
   const [description, setDescription] = useState("A quick checkup");
+  const [attendeeDraft, setAttendeeDraft] = useState("");
+  const [attendeeEmails, setAttendeeEmails] = useState(["example@mail.com", "test@mail.com"]);
   const [location, setLocation] = useState<Location>("In-Person");
   const [limitsOpen, setLimitsOpen] = useState(true);
   const [limitedMeetingsOpen, setLimitedMeetingsOpen] = useState(true);
@@ -40,20 +46,40 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
   const previewYear = visibleMonth.getFullYear();
   const previewMonth = visibleMonth.getMonth();
 
+  const selectSection = (sectionId: string) => {
+    if (sectionId === "basic") router.push(`/appointments/${encodeURIComponent(appointment.id)}`);
+    if (sectionId === "host") router.push(`/appointments/${encodeURIComponent(appointment.id)}/host`);
+    if (sectionId === "secondary-availability") router.push(`/appointments/${encodeURIComponent(appointment.id)}/availability`);
+  };
+
+  const addAttendee = () => {
+    const email = attendeeDraft.trim();
+    if (!email || attendeeEmails.includes(email)) return;
+    setAttendeeEmails((emails) => [...emails, email]);
+    setAttendeeDraft("");
+  };
+
   const finishEditing = () => {
-    onBack({
+    const updatedAppointment = {
       ...appointment,
       duration: `${safeDuration}m`,
       hidden,
       name: title.trim() || appointment.name,
-    });
+    };
+
+    if (onBack) {
+      onBack(updatedAppointment);
+      return;
+    }
+
+    router.push("/appointments");
   };
 
   return (
     <main className={styles.page}>
       <div className={styles.layout}>
         <aside className={styles.sidebar}>
-          <SecondaryNavigation defaultActiveId="basic" onBack={finishEditing} />
+          <SecondaryNavigation activeId={activeSection} onActiveChange={selectSection} onBack={finishEditing} />
         </aside>
 
         <section aria-labelledby="appointment-editor-title" className={styles.workspace}>
@@ -80,7 +106,68 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
             </div>
           </header>
 
-          <div className={styles.editorSurface}>
+          <div className={`${styles.editorSurface} ${activeSection === "secondary-availability" ? styles.availabilitySurface : ""}`}>
+            {activeSection === "secondary-availability" ? (
+              <AppointmentAvailability duration={safeDuration} title={title.trim() || "Appointment"} />
+            ) : activeSection === "host" ? (
+              <form className={`${styles.formPanel} ${styles.hostForm}`} onSubmit={(event) => event.preventDefault()}>
+                <section className={styles.hostGroup}>
+                  <span className={styles.hostLabel}>Host</span>
+                  <div className={styles.hostIdentity}>
+                    <span aria-hidden className={styles.hostAvatar}>S</span>
+                    <span className={styles.hostCopy}>
+                      <strong>Sample</strong>
+                      <small>sample@mail.com</small>
+                    </span>
+                  </div>
+                  <button className={styles.addCohost} type="button">
+                    <span>Add Co-host</span>
+                    <span aria-hidden className={styles.addCohostIcon}>
+                      <Image alt="" height={14} src="/icons/appointments/host/plus.svg" width={14} />
+                    </span>
+                  </button>
+                </section>
+
+                <section className={styles.attendeeGroup}>
+                  <label htmlFor="attendee-email">Attendee mail</label>
+                  <div className={styles.inviteRow}>
+                    <div className={styles.attendeeInput}>
+                      {attendeeEmails.map((email, index) => (
+                        <span className={styles.emailChip} key={email}>
+                          <span
+                            aria-hidden
+                            className={styles.emailAvatar}
+                            data-tone={index % 2 === 0 ? "purple" : "blue"}
+                          >
+                            {email.charAt(0).toUpperCase()}
+                          </span>
+                          <span>{email}</span>
+                          <button
+                            aria-label={`Remove ${email}`}
+                            onClick={() => setAttendeeEmails((emails) => emails.filter((item) => item !== email))}
+                            type="button"
+                          >
+                            <Image alt="" height={9} src="/icons/appointments/host/close.svg" width={9} />
+                          </button>
+                        </span>
+                      ))}
+                      <input
+                        aria-label="Add attendee email"
+                        id="attendee-email"
+                        onChange={(event) => setAttendeeDraft(event.target.value)}
+                        onKeyDown={(event) => {
+                          if (event.key !== "Enter") return;
+                          event.preventDefault();
+                          addAttendee();
+                        }}
+                        value={attendeeDraft}
+                      />
+                    </div>
+                    <Button onClick={addAttendee} variant="primary">Send Mail</Button>
+                  </div>
+                </section>
+              </form>
+            ) : (
             <form className={styles.formPanel} onSubmit={(event) => event.preventDefault()}>
               <label className={styles.field}>
                 <span>Title</span>
@@ -124,13 +211,15 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
                   <span className={styles.editorToolbar}>
                     <button className={styles.normalTool} type="button">
                       Normal
-                      <Image alt="" height={14} src="/icons/appointments/editor/caret.svg" width={14} />
+                      <span aria-hidden className={styles.toolbarCaret}>
+                        <Image alt="" height={5} src="/icons/appointments/editor/caret.svg" width={10} />
+                      </span>
                     </button>
                     <span aria-hidden className={styles.toolbarDivider} />
-                    <button aria-label="Bold" type="button"><Image alt="" height={18} src="/icons/appointments/editor/bold.svg" width={18} /></button>
-                    <button aria-label="Italic" type="button"><Image alt="" height={18} src="/icons/appointments/editor/italic.svg" width={18} /></button>
+                    <button aria-label="Bold" type="button"><Image alt="" height={12} src="/icons/appointments/editor/bold.svg" width={10} /></button>
+                    <button aria-label="Italic" type="button"><Image alt="" height={12} src="/icons/appointments/editor/italic.svg" width={10} /></button>
                     <span aria-hidden className={styles.toolbarDivider} />
-                    <button aria-label="Insert link" type="button"><Image alt="" height={18} src="/icons/appointments/editor/link.svg" width={18} /></button>
+                    <button aria-label="Insert link" type="button"><Image alt="" height={14} src="/icons/appointments/editor/link.svg" width={16} /></button>
                   </span>
                   <textarea onChange={(event) => setDescription(event.target.value)} value={description} />
                   <Image alt="" className={styles.resizeNotches} height={14} src="/icons/appointments/editor/notches.svg" width={14} />
@@ -196,8 +285,9 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
                 ) : null}
               </section>
             </form>
+            )}
 
-            <aside aria-label="Appointment preview" className={styles.previewPanel}>
+            {activeSection !== "secondary-availability" ? <aside aria-label="Appointment preview" className={styles.previewPanel}>
               <div className={styles.previewStack}>
                 <AppointmentPreviewCard duration={safeDuration} title={title.trim() || "Appointment"} />
                 <AppointmentCalendar
@@ -214,7 +304,7 @@ export function AppointmentEditScreen({ appointment, onBack }: AppointmentEditSc
                   year={previewYear}
                 />
               </div>
-            </aside>
+            </aside> : null}
           </div>
         </section>
       </div>

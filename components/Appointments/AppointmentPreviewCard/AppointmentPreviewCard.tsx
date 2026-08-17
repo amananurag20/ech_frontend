@@ -7,6 +7,7 @@ export type AppointmentPreviewCardProps = {
   location?: string;
   timeZone?: string;
   title: string;
+  tone?: "dark" | "muted";
 };
 
 export function AppointmentPreviewCard({
@@ -14,9 +15,10 @@ export function AppointmentPreviewCard({
   location = "Medical Clinic",
   timeZone = "Asia/Singapore",
   title,
+  tone = "dark",
 }: AppointmentPreviewCardProps) {
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${tone === "muted" ? styles.muted : ""}`}>
       <div className={styles.leftColumn}>
         <div className={styles.details}>
           <div className={styles.doctor}>

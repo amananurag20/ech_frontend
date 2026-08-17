@@ -12,6 +12,15 @@
   width: 380px;
 }
 
+.muted {
+  background: rgba(23, 38, 41, 0.12);
+  color: #191b1c;
+  width: 100%;
+}
+
+.muted .doctorInfo small { color: #858887; }
+.muted .previewTag { color: #535250 !important; }
+
 .leftColumn {
   display: flex;
   flex: 1 1 auto;

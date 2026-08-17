@@ -78,6 +78,11 @@
   padding: 12px;
 }
 
+.availabilitySurface {
+  display: block;
+  padding: 2px;
+}
+
 .formPanel,
 .previewPanel {
   border-radius: 14px;
@@ -91,6 +96,179 @@
   flex-direction: column;
   gap: 20px;
   padding: 16px;
+}
+
+.hostForm {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.hostGroup,
+.attendeeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hostLabel,
+.attendeeGroup > label {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.hostIdentity {
+  align-items: center;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.hostAvatar {
+  align-items: center;
+  background: #8be1d7;
+  border-radius: 40px;
+  color: #191b1c;
+  display: inline-flex;
+  flex: 0 0 24px;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.hostCopy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hostCopy strong,
+.hostCopy small {
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hostCopy strong {
+  color: #191b1c;
+}
+
+.hostCopy small {
+  color: #858887;
+}
+
+.addCohost {
+  align-items: center;
+  align-self: flex-start;
+  background: transparent;
+  border: 0;
+  color: #2954c2;
+  cursor: pointer;
+  display: inline-flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 4px;
+  padding: 0;
+}
+
+.addCohostIcon {
+  align-items: center;
+  display: inline-flex;
+  height: 18px;
+  justify-content: center;
+  width: 18px;
+}
+
+.attendeeGroup {
+  padding: 8px 0;
+}
+
+.inviteRow {
+  align-items: flex-start;
+  display: flex;
+  gap: 10px;
+}
+
+.attendeeInput {
+  align-items: center;
+  background: rgba(253, 253, 253, 0.64);
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 38px;
+  min-width: 0;
+  padding: 6px 8px;
+}
+
+.attendeeInput:focus-within {
+  border-color: #2954c2;
+  box-shadow: 0 0 0 2px rgba(41, 84, 194, 0.12);
+}
+
+.attendeeInput > input {
+  background: transparent;
+  border: 0;
+  field-sizing: content;
+  flex: 1 1 16px;
+  font: 480 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  height: 26px;
+  min-width: 16px;
+  outline: none;
+}
+
+.emailChip {
+  align-items: center;
+  background: #fdfdff;
+  border: 1px solid rgba(206, 205, 204, 0.72);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.24);
+  color: #191b1c;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 6px;
+  padding: 4px 6px 4px 4px;
+  max-width: 100%;
+}
+
+.emailChip > span:nth-child(2) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emailAvatar {
+  align-items: center;
+  background: #cdaaec;
+  border-radius: 40px;
+  display: inline-flex;
+  height: 18px;
+  justify-content: center;
+  width: 18px;
+}
+
+.emailAvatar[data-tone="blue"] {
+  background: #aac5ec;
+}
+
+.emailChip > button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  height: 14px;
+  justify-content: center;
+  padding: 0;
+  width: 14px;
 }
 
 .previewPanel {
@@ -196,13 +374,15 @@
 .editorToolbar {
   align-items: center;
   border-bottom: 1px solid rgba(206, 205, 204, 0.72);
+  box-sizing: border-box;
   display: flex;
   gap: 8px;
-  height: 30px;
-  padding: 0 10px;
+  min-height: 31px;
+  padding: 6px 10px;
 }
 
 .editorToolbar button {
+  align-items: center;
   background: transparent;
   border: 0;
   border-radius: 4px;
@@ -210,7 +390,9 @@
   cursor: pointer;
   display: inline-flex;
   height: 18px;
+  justify-content: center;
   padding: 0;
+  width: 18px;
 }
 
 .editorToolbar button:hover { background: rgba(111, 111, 129, 0.08); }
@@ -220,6 +402,16 @@
   color: #858887;
   font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
   gap: 4px;
+  justify-content: flex-start;
+  width: auto;
+}
+
+.toolbarCaret {
+  align-items: center;
+  display: inline-flex;
+  height: 14px;
+  justify-content: center;
+  width: 14px;
 }
 
 .toolbarDivider {

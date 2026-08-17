@@ -86,27 +86,6 @@
 .title h1 { font: 480 32px/36px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; letter-spacing: -0.24px; margin: 0; }
 .title p { color: #858887; font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; margin: 0; }
 
-.schedule { display: flex; flex-direction: column; gap: 16px; width: 100%; }
-.dayRow { align-items: flex-start; display: grid; gap: 14px; grid-template-columns: 32px 100px minmax(0, 1fr) 86px; min-height: 36px; width: 100%; }
-.dayInitial { align-items: center; background: #070e11; border-radius: 40px; color: #f6f8f3; display: flex; font: 480 14px/16px "Saans Medium", "Saans", sans-serif; height: 32px; justify-content: center; margin-top: 2px; width: 32px; }
-.dayName { font: 480 18px/24px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif; letter-spacing: 0.14px; padding-top: 6px; }
-.dayTimes { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.unavailable { color: #858887; font: 480 14px/16px "Saans Medium", "Saans", sans-serif; padding: 10px; }
-.slot { align-items: center; display: grid; gap: 14px; grid-template-columns: 80px 6px 80px; }
-.slot > span { font: 480 14px/16px "Saans Medium", "Saans", sans-serif; text-align: center; }
-.timeSelect { position: relative; width: 80px; }
-.timeTrigger { align-items: center; background: #fefdff; border: 1px solid rgba(206, 205, 204, 0.72); border-radius: 8px; color: #535250; cursor: pointer; display: flex; font: 480 14px/16px "Saans Medium", "Saans", sans-serif; height: 36px; justify-content: center; padding: 9px 10px; position: relative; white-space: nowrap; width: 80px; }
-.timeTrigger:focus-visible { border-color: #2954c2; outline: 2px solid rgba(41, 84, 194, 0.2); }
-.timeMenu { background: #fefdff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,.2), 0 2px 12px -2px rgba(0,0,0,.12); box-sizing: border-box; display: flex; flex-direction: column; left: 0; max-height: 256px; overflow: hidden; padding: 2px; position: absolute; top: 40px; width: 154px; z-index: 20; }
-.timeMenu button { background: transparent; border: 0; border-radius: 8px; color: #535250; cursor: pointer; flex: 0 0 36px; font: 480 14px/16px "Saans Medium", "Saans", sans-serif; padding: 10px; text-align: left; width: 100%; }
-.timeMenu button:hover,
-.timeMenu button:focus-visible { background: rgba(133, 192, 240, 0.1); color: #191b1c; outline: none; }
-.timeMenu .selectedTime { background: linear-gradient(rgba(133, 192, 240, 0.16), rgba(133, 192, 240, 0.16)), rgba(248, 251, 249, 0.44); color: #191b1c; }
-.dayActions { align-items: center; display: flex; gap: 4px; justify-content: flex-end; padding-top: 5px; }
-.iconAction { align-items: center; background: transparent; border: 0; border-radius: 6px; cursor: pointer; display: flex; height: 26px; justify-content: center; padding: 6px; transition: background-color 120ms ease; width: 26px; }
-.iconAction:hover { background: rgba(143, 150, 165, 0.08); }
-.iconAction:focus-visible { outline: 2px solid #2954c2; outline-offset: 1px; }
-.iconAction img { display: block; height: 14px; width: 14px; }
 .continueButton { align-self: flex-start; height: 28px; margin-top: 40px; }
 .continueButton img { height: 14px; width: 14px; }
 
@@ -162,8 +141,4 @@
 
 @media (max-width: 580px) {
   .formPanel { padding: 18px 10px; }
-  .dayRow { gap: 8px; grid-template-columns: 32px minmax(70px, 1fr) auto; }
-  .dayName { font-size: 15px; }
-  .dayTimes { grid-column: 2 / 4; }
-  .dayActions { grid-column: 2 / 4; justify-content: flex-start; }
 }
