@@ -184,11 +184,12 @@ type PreviewQuestionProps = {
 function PreviewQuestion({ error, onValueChange, question, value }: PreviewQuestionProps) {
   const label = question.label;
   const options = (question.options ?? []).filter((option) => option.trim().length > 0);
+  const previewLabel = <>{label}{question.state === "required" ? <span aria-hidden className={styles.requiredMark}>*</span> : null}</>;
 
   if (question.type === "Dropdown") {
     return (
       <label className={`${styles.previewField} ${error ? styles.previewFieldError : ""}`}>
-        <span>{label}</span>
+        <span>{previewLabel}</span>
         <span className={styles.dropdownPreview}>
           <select onChange={(event) => onValueChange(event.target.value)} value={typeof value === "string" ? value : ""}>
             <option value="">{question.placeholder || "Select an option"}</option>
@@ -204,7 +205,7 @@ function PreviewQuestion({ error, onValueChange, question, value }: PreviewQuest
   if (question.type === "Checkbox" || question.type === "Radio") {
     return (
       <fieldset className={`${styles.choicePreview} ${error ? styles.previewFieldError : ""}`}>
-        <legend>{label}</legend>
+        <legend>{previewLabel}</legend>
         <div className={styles.choiceOptions}>
           {options.map((option) => {
             const selectedValues = Array.isArray(value) ? value : [];
@@ -236,7 +237,7 @@ function PreviewQuestion({ error, onValueChange, question, value }: PreviewQuest
   if (question.type === "Long Text") {
     return (
       <label className={`${styles.previewField} ${error ? styles.previewFieldError : ""}`}>
-        <span>{label}</span>
+        <span>{previewLabel}</span>
         <textarea onChange={(event) => onValueChange(event.target.value)} placeholder={question.placeholder} value={typeof value === "string" ? value : ""} />
         {error ? <small className={styles.fieldError}>This field is required</small> : null}
       </label>
@@ -245,7 +246,7 @@ function PreviewQuestion({ error, onValueChange, question, value }: PreviewQuest
 
   return (
     <label className={`${styles.previewField} ${error ? styles.previewFieldError : ""}`}>
-      <span>{label}</span>
+      <span>{previewLabel}</span>
       <input onChange={(event) => onValueChange(event.target.value)} placeholder={question.placeholder} type={question.type === "Email" ? "email" : "text"} value={typeof value === "string" ? value : ""} />
       {error ? <small className={styles.fieldError}>This field is required</small> : null}
     </label>

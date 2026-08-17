@@ -487,6 +487,11 @@
   margin: 0;
 }
 
+.requiredMark {
+  color: #ea1017;
+  margin-left: 3px;
+}
+
 .previewField input,
 .previewField textarea,
 .dropdownPreview {
