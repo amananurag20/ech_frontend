@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import type { DragEvent } from "react";
 import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Toggle } from "@/components/Toggle";
@@ -41,13 +42,19 @@ function typeClass(type: InputType) {
 }
 
 type QuestionRowProps = {
+  dragging: boolean;
+  dropTarget: boolean;
   expanded: boolean;
   onChange: (question: InviteeQuestion) => void;
+  onDragEnd: () => void;
+  onDragEnter: () => void;
+  onDragStart: (event: DragEvent<HTMLElement>) => void;
+  onDrop: (event: DragEvent<HTMLElement>) => void;
   onToggle: () => void;
   question: InviteeQuestion;
 };
 
-function QuestionRow({ expanded, onChange, onToggle, question }: QuestionRowProps) {
+function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDragEnter, onDragStart, onDrop, onToggle, question }: QuestionRowProps) {
   const update = <Key extends keyof InviteeQuestion>(key: Key, value: InviteeQuestion[Key]) => {
     const nextQuestion = { ...question, [key]: value };
     if (key === "label" && question.title === question.label) nextQuestion.title = String(value);
@@ -55,7 +62,15 @@ function QuestionRow({ expanded, onChange, onToggle, question }: QuestionRowProp
   };
 
   return (
-    <section className={`${styles.questionRow} ${expanded ? styles.expandedRow : ""} ${question.state === "hidden" ? styles.mutedRow : ""}`}>
+    <section
+      className={`${styles.questionRow} ${expanded ? styles.expandedRow : ""} ${question.state === "hidden" ? styles.mutedRow : ""} ${dragging ? styles.draggingRow : ""} ${dropTarget ? styles.dropTargetRow : ""}`}
+      draggable
+      onDragEnd={onDragEnd}
+      onDragEnter={onDragEnter}
+      onDragOver={(event) => event.preventDefault()}
+      onDragStart={onDragStart}
+      onDrop={onDrop}
+    >
       <span className={styles.dragColumn}><DragHandle /></span>
       <div className={styles.questionBody}>
         <button aria-expanded={expanded} className={styles.questionSummary} onClick={onToggle} type="button">
@@ -145,6 +160,8 @@ export function AppointmentInviteeForm() {
   const [questions, setQuestions] = useState(initialQuestions);
   const [expandedId, setExpandedId] = useState<string | null>("contact");
   const [inviteeGuests, setInviteeGuests] = useState(true);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dropTargetId, setDropTargetId] = useState<string | null>(null);
 
   const updateQuestion = (nextQuestion: InviteeQuestion) => {
     setQuestions((current) => current.map((question) => question.id === nextQuestion.id ? nextQuestion : question));
@@ -157,6 +174,30 @@ export function AppointmentInviteeForm() {
     setExpandedId(id);
   };
 
+  const finishDragging = () => {
+    setDraggedId(null);
+    setDropTargetId(null);
+  };
+
+  const moveQuestion = (targetId: string) => {
+    if (!draggedId || draggedId === targetId) {
+      finishDragging();
+      return;
+    }
+
+    setQuestions((current) => {
+      const fromIndex = current.findIndex((question) => question.id === draggedId);
+      const targetIndex = current.findIndex((question) => question.id === targetId);
+      if (fromIndex < 0 || targetIndex < 0) return current;
+
+      const nextQuestions = [...current];
+      const [movedQuestion] = nextQuestions.splice(fromIndex, 1);
+      nextQuestions.splice(targetIndex, 0, movedQuestion);
+      return nextQuestions;
+    });
+    finishDragging();
+  };
+
   return (
     <div className={styles.inviteeLayout}>
       <section className={styles.questionPanel}>
@@ -164,9 +205,22 @@ export function AppointmentInviteeForm() {
         <div className={styles.questionList}>
           {questions.map((question) => (
             <QuestionRow
+              dragging={draggedId === question.id}
+              dropTarget={dropTargetId === question.id && draggedId !== question.id}
               expanded={expandedId === question.id}
               key={question.id}
               onChange={updateQuestion}
+              onDragEnd={finishDragging}
+              onDragEnter={() => draggedId && setDropTargetId(question.id)}
+              onDragStart={(event) => {
+                setDraggedId(question.id);
+                event.dataTransfer.effectAllowed = "move";
+                event.dataTransfer.setData("text/plain", question.id);
+              }}
+              onDrop={(event) => {
+                event.preventDefault();
+                moveQuestion(question.id);
+              }}
               onToggle={() => setExpandedId((current) => current === question.id ? null : question.id)}
               question={question}
             />
