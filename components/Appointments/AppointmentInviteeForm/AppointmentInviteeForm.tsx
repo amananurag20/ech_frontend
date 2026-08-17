@@ -7,13 +7,14 @@ import { Button } from "@/components/Button";
 import { Toggle } from "@/components/Toggle";
 import styles from "./AppointmentInviteeForm.module.css";
 
-type InputType = "Email" | "Long Text" | "Name" | "Text";
+type InputType = "Checkbox" | "Dropdown" | "Email" | "Long Text" | "Name" | "Radio" | "Text";
 type QuestionState = "hidden" | "optional" | "required";
 
 type InviteeQuestion = {
   description: string;
   id: string;
   label: string;
+  options?: string[];
   placeholder: string;
   state: QuestionState;
   title: string;
@@ -28,7 +29,11 @@ const initialQuestions: InviteeQuestion[] = [
   { description: "Max 1000 char.", id: "reschedule", label: "Reason for reschedule", placeholder: "Tell us why you need to reschedule", state: "hidden", title: "Reason for reschedule", type: "Long Text" },
 ];
 
-const typeOptions: InputType[] = ["Name", "Email", "Text", "Long Text"];
+const typeOptions: InputType[] = ["Name", "Email", "Text", "Long Text", "Dropdown", "Checkbox", "Radio"];
+
+function isChoiceType(type: InputType) {
+  return type === "Dropdown" || type === "Checkbox" || type === "Radio";
+}
 
 function DragHandle() {
   return <span aria-hidden className={styles.dragHandle}>{Array.from({ length: 6 }, (_, index) => <span key={index} />)}</span>;
@@ -38,6 +43,7 @@ function typeClass(type: InputType) {
   if (type === "Email") return styles.email;
   if (type === "Name") return styles.name;
   if (type === "Long Text") return styles.longText;
+  if (isChoiceType(type)) return styles.choice;
   return styles.text;
 }
 
@@ -59,6 +65,14 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
     const nextQuestion = { ...question, [key]: value };
     if (key === "label" && question.title === question.label) nextQuestion.title = String(value);
     onChange(nextQuestion);
+  };
+
+  const updateType = (type: InputType) => {
+    onChange({
+      ...question,
+      options: isChoiceType(type) && !question.options?.length ? ["Option 1", "Option 2"] : question.options,
+      type,
+    });
   };
 
   return (
@@ -94,7 +108,7 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
             <label className={styles.editorField}>
               <span>Input type</span>
               <span className={styles.selectControl}>
-                <select onChange={(event) => update("type", event.target.value as InputType)} value={question.type}>
+                <select onChange={(event) => updateType(event.target.value as InputType)} value={question.type}>
                   {typeOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
                 <Image alt="" height={14} src="/icons/booking/caret-up-down.svg" width={14} />
@@ -112,6 +126,18 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
               </label>
             </div>
 
+            {isChoiceType(question.type) ? (
+              <label className={styles.editorField}>
+                <span>Options</span>
+                <input
+                  aria-label={`${question.title} options`}
+                  onChange={(event) => update("options", event.target.value.split(",").map((option) => option.trimStart()))}
+                  placeholder="Option 1, Option 2"
+                  value={(question.options ?? []).join(", ")}
+                />
+              </label>
+            ) : null}
+
             <div className={styles.requiredRow}>
               <span>Make this field required</span>
               <Toggle aria-label={`Make ${question.title} required`} checked={question.state === "required"} className={styles.neutralToggle} onCheckedChange={(checked) => update("state", checked ? "required" : "optional")} />
@@ -125,6 +151,35 @@ function QuestionRow({ dragging, dropTarget, expanded, onChange, onDragEnd, onDr
 
 function PreviewQuestion({ question }: { question: InviteeQuestion }) {
   const label = question.label;
+  const options = (question.options ?? []).filter((option) => option.trim().length > 0);
+
+  if (question.type === "Dropdown") {
+    return (
+      <label className={styles.previewField}>
+        <span>{label}</span>
+        <span className={styles.dropdownPreview}>
+          <span>{question.placeholder || "Select an option"}</span>
+          <Image alt="" height={14} src="/icons/booking/caret-up-down.svg" width={14} />
+        </span>
+      </label>
+    );
+  }
+
+  if (question.type === "Checkbox" || question.type === "Radio") {
+    return (
+      <fieldset className={styles.choicePreview}>
+        <legend>{label}</legend>
+        <div className={styles.choiceOptions}>
+          {options.map((option) => (
+            <label key={option}>
+              <input name={question.id} type={question.type === "Radio" ? "radio" : "checkbox"} />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    );
+  }
 
   if (question.type === "Long Text") {
     return <label className={styles.previewField}><span>{label}</span><textarea placeholder={question.placeholder} readOnly /></label>;

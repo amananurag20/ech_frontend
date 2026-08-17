@@ -198,6 +198,11 @@
   color: #007eae;
 }
 
+.choice {
+  background: rgba(205, 170, 236, 0.28);
+  color: #6942a6;
+}
+
 .name {
   background: rgba(116, 140, 250, 0.32);
   color: #1e6ef4;
@@ -389,7 +394,8 @@
 }
 
 .previewField input,
-.previewField textarea {
+.previewField textarea,
+.dropdownPreview {
   background: rgba(253, 253, 253, 0.64);
   border: 1px solid rgba(206, 205, 204, 0.72);
   border-radius: 8px;
@@ -403,6 +409,51 @@
 
 .previewField input {
   height: 36px;
+}
+
+.dropdownPreview {
+  align-items: center;
+  color: #858887;
+  display: flex;
+  height: 36px;
+  justify-content: space-between;
+}
+
+.choicePreview {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.choicePreview legend {
+  color: #191b1c;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.choiceOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choiceOptions label {
+  align-items: center;
+  color: #535250;
+  display: flex;
+  font: 480 14px/16px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 8px;
+}
+
+.choiceOptions input {
+  accent-color: #2954c2;
+  height: 16px;
+  margin: 0;
+  width: 16px;
 }
 
 .previewField input::placeholder,
