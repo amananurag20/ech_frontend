@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Button } from "@/components/Button";
 import { PrimaryNavigation } from "@/components/Navigation";
 import styles from "./PatientDetailsScreen.module.css";
 
@@ -38,6 +39,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 
 export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData }) {
   const [tab, setTab] = useState<"general" | "health">("general");
+  const uploadInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <main className={styles.page}>
@@ -130,7 +132,39 @@ export function PatientDetailsScreen({ patient }: { patient: PatientDetailsData 
           </div>
 
           <section className={styles.recordsSection}>
-            <h2>Medical Records</h2>
+            <div className={styles.recordsHeader}>
+              <h2>Medical Records</h2>
+              <div className={styles.recordActions}>
+                <Button
+                  className={styles.accessButton}
+                  leadingIcon={
+                    <Image
+                      alt=""
+                      height={16}
+                      src="/icons/patients/details/handshake.svg"
+                      width={16}
+                    />
+                  }
+                  variant="link"
+                >
+                  Access
+                </Button>
+                <Button
+                  className={styles.uploadButton}
+                  onClick={() => uploadInputRef.current?.click()}
+                  variant="primary"
+                >
+                  Upload Document
+                </Button>
+                <input
+                  accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                  aria-label="Upload medical document"
+                  className={styles.hiddenUpload}
+                  ref={uploadInputRef}
+                  type="file"
+                />
+              </div>
+            </div>
             <div className={styles.recordsTable}>
               {medicalRecords.map((record, index) => (
                 <article className={styles.record} key={`${record}-${index}`}>

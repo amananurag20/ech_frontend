@@ -168,7 +168,9 @@
 }
 
 .detailsTable {
+  box-sizing: border-box;
   filter: drop-shadow(0 4px 4px rgba(30, 30, 30, 0.12));
+  height: 286px;
 }
 
 .detailRow {
@@ -287,6 +289,59 @@
   letter-spacing: -0.14px;
   line-height: 24px;
   margin: 0;
+}
+
+.recordsHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.recordActions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.accessButton {
+  border-radius: 8px;
+  color: #2954c2;
+  gap: 4px;
+  height: 36px;
+  padding: 8px 12px 8px 10px;
+}
+
+.accessButton > span:first-child,
+.accessButton > span:first-child > * {
+  flex-basis: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.accessButton > span:last-child {
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
+.uploadButton {
+  background: #2954c2;
+  border-radius: 8px;
+  color: #f6f8f3;
+  height: 36px;
+  padding: 10px 12px;
+  width: 142px;
+}
+
+.uploadButton:hover {
+  background: linear-gradient(rgba(27, 31, 40, 0.08), rgba(27, 31, 40, 0.08)), #2954c2;
+}
+
+.hiddenUpload {
+  display: none;
 }
 
 .recordsTable {
