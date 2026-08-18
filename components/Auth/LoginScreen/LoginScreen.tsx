@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   useRef,
@@ -431,7 +430,7 @@ export function LoginScreen({
         {step !== "verification" ? (
           <div className={styles.secondaryContent}>
             <p className={styles.createAccount}>
-              Not a member yet? <Link href="/signup">Create an account</Link>
+              Not a member yet? <a href="/signup">Create an account</a>
             </p>
             <div className={styles.divider}><span>OR</span></div>
             <div className={styles.providers}>
