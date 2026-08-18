@@ -16,6 +16,7 @@ import styles from "./SignupScreen.module.css";
 
 export type SignupScreenProps = {
   onAppleSignup?: () => void | Promise<void>;
+  onEmailSignup?: (email: string, password: string) => void | Promise<void>;
   onGoogleSignup?: () => void | Promise<void>;
   onPhoneSignup?: (phoneNumber: string, countryCode: string) => void | Promise<void>;
   onRegister?: (code: string, phoneNumber: string, countryCode: string) => void | Promise<void>;
@@ -28,7 +29,7 @@ const phoneRules = {
 } as const;
 
 type CountryCode = keyof typeof phoneRules;
-type SignupStep = "options" | "phone" | "verification";
+type SignupStep = "options" | "email" | "password" | "phone" | "verification";
 
 const verificationCodeLength = 5;
 const minimumLoadingTime = 500;
@@ -61,16 +62,24 @@ function formatPhoneNumber(value: string, countryCode: CountryCode) {
 
 export function SignupScreen({
   onAppleSignup,
+  onEmailSignup,
   onGoogleSignup,
   onPhoneSignup,
   onRegister,
 }: SignupScreenProps) {
   const router = useRouter();
   const [step, setStep] = useState<SignupStep>("options");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [countryCode, setCountryCode] = useState<CountryCode>("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
   const [isPhoneSubmitting, setIsPhoneSubmitting] = useState(false);
+  const [isEmailSubmitting, setIsEmailSubmitting] = useState(false);
+  const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(
     Array(verificationCodeLength).fill(""),
@@ -79,6 +88,17 @@ export function SignupScreen({
   const normalizedPhoneNumber = phoneDigits(phoneNumber);
   const isPhoneValid = normalizedPhoneNumber.length === phoneRules[countryCode].digits;
   const isVerificationComplete = verificationCode.every((digit) => digit.length === 1);
+  const normalizedEmail = email.trim();
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
+  const passwordRules = [
+    { label: "At least 8 characters", met: password.length >= 8 },
+    { label: "Must contain a special character (! @ # $ &)", met: /[!@#$&]/.test(password) },
+    { label: "At least one number", met: /\d/.test(password) },
+  ];
+  const passwordScore = passwordRules.filter((rule) => rule.met).length;
+  const passwordStrength = passwordScore === 3 ? "Strong" : passwordScore === 2 ? "Medium" : "Weak";
+  const isPasswordValid = passwordScore === passwordRules.length;
+  const canContinueWithPassword = isPasswordValid && confirmPassword.length > 0 && password === confirmPassword;
 
   const showOptions = () => {
     setError("");
@@ -88,12 +108,55 @@ export function SignupScreen({
 
   const showPreviousStep = () => {
     setError("");
+    if (step === "password") {
+      setStep("email");
+      return;
+    }
     if (step === "verification") {
       setVerificationCode(Array(verificationCodeLength).fill(""));
       setStep("phone");
       return;
     }
     showOptions();
+  };
+
+  const submitEmail = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isEmailValid) {
+      setError("Enter a valid email address");
+      return;
+    }
+
+    setError("");
+    setIsEmailSubmitting(true);
+    try {
+      await waitForLoadingCue();
+      setStep("password");
+    } finally {
+      setIsEmailSubmitting(false);
+    }
+  };
+
+  const submitPassword = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!canContinueWithPassword) {
+      setError(password !== confirmPassword ? "Passwords do not match" : "Complete all password requirements");
+      return;
+    }
+
+    setError("");
+    setIsPasswordSubmitting(true);
+    try {
+      await Promise.all([
+        Promise.resolve(onEmailSignup?.(normalizedEmail, password)),
+        waitForLoadingCue(),
+      ]);
+      router.push("/signup/profile");
+    } catch {
+      setError("Unable to create your account. Try again.");
+    } finally {
+      setIsPasswordSubmitting(false);
+    }
   };
 
   const submitPhone = async (event: FormEvent<HTMLFormElement>) => {
@@ -207,14 +270,24 @@ export function SignupScreen({
 
                   <div className={styles.divider}><span>OR</span></div>
 
-                  <Button
-                    className={styles.actionButton}
-                    leadingIcon={<Image alt="" height={16} src="/icons/auth/phone.svg" width={16} />}
-                    onClick={() => setStep("phone")}
-                    variant="bordered"
-                  >
-                    Continue with Phone Number
-                  </Button>
+                  <div className={styles.signupMethods}>
+                    <Button
+                      className={styles.actionButton}
+                      leadingIcon={<span aria-hidden className={styles.mailIcon} />}
+                      onClick={() => setStep("email")}
+                      variant="bordered"
+                    >
+                      Continue with Email
+                    </Button>
+                    <Button
+                      className={styles.actionButton}
+                      leadingIcon={<Image alt="" height={16} src="/icons/auth/phone.svg" width={16} />}
+                      onClick={() => setStep("phone")}
+                      variant="bordered"
+                    >
+                      Continue with Phone Number
+                    </Button>
+                  </div>
                 </div>
 
                 <p className={styles.signInCopy}>
@@ -233,7 +306,139 @@ export function SignupScreen({
                 </Button>
 
                 <div className={styles.flowFocus}>
-                  {step === "phone" ? (
+                  {step === "email" ? (
+                    <>
+                      <div className={styles.flowTitle}>
+                        <h1 id="signup-title">Create your MedQT Account</h1>
+                        <p>Manage your patient appointments, follow ups and much more</p>
+                      </div>
+
+                      <form className={styles.flowForm} onSubmit={submitEmail}>
+                        <div className={styles.emailField}>
+                          <label htmlFor="signup-email">Email</label>
+                          <FieldContainer
+                            aria-describedby={error ? "signup-email-error" : undefined}
+                            aria-invalid={Boolean(error)}
+                            autoComplete="email"
+                            className={styles.emailInput}
+                            id="signup-email"
+                            onChange={(event) => {
+                              setEmail(event.target.value);
+                              setError("");
+                            }}
+                            placeholder="Enter your mail address"
+                            state={isEmailSubmitting ? "disabled" : "enabled"}
+                            type="email"
+                            value={email}
+                          />
+                        </div>
+                        <p aria-live="polite" className={styles.error} id="signup-email-error">{error}</p>
+                        <Button
+                          className={`${styles.emailAction} ${!isEmailValid || isEmailSubmitting ? styles.disabledFlowAction : ""}`}
+                          disabled={!isEmailValid || isEmailSubmitting}
+                          state={!isEmailValid || isEmailSubmitting ? "disabled" : "enabled"}
+                          type="submit"
+                          variant="primary"
+                        >
+                          {isEmailSubmitting ? "Continuing..." : "Continue with Email"}
+                        </Button>
+                      </form>
+                    </>
+                  ) : step === "password" ? (
+                    <>
+                      <div className={styles.flowTitle}>
+                        <h1 id="signup-title">Set up a Password</h1>
+                        <p>You will need a password to login securely</p>
+                      </div>
+
+                      <form className={`${styles.flowForm} ${styles.passwordForm}`} onSubmit={submitPassword}>
+                        <div className={styles.passwordField}>
+                          <label htmlFor="signup-password">Password</label>
+                          <div className={styles.passwordRow}>
+                            <div className={styles.passwordInputWrap}>
+                              <input
+                                autoComplete="new-password"
+                                disabled={isPasswordSubmitting}
+                                id="signup-password"
+                                onChange={(event) => {
+                                  setPassword(event.target.value);
+                                  setError("");
+                                }}
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                              />
+                              <button
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                className={styles.eyeButton}
+                                onClick={() => setShowPassword((current) => !current)}
+                                type="button"
+                              >
+                                <span aria-hidden className={`${styles.eyeIcon} ${showPassword ? styles.eyeIconVisible : ""}`} />
+                              </button>
+                            </div>
+                            {password ? (
+                              <span className={`${styles.strengthPill} ${styles[`strength${passwordStrength}`]}`}>
+                                <span aria-hidden className={styles.strengthDot} />
+                                {passwordStrength}
+                              </span>
+                            ) : null}
+                          </div>
+                        </div>
+
+                        <div className={styles.passwordChecklist}>
+                          <p>Password strength</p>
+                          <ul>
+                            {passwordRules.map((rule) => (
+                              <li className={rule.met ? styles.ruleMet : styles.ruleUnmet} key={rule.label}>
+                                <span aria-hidden>{rule.met ? "✓" : "×"}</span>
+                                {rule.label}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className={styles.passwordField}>
+                          <label htmlFor="signup-confirm-password">Confirm Password</label>
+                          <div className={styles.passwordInputWrap}>
+                            <input
+                              aria-invalid={Boolean(confirmPassword) && confirmPassword !== password}
+                              autoComplete="new-password"
+                              disabled={isPasswordSubmitting}
+                              id="signup-confirm-password"
+                              onChange={(event) => {
+                                setConfirmPassword(event.target.value);
+                                setError("");
+                              }}
+                              type={showConfirmPassword ? "text" : "password"}
+                              value={confirmPassword}
+                            />
+                            <button
+                              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                              className={styles.eyeButton}
+                              onClick={() => setShowConfirmPassword((current) => !current)}
+                              type="button"
+                            >
+                              <span aria-hidden className={`${styles.eyeIcon} ${showConfirmPassword ? styles.eyeIconVisible : ""}`} />
+                            </button>
+                          </div>
+                        </div>
+
+                        <p aria-live="polite" className={`${styles.error} ${styles.passwordError}`}>{error}</p>
+                        <Button
+                          className={`${styles.flowAction} ${styles.passwordAction} ${!canContinueWithPassword || isPasswordSubmitting ? styles.disabledFlowAction : ""}`}
+                          disabled={!canContinueWithPassword || isPasswordSubmitting}
+                          state={!canContinueWithPassword || isPasswordSubmitting ? "disabled" : "enabled"}
+                          trailingIcon={isPasswordSubmitting
+                            ? <span aria-hidden className={styles.inlineSpinner} />
+                            : <Image alt="" height={14} src="/icons/auth/arrow-right.svg" width={14} />}
+                          type="submit"
+                          variant="primary"
+                        >
+                          Continue
+                        </Button>
+                      </form>
+                    </>
+                  ) : step === "phone" ? (
                     <>
                       <div className={styles.flowTitle}>
                         <h1 id="signup-title">Enter your Phone Number</h1>
@@ -362,7 +567,13 @@ export function SignupScreen({
                   )}
                 </div>
 
-                <button className={styles.tryAnother} onClick={showOptions} type="button">Try another way</button>
+                {step === "email" ? (
+                  <p className={styles.flowSignInCopy}>
+                    Already have an account? <Link href="/login">Sign In</Link>
+                  </p>
+                ) : (
+                  <button className={styles.tryAnother} onClick={showOptions} type="button">Try another way</button>
+                )}
               </>
             )}
           </div>

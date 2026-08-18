@@ -1,7 +1,12 @@
 .page {
+  align-items: center;
   background: #f1f1f5;
+  box-sizing: border-box;
   color: #191b1c;
+  display: flex;
+  justify-content: center;
   min-height: 100svh;
+  padding: 24px;
   position: relative;
 }
 
@@ -17,21 +22,21 @@
 }
 
 .card {
-  background: #fbfbfd;
+  background: #fdfdff;
   border-radius: 24px;
-  box-shadow: 0 12px 24px rgba(25, 27, 28, 0.08), 0 2px 6px rgba(25, 27, 28, 0.08);
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.16);
   box-sizing: border-box;
-  left: 50%;
-  height: 512px;
-  padding: 32px;
-  position: absolute;
-  top: calc(50% + 20px);
-  transform: translate(-50%, -50%);
-  width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px;
+  width: min(440px, 100%);
 }
 
-.verificationCard {
-  height: 400px;
+.primaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .mark {
@@ -41,36 +46,114 @@
 }
 
 .card h1 {
-  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
-  font-size: 28px;
-  font-weight: 480;
+  color: #191b1c;
+  font: 480 28px/32px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
   letter-spacing: -0.56px;
-  line-height: 32px;
-  margin: 34px 0 28px;
+  margin: 0;
 }
 
-.form label {
-  display: block;
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.segmentedControl {
+  background: #e4e5e5;
+  border-radius: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2px;
+}
+
+.segmentedControl button {
+  background: transparent;
+  border: 0;
+  border-radius: 40px;
+  color: #5b5d5c;
+  cursor: pointer;
   font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
-  margin-bottom: 8px;
+  min-height: 28px;
+  padding: 6px 20px;
+  transition: background-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
+}
+
+.segmentedControl button:hover:not(.segmentActive) {
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.segmentedControl button.segmentActive {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(25, 27, 28, 0.08);
+  color: #191b1c;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fieldGroup label {
+  color: #191b1c;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.input,
+.phoneInput {
+  background: #fdfdff;
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  min-width: 0;
+}
+
+.input input::selection,
+.phoneInput input::selection {
+  background: transparent;
+  color: #191b1c;
+}
+
+.input input:-webkit-autofill,
+.input input:-webkit-autofill:focus,
+.input input:-webkit-autofill:hover,
+.phoneInput input:-webkit-autofill,
+.phoneInput input:-webkit-autofill:focus,
+.phoneInput input:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0 1000px #fdfdff inset;
+  -webkit-text-fill-color: #191b1c;
+  caret-color: #191b1c;
 }
 
 .phoneRow {
-  display: grid;
+  display: flex;
   gap: 8px;
-  grid-template-columns: 84px 1fr;
+  min-width: 0;
   position: relative;
+}
+
+.phoneInput {
+  flex: 1;
 }
 
 .countrySelect {
   align-items: center;
+  background: #fdfdff;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 1px rgba(133, 133, 133, 0.44);
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
   display: flex;
+  flex: 0 0 auto;
   height: 36px;
   overflow: hidden;
   padding: 0 8px 0 10px;
   position: relative;
+  width: 84px;
 }
 
 .countrySelect select {
@@ -96,38 +179,47 @@
   width: 10px;
 }
 
-.phoneInput {
+.continueButton,
+.providerButton {
   box-sizing: border-box;
-  width: 296px;
+  height: 40px;
+  width: 100%;
 }
 
-.error {
-  color: #dd1010;
-  font: 400 11px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  height: 16px;
-  margin: 3px 0 6px;
-}
-
-.continueButton {
-  box-sizing: border-box;
-  height: 32px;
-  width: 376px;
-}
-
-button.disabledAction:disabled {
+button.continueButton:disabled,
+button.verifyButton:disabled {
   background: #e6ebf7;
   box-shadow: inset 0 0 0 1px rgba(41, 84, 194, 0.08);
   color: #8796bd;
 }
 
-.disabledAction img {
-  filter: brightness(0) saturate(100%) invert(62%) sepia(15%) saturate(925%) hue-rotate(187deg) brightness(94%) contrast(87%);
-  opacity: 1;
+.error {
+  color: #dd1010;
+  font: 400 11px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin: -14px 0 -12px;
+  min-height: 14px;
+}
+
+.changeEmail {
+  align-self: center;
+  background: transparent;
+  border: 0;
+  color: #2954c2;
+  cursor: pointer;
+  font: 480 12px/14px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin-top: -10px;
+  padding: 0;
+}
+
+.secondaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .createAccount {
   font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
-  margin: 24px 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -136,14 +228,17 @@ button.disabledAction:disabled {
   text-decoration: none;
 }
 
-.createAccount a:hover { text-decoration: underline; }
+.createAccount a:hover,
+.changeEmail:hover {
+  text-decoration: underline;
+}
 
 .divider {
   align-items: center;
   color: #858887;
   display: flex;
   font: 400 12px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  gap: 24px;
+  gap: 34px;
 }
 
 .divider::before,
@@ -156,16 +251,12 @@ button.disabledAction:disabled {
 .providers {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 14px;
 }
 
 .providerButton {
-  background: #fbfbfd;
+  background: #fdfdff;
   box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
-  box-sizing: border-box;
-  height: 40px;
-  width: 376px;
 }
 
 .providerButton > span:first-child {
@@ -176,14 +267,7 @@ button.disabledAction:disabled {
 
 .providerButton > span:first-child > * {
   height: 18px;
-  width: auto;
-}
-
-.verificationCard h1 {
-  font-size: 32px;
-  letter-spacing: -0.64px;
-  line-height: 36px;
-  margin: 38px 0 12px;
+  width: 18px;
 }
 
 .verificationCopy {
@@ -197,7 +281,6 @@ button.disabledAction:disabled {
 
 .verificationCopy strong {
   color: #191b1c;
-  font-family: "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
   font-weight: 480;
 }
 
@@ -212,22 +295,9 @@ button.disabledAction:disabled {
   text-underline-offset: 2px;
 }
 
-.verificationForm {
-  margin-top: 56px;
-}
-
-.verificationForm > label {
-  display: block;
-  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
-  margin-bottom: 6px;
-}
-
 .codeInputs {
-  display: grid;
+  display: flex;
   gap: 8px;
-  grid-auto-columns: 34px;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(5, 44px);
 }
 
 .codeInputs input {
@@ -248,6 +318,7 @@ button.disabledAction:disabled {
 .codeInputs input:focus {
   background: #fafcfa;
   box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56), inset 0 0 0 2px rgba(60, 137, 251, 0.4), 0 0 0 2px rgba(35, 30, 98, 0.12);
+  color: #191b1c;
 }
 
 .codeInputsComplete input,
@@ -256,31 +327,14 @@ button.disabledAction:disabled {
   box-shadow: inset 0 0 0 1px rgba(50, 54, 56, 0.56);
 }
 
-.codeInputs input:disabled {
-  cursor: default;
+.verifyButton {
+  align-self: flex-start;
+  height: 28px;
 }
 
-.loader {
-  align-items: center;
-  display: inline-flex;
-  height: 44px;
-  justify-content: center;
-  padding: 0 8px;
-  width: 34px;
-}
-
-.loader img {
+.loaderIcon {
   animation: login-loader-spin 800ms linear infinite;
   display: block;
-  height: 18px;
-  width: 18px;
-}
-
-.phoneLoader {
-  height: 36px;
-  left: calc(100% + 2px);
-  position: absolute;
-  top: 0;
 }
 
 @keyframes login-loader-spin {
@@ -288,36 +342,38 @@ button.disabledAction:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .loader img { animation: none; }
-}
-
-.verificationError {
-  color: #dd1010;
-  font: 400 11px/14px "Saans", var(--font-geist-sans), Arial, sans-serif;
-  height: 16px;
-  margin: 4px 0 4px;
-}
-
-.verifyButton {
-  box-sizing: border-box;
-  height: 28px;
-  width: 70px;
+  .segmentedControl button { transition: none; }
+  .loaderIcon { animation: none; }
 }
 
 @media (max-width: 560px) {
-  .header { left: 24px; top: 24px; }
-  .card {
-    border-radius: 20px;
-    min-height: 0;
-    padding: 28px 24px;
-    top: 54%;
-    width: calc(100% - 32px);
+  .page {
+    align-items: flex-start;
+    padding: 16px;
   }
-  .verificationCard { height: auto; }
-  .codeInputs { gap: 8px; }
-  .codeInputs input { width: 100%; }
-  .phoneRow { grid-template-columns: 84px minmax(0, 1fr); }
-  .phoneInput,
-  .continueButton,
-  .providerButton { width: 100%; }
+
+  .header {
+    left: 24px;
+    top: 24px;
+  }
+
+  .card {
+    margin: auto 0;
+    padding: 24px;
+  }
+
+  .card h1 {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .codeInputs {
+    gap: 6px;
+  }
+
+  .codeInputs input {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
 }

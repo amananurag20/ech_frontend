@@ -71,11 +71,39 @@
   margin-top: 60px;
 }
 
+.signupMethods {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .googleButton,
 .actionButton {
   box-sizing: border-box;
   height: 40px;
   width: 100%;
+}
+
+.mailIcon {
+  border: 1.25px solid currentColor;
+  border-radius: 2px;
+  box-sizing: border-box;
+  display: block;
+  height: 12px;
+  position: relative;
+  width: 15px;
+}
+
+.mailIcon::after {
+  border-bottom: 1.25px solid currentColor;
+  border-left: 1.25px solid currentColor;
+  content: "";
+  height: 7px;
+  left: 3px;
+  position: absolute;
+  top: -2px;
+  transform: rotate(-45deg);
+  width: 7px;
 }
 
 .actionButton {
@@ -207,6 +235,234 @@
   gap: 24px;
   position: relative;
   width: 100%;
+}
+
+.emailField,
+.passwordField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.emailField label,
+.passwordField label {
+  color: #191b1c;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+}
+
+.emailInput {
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  width: 100%;
+}
+
+.emailInput input,
+.passwordInputWrap input {
+  -webkit-text-fill-color: #191b1c;
+  caret-color: #2954c2;
+}
+
+.emailInput input::selection,
+.passwordInputWrap input::selection {
+  background: rgba(41, 84, 194, 0.16);
+}
+
+.emailInput input:-webkit-autofill,
+.emailInput input:-webkit-autofill:focus,
+.passwordInputWrap input:-webkit-autofill,
+.passwordInputWrap input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #fbfbfd inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+.emailAction {
+  height: 40px;
+  width: 100%;
+}
+
+.passwordForm {
+  gap: 24px;
+}
+
+.passwordRow {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.passwordInputWrap {
+  align-items: center;
+  background: #fbfbfd;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  display: flex;
+  flex: 1;
+  height: 36px;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.passwordInputWrap:focus-within {
+  box-shadow: inset 0 0 0 1px #2954c2, 0 0 0 2px rgba(41, 84, 194, 0.1);
+}
+
+.passwordInputWrap input {
+  background: transparent;
+  border: 0;
+  color: #191b1c;
+  flex: 1;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  min-width: 0;
+  outline: 0;
+  padding: 0;
+}
+
+.eyeButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #858887;
+  cursor: pointer;
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  padding: 5px;
+  width: 24px;
+}
+
+.eyeIcon {
+  border: 1.25px solid currentColor;
+  border-radius: 50% 0 50% 0;
+  display: block;
+  height: 9px;
+  position: relative;
+  transform: rotate(45deg);
+  width: 9px;
+}
+
+.eyeIcon::after {
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+  height: 3px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 3px;
+}
+
+.eyeIcon:not(.eyeIconVisible)::before {
+  background: #fbfbfd;
+  border-top: 1.25px solid currentColor;
+  content: "";
+  height: 4px;
+  left: -2px;
+  position: absolute;
+  top: 3px;
+  transform: rotate(-45deg);
+  width: 13px;
+  z-index: 1;
+}
+
+.strengthPill {
+  align-items: center;
+  border-radius: 56px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font: 480 12px/14px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 4px;
+  height: 28px;
+  padding: 0 10px;
+}
+
+.strengthDot {
+  background: currentColor;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 6px;
+}
+
+.strengthWeak {
+  background: rgba(252, 74, 77, 0.24);
+  color: #c8000b;
+}
+
+.strengthMedium {
+  background: rgba(245, 180, 51, 0.22);
+  color: #926100;
+}
+
+.strengthStrong {
+  background: rgba(30, 158, 106, 0.2);
+  color: #087b4d;
+}
+
+.passwordChecklist {
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(206, 205, 204, 0.72);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+  width: 100%;
+}
+
+.passwordChecklist > p {
+  color: #191b1c;
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin: 0;
+}
+
+.passwordChecklist ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.passwordChecklist li {
+  align-items: center;
+  display: flex;
+  font: 480 12px/14px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  gap: 8px;
+}
+
+.passwordChecklist li > span {
+  align-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: inline-flex;
+  flex: 0 0 14px;
+  font-size: 11px;
+  height: 14px;
+  justify-content: center;
+  line-height: 1;
+  width: 14px;
+}
+
+.ruleMet { color: #1e9e6a; }
+.ruleUnmet { color: #858887; }
+
+.passwordAction {
+  width: 120px;
+}
+
+.passwordError {
+  bottom: 34px;
+}
+
+.inlineSpinner {
+  border: 1.5px solid rgba(255, 255, 255, 0.44);
+  border-radius: 50%;
+  border-top-color: #fff;
+  height: 12px;
+  width: 12px;
+  animation: signup-loader-spin 800ms linear infinite;
 }
 
 .phoneField,
@@ -376,6 +632,18 @@ button.flowAction.disabledFlowAction:disabled {
   text-align: left;
   width: 400px;
 }
+
+.flowSignInCopy {
+  font: 480 14px/16px "Saans Medium", "Saans", var(--font-geist-sans), Arial, sans-serif;
+  margin: 0;
+}
+
+.flowSignInCopy a {
+  color: #2954c2;
+  text-decoration: none;
+}
+
+.flowSignInCopy a:hover { text-decoration: underline; }
 
 @media (max-width: 900px) {
   .page { padding: 0; }
