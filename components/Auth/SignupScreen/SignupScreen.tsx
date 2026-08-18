@@ -373,12 +373,16 @@ export function SignupScreen({
                                 onClick={() => setShowPassword((current) => !current)}
                                 type="button"
                               >
-                                <span aria-hidden className={`${styles.eyeIcon} ${showPassword ? styles.eyeIconVisible : ""}`} />
+                                <span aria-hidden className={styles.eyeIconWrap}>
+                                  <Image alt="" className={styles.eyeIcon} height={14} src="/icons/auth/password/eye.svg" width={14} />
+                                </span>
                               </button>
                             </div>
                             {password ? (
                               <span className={`${styles.strengthPill} ${styles[`strength${passwordStrength}`]}`}>
-                                <span aria-hidden className={styles.strengthDot} />
+                                <span aria-hidden className={styles.strengthIconWrap}>
+                                  <Image alt="" className={styles.strengthIcon} height={16} src="/icons/auth/password/shield-warning.svg" width={16} />
+                                </span>
                                 {passwordStrength}
                               </span>
                             ) : null}
@@ -390,7 +394,15 @@ export function SignupScreen({
                           <ul>
                             {passwordRules.map((rule) => (
                               <li className={rule.met ? styles.ruleMet : styles.ruleUnmet} key={rule.label}>
-                                <span aria-hidden>{rule.met ? "✓" : "×"}</span>
+                                <span aria-hidden className={styles.ruleIconWrap}>
+                                  <Image
+                                    alt=""
+                                    className={styles.ruleIcon}
+                                    height={14}
+                                    src={rule.met ? "/icons/auth/password/rule-met.svg" : "/icons/auth/password/rule-unmet.svg"}
+                                    width={14}
+                                  />
+                                </span>
                                 {rule.label}
                               </li>
                             ))}
@@ -418,7 +430,9 @@ export function SignupScreen({
                               onClick={() => setShowConfirmPassword((current) => !current)}
                               type="button"
                             >
-                              <span aria-hidden className={`${styles.eyeIcon} ${showConfirmPassword ? styles.eyeIconVisible : ""}`} />
+                              <span aria-hidden className={styles.eyeIconWrap}>
+                                <Image alt="" className={styles.eyeIcon} height={14} src="/icons/auth/password/eye.svg" width={14} />
+                              </span>
                             </button>
                           </div>
                         </div>
@@ -430,7 +444,11 @@ export function SignupScreen({
                           state={!canContinueWithPassword || isPasswordSubmitting ? "disabled" : "enabled"}
                           trailingIcon={isPasswordSubmitting
                             ? <span aria-hidden className={styles.inlineSpinner} />
-                            : <Image alt="" height={14} src="/icons/auth/arrow-right.svg" width={14} />}
+                            : (
+                              <span aria-hidden className={styles.passwordArrowWrap}>
+                                <Image alt="" className={styles.passwordArrow} height={14} src="/icons/auth/password/arrow-right.svg" width={14} />
+                              </span>
+                            )}
                           type="submit"
                           variant="primary"
                         >
